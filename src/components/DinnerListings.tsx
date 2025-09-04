@@ -1,0 +1,157 @@
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Search, Filter, Plus, Calendar } from "lucide-react";
+import DinnerCard from "./DinnerCard";
+
+// Mock data for dinner listings
+const mockDinners = [
+  {
+    id: "1",
+    title: "Weekend Taco Night",
+    host: { name: "Sarah Chen", initials: "SC" },
+    date: "Sat, Dec 9",
+    time: "6:00 PM",
+    location: "Oak Street",
+    venue: "home" as const,
+    capacity: 8,
+    attendees: 5,
+    mealType: "potluck" as const,
+    distance: "0.2 mi",
+    dietary: ["Vegetarian Option", "Gluten-Free"]
+  },
+  {
+    id: "2", 
+    title: "Neighborhood Seafood Boil",
+    host: { name: "Marcus Johnson", initials: "MJ" },
+    date: "Sun, Dec 10",
+    time: "5:30 PM", 
+    location: "Community Clubhouse",
+    venue: "clubhouse" as const,
+    capacity: 12,
+    attendees: 8,
+    mealType: "restaurant" as const,
+    distance: "0.4 mi",
+    dietary: ["Shellfish"]
+  },
+  {
+    id: "3",
+    title: "Italian Family Dinner",
+    host: { name: "Anna Rodriguez", initials: "AR" },
+    date: "Wed, Dec 13",
+    time: "7:00 PM",
+    location: "Maple Avenue", 
+    venue: "home" as const,
+    capacity: 6,
+    attendees: 4,
+    mealType: "potluck" as const,
+    distance: "0.1 mi",
+    dietary: ["Vegetarian Option"]
+  },
+  {
+    id: "4",
+    title: "Holiday Cookie Exchange",
+    host: { name: "Lisa Park", initials: "LP" },
+    date: "Fri, Dec 15",
+    time: "6:30 PM",
+    location: "Pine Street",
+    venue: "home" as const,
+    capacity: 10,
+    attendees: 9,
+    mealType: "potluck" as const,
+    distance: "0.3 mi",
+    dietary: ["Desserts", "Gluten-Free Options"]
+  }
+];
+
+const DinnerListings = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedFilter, setSelectedFilter] = useState("all");
+
+  return (
+    <section className="py-20 bg-secondary/20">
+      <div className="container mx-auto px-6">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
+            Upcoming <span className="bg-gradient-primary bg-clip-text text-transparent">Neighborhood Dinners</span>
+          </h2>
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            Join your neighbors for shared meals and meaningful connections right in your community.
+          </p>
+        </div>
+
+        {/* Search and Filters */}
+        <Card className="mb-8 border-border/50">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Search className="w-5 h-5" />
+              Find Your Perfect Dinner
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <div className="md:col-span-2">
+                <Input
+                  placeholder="Search by host, location, or meal type..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="h-12"
+                />
+              </div>
+              <Select value={selectedFilter} onValueChange={setSelectedFilter}>
+                <SelectTrigger className="h-12">
+                  <SelectValue placeholder="Filter by date" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Dates</SelectItem>
+                  <SelectItem value="this-week">This Week</SelectItem>
+                  <SelectItem value="weekend">Weekend</SelectItem>
+                  <SelectItem value="next-week">Next Week</SelectItem>
+                </SelectContent>
+              </Select>
+              <Button variant="outline" size="lg" className="h-12">
+                <Filter className="w-4 h-4 mr-2" />
+                More Filters
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Host Your Own Section */}
+        <Card className="mb-8 bg-gradient-subtle border-primary/30">
+          <CardContent className="p-8 text-center">
+            <h3 className="text-2xl font-bold mb-4 text-foreground">Want to host your neighbors?</h3>
+            <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
+              Hosting a dinner is a wonderful way to strengthen your community connections. 
+              We'll help you every step of the way!
+            </p>
+            <Button variant="hero" size="lg">
+              <Plus className="w-4 h-4 mr-2" />
+              Host a Dinner
+            </Button>
+          </CardContent>
+        </Card>
+
+        {/* Dinner Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+          {mockDinners.map((dinner) => (
+            <DinnerCard key={dinner.id} {...dinner} />
+          ))}
+        </div>
+
+        {/* Load More */}
+        <div className="text-center">
+          <Button variant="outline" size="lg">
+            <Calendar className="w-4 h-4 mr-2" />
+            Load More Dinners
+          </Button>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default DinnerListings;
