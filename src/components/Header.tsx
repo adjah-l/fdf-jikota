@@ -1,8 +1,40 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Users, Menu, Bell, User } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
+import { Users, Menu, Bell, User, LogOut, Settings, UserCircle } from "lucide-react";
+import { useState } from "react";
+import { useAuth } from "@/contexts/AuthContext";
+import AuthModal from "./auth/AuthModal";
 
 const Header = () => {
+  const { user, signOut, loading } = useAuth();
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [authMode, setAuthMode] = useState<'login' | 'signup'>('login');
+
+  const handleAuthClick = (mode: 'login' | 'signup') => {
+    setAuthMode(mode);
+    setAuthModalOpen(true);
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+    } catch (error) {
+      console.error('Sign out error:', error);
+    }
+  };
+
+  const getUserInitials = (name: string | undefined) => {
+    if (!name) return 'U';
+    return name
+      .split(' ')
+      .map(n => n[0])
+      .join('')
+      .toUpperCase()
+      .slice(0, 2);
+  };
+
   return (
     <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border/40">
       <div className="container mx-auto px-6">
@@ -45,9 +77,48 @@ const Header = () => {
             </Button>
 
             {/* Profile */}
-            <Button variant="ghost" size="icon">
-              <User className="w-5 h-5" />
-            </Button>
+            {user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="icon" className="relative">
+                    <Avatar className="w-8 h-8">
+                      <AvatarImage src={user.user_metadata?.avatar_url} />
+                      <AvatarFallback className="bg-primary text-primary-foreground text-xs">
+                        {getUserInitials(user.user_metadata?.full_name)}
+                      </AvatarFallback>
+                    </Avatar>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-48">
+                  <div className="px-2 py-1.5 text-sm">
+                    <p className="font-medium text-foreground">
+                      {user.user_metadata?.full_name || 'User'}
+                    </p>
+                    <p className="text-muted-foreground text-xs truncate">
+                      {user.email}
+                    </p>
+                  </div>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>
+                    <UserCircle className="w-4 h-4 mr-2" />
+                    Profile
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Settings className="w-4 h-4 mr-2" />
+                    Settings
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={handleSignOut}>
+                    <LogOut className="w-4 h-4 mr-2" />
+                    Sign out
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Button variant="ghost" size="icon">
+                <User className="w-5 h-5" />
+              </Button>
+            )}
 
             {/* Mobile Menu */}
             <Button variant="ghost" size="icon" className="md:hidden">
@@ -55,17 +126,33 @@ const Header = () => {
             </Button>
 
             {/* Join/Login Buttons */}
-            <div className="hidden sm:flex items-center gap-2">
-              <Button variant="ghost" size="sm">
-                Log In
-              </Button>
-              <Button variant="default" size="sm">
-                Join Now
-              </Button>
-            </div>
+            {!user && !loading && (
+              <div className="hidden sm:flex items-center gap-2">
+                <Button 
+                  variant="ghost" 
+                  size="sm"
+                  onClick={() => handleAuthClick('login')}
+                >
+                  Log In
+                </Button>
+                <Button 
+                  variant="default" 
+                  size="sm"
+                  onClick={() => handleAuthClick('signup')}
+                >
+                  Join Now
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       </div>
+      
+      <AuthModal
+        open={authModalOpen}
+        onOpenChange={setAuthModalOpen}
+        defaultMode={authMode}
+      />
     </header>
   );
 };
