@@ -14,6 +14,54 @@ export type Database = {
   }
   public: {
     Tables: {
+      neighborhoods: {
+        Row: {
+          active_dinners_count: number | null
+          city: string
+          community_tags: string[] | null
+          created_at: string
+          description: string | null
+          id: string
+          latitude: number | null
+          longitude: number | null
+          member_count: number | null
+          name: string
+          state: string
+          updated_at: string
+          zip_codes: string[] | null
+        }
+        Insert: {
+          active_dinners_count?: number | null
+          city: string
+          community_tags?: string[] | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          member_count?: number | null
+          name: string
+          state: string
+          updated_at?: string
+          zip_codes?: string[] | null
+        }
+        Update: {
+          active_dinners_count?: number | null
+          city?: string
+          community_tags?: string[] | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          member_count?: number | null
+          name?: string
+          state?: string
+          updated_at?: string
+          zip_codes?: string[] | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -43,6 +91,38 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      user_neighborhoods: {
+        Row: {
+          id: string
+          is_active: boolean | null
+          joined_at: string
+          neighborhood_id: string
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          is_active?: boolean | null
+          joined_at?: string
+          neighborhood_id: string
+          user_id: string
+        }
+        Update: {
+          id?: string
+          is_active?: boolean | null
+          joined_at?: string
+          neighborhood_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_neighborhoods_neighborhood_id_fkey"
+            columns: ["neighborhood_id"]
+            isOneToOne: false
+            referencedRelation: "neighborhoods"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {

@@ -1,9 +1,30 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Users, Heart, Home, Calendar } from "lucide-react";
 import heroDinner from "@/assets/hero-dinner.jpg";
+import NeighborhoodSelector from "@/components/neighborhood/NeighborhoodSelector";
+import AuthModal from "@/components/auth/AuthModal";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Hero = () => {
+  const { user } = useAuth();
+  const [showNeighborhoodSelector, setShowNeighborhoodSelector] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
+
+  const handleJoinNeighborhood = () => {
+    setShowNeighborhoodSelector(true);
+  };
+
+  const handleHostDinner = () => {
+    if (!user) {
+      setShowAuthModal(true);
+    } else {
+      // TODO: Navigate to dinner creation page
+      console.log("Navigate to dinner creation");
+    }
+  };
+
   return (
     <section className="relative min-h-screen flex items-center justify-center bg-gradient-subtle overflow-hidden">
       {/* Background Image */}
@@ -29,10 +50,20 @@ const Hero = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-            <Button variant="hero" size="lg" className="min-w-[200px]">
+            <Button 
+              variant="hero" 
+              size="lg" 
+              className="min-w-[200px]"
+              onClick={handleJoinNeighborhood}
+            >
               Join Your Neighborhood
             </Button>
-            <Button variant="outline" size="lg" className="min-w-[200px]">
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="min-w-[200px]"
+              onClick={handleHostDinner}
+            >
               Host a Dinner
             </Button>
           </div>
@@ -73,6 +104,18 @@ const Hero = () => {
           </div>
         </div>
       </div>
+
+      {/* Modals */}
+      <NeighborhoodSelector
+        open={showNeighborhoodSelector}
+        onOpenChange={setShowNeighborhoodSelector}
+      />
+      
+      <AuthModal
+        open={showAuthModal}
+        onOpenChange={setShowAuthModal}
+        defaultMode="login"
+      />
     </section>
   );
 };
