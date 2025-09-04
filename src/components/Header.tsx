@@ -14,7 +14,7 @@ const Header = () => {
             </div>
             <div>
               <h1 className="font-bold text-lg text-foreground">Family Dinner Foundation</h1>
-              <p className="text-xs text-muted-foreground">Connecting neighbors through meals</p>
+              <p className="text-xs text-muted-foreground">Connecting the world as a family at and beyond the dinner table</p>
             </div>
           </div>
 
