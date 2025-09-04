@@ -5,10 +5,14 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Users, Menu, Bell, User, LogOut, Settings, UserCircle } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
+import { useProfile } from "@/hooks/useProfile";
+import { useNavigate } from "react-router-dom";
 import AuthModal from "./auth/AuthModal";
 
 const Header = () => {
   const { user, signOut, loading } = useAuth();
+  const { profile } = useProfile();
+  const navigate = useNavigate();
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [authMode, setAuthMode] = useState<'login' | 'signup'>('login');
 
@@ -25,7 +29,7 @@ const Header = () => {
     }
   };
 
-  const getUserInitials = (name: string | undefined) => {
+  const getUserInitials = (name: string | null | undefined) => {
     if (!name) return 'U';
     return name
       .split(' ')
@@ -33,6 +37,10 @@ const Header = () => {
       .join('')
       .toUpperCase()
       .slice(0, 2);
+  };
+
+  const handleProfileClick = () => {
+    navigate('/profile');
   };
 
   return (
@@ -82,9 +90,9 @@ const Header = () => {
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" size="icon" className="relative">
                     <Avatar className="w-8 h-8">
-                      <AvatarImage src={user.user_metadata?.avatar_url} />
+                      <AvatarImage src={profile?.avatar_url || user.user_metadata?.avatar_url} />
                       <AvatarFallback className="bg-primary text-primary-foreground text-xs">
-                        {getUserInitials(user.user_metadata?.full_name)}
+                        {getUserInitials(profile?.full_name || user.user_metadata?.full_name)}
                       </AvatarFallback>
                     </Avatar>
                   </Button>
@@ -92,14 +100,14 @@ const Header = () => {
                 <DropdownMenuContent align="end" className="w-48">
                   <div className="px-2 py-1.5 text-sm">
                     <p className="font-medium text-foreground">
-                      {user.user_metadata?.full_name || 'User'}
+                      {profile?.full_name || user.user_metadata?.full_name || 'User'}
                     </p>
                     <p className="text-muted-foreground text-xs truncate">
                       {user.email}
                     </p>
                   </div>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem>
+                  <DropdownMenuItem onClick={handleProfileClick}>
                     <UserCircle className="w-4 h-4 mr-2" />
                     Profile
                   </DropdownMenuItem>
