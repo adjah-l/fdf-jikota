@@ -16,7 +16,18 @@ const ProfilePage = () => {
   }
 
   if (!user) {
-    return <Navigate to="/" replace />;
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        <main className="container mx-auto py-8 px-4">
+          <div className="mb-4 rounded-md border border-border bg-muted/30 p-4 text-sm text-muted-foreground">
+            You’re viewing a demo of the profile page. Sign in to save changes.
+          </div>
+          <Profile />
+        </main>
+        <Footer />
+      </div>
+    );
   }
 
   return (

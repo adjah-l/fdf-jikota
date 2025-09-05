@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import LoginForm from "./LoginForm";
 import SignupForm from "./SignupForm";
 
@@ -23,6 +23,12 @@ const AuthModal = ({ open, onOpenChange, defaultMode = 'login' }: AuthModalProps
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle className="sr-only">{mode === 'login' ? 'Sign In' : 'Create Account'}</DialogTitle>
+          <DialogDescription className="sr-only">
+            {mode === 'login' ? 'Sign in to your account' : 'Create a new account'}
+          </DialogDescription>
+        </DialogHeader>
         {mode === 'login' ? (
           <LoginForm
             onSuccess={handleSuccess}
