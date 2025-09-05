@@ -18,7 +18,9 @@ export const useAdmin = () => {
   const [loading, setLoading] = useState(true);
 
   const checkAdminStatus = async () => {
+    console.log('useAdmin: checking admin status, user:', user);
     if (!user) {
+      console.log('useAdmin: no user found, setting admin to false');
       setIsAdmin(false);
       setAdminRole(null);
       setLoading(false);
