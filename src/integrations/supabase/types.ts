@@ -64,31 +64,115 @@ export type Database = {
       }
       profiles: {
         Row: {
+          activities: string[] | null
+          age_group: string | null
           avatar_url: string | null
           bio: string | null
+          children_ages: string | null
+          city: string | null
+          closest_fd_city: string | null
+          country: string | null
           created_at: string
+          date_of_birth: string | null
+          development_subdivision: string | null
+          family_profile: string | null
+          favorite_dessert: string | null
+          favorite_dinner_meal: string | null
+          first_name: string | null
           full_name: string | null
+          group_interest: string | null
+          hometown: string | null
           id: string
+          instagram_handle: string | null
+          last_name: string | null
+          neighborhood_name: string | null
+          new_to_city: string | null
+          phone_number: string | null
+          season_interest: string | null
+          spouse_email: string | null
+          spouse_first_name: string | null
+          spouse_last_name: string | null
+          spouse_phone: string | null
+          state_region: string | null
           updated_at: string
           user_id: string
+          ways_to_serve: string[] | null
+          willing_to_welcome: boolean | null
+          work_from_home: string | null
         }
         Insert: {
+          activities?: string[] | null
+          age_group?: string | null
           avatar_url?: string | null
           bio?: string | null
+          children_ages?: string | null
+          city?: string | null
+          closest_fd_city?: string | null
+          country?: string | null
           created_at?: string
+          date_of_birth?: string | null
+          development_subdivision?: string | null
+          family_profile?: string | null
+          favorite_dessert?: string | null
+          favorite_dinner_meal?: string | null
+          first_name?: string | null
           full_name?: string | null
+          group_interest?: string | null
+          hometown?: string | null
           id?: string
+          instagram_handle?: string | null
+          last_name?: string | null
+          neighborhood_name?: string | null
+          new_to_city?: string | null
+          phone_number?: string | null
+          season_interest?: string | null
+          spouse_email?: string | null
+          spouse_first_name?: string | null
+          spouse_last_name?: string | null
+          spouse_phone?: string | null
+          state_region?: string | null
           updated_at?: string
           user_id: string
+          ways_to_serve?: string[] | null
+          willing_to_welcome?: boolean | null
+          work_from_home?: string | null
         }
         Update: {
+          activities?: string[] | null
+          age_group?: string | null
           avatar_url?: string | null
           bio?: string | null
+          children_ages?: string | null
+          city?: string | null
+          closest_fd_city?: string | null
+          country?: string | null
           created_at?: string
+          date_of_birth?: string | null
+          development_subdivision?: string | null
+          family_profile?: string | null
+          favorite_dessert?: string | null
+          favorite_dinner_meal?: string | null
+          first_name?: string | null
           full_name?: string | null
+          group_interest?: string | null
+          hometown?: string | null
           id?: string
+          instagram_handle?: string | null
+          last_name?: string | null
+          neighborhood_name?: string | null
+          new_to_city?: string | null
+          phone_number?: string | null
+          season_interest?: string | null
+          spouse_email?: string | null
+          spouse_first_name?: string | null
+          spouse_last_name?: string | null
+          spouse_phone?: string | null
+          state_region?: string | null
           updated_at?: string
           user_id?: string
+          ways_to_serve?: string[] | null
+          willing_to_welcome?: boolean | null
+          work_from_home?: string | null
         }
         Relationships: []
       }
@@ -132,7 +216,14 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      age_group_type: "22-24" | "25-34" | "35-44" | "45-54" | "55+"
+      family_profile_type:
+        | "married_no_children"
+        | "single_no_children"
+        | "married_with_children"
+        | "single_with_children"
+      new_to_city_type: "yes_less_3_months" | "yes_less_year" | "no"
+      work_from_home_type: "yes_100_percent" | "yes_3_days" | "hybrid" | "no"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -259,6 +350,16 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      age_group_type: ["22-24", "25-34", "35-44", "45-54", "55+"],
+      family_profile_type: [
+        "married_no_children",
+        "single_no_children",
+        "married_with_children",
+        "single_with_children",
+      ],
+      new_to_city_type: ["yes_less_3_months", "yes_less_year", "no"],
+      work_from_home_type: ["yes_100_percent", "yes_3_days", "hybrid", "no"],
+    },
   },
 } as const

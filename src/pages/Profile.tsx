@@ -2,7 +2,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Navigate } from 'react-router-dom';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import Profile from '@/components/Profile';
+import ProfileForm from '@/components/ProfileForm';
 
 const ProfilePage = () => {
   const { user, loading } = useAuth();
@@ -23,7 +23,7 @@ const ProfilePage = () => {
           <div className="mb-4 rounded-md border border-border bg-muted/30 p-4 text-sm text-muted-foreground">
             You’re viewing a demo of the profile page. Sign in to save changes.
           </div>
-          <Profile />
+          <ProfileForm />
         </main>
         <Footer />
       </div>
@@ -34,7 +34,7 @@ const ProfilePage = () => {
     <div className="min-h-screen bg-background">
       <Header />
       <main className="container mx-auto py-8 px-4">
-        <Profile />
+        <ProfileForm />
       </main>
       <Footer />
     </div>
