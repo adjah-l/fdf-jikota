@@ -33,7 +33,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // Listen for auth changes FIRST to avoid race conditions
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {
-        console.log('Auth state changed:', event, 'Session:', session, 'User:', session?.user);
         setSession(session);
         setUser(session?.user ?? null);
         setLoading(false);
