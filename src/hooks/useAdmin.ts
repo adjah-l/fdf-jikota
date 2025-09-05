@@ -12,15 +12,19 @@ export interface AdminUser {
 }
 
 export const useAdmin = () => {
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const [isAdmin, setIsAdmin] = useState(false);
   const [adminRole, setAdminRole] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
   const checkAdminStatus = async () => {
-    console.log('useAdmin: checking admin status, user:', user);
+    console.log('useAdmin: checking admin status, user:', user, 'authLoading:', authLoading);
     if (!user) {
-      console.log('useAdmin: no user found, setting admin to false');
+      if (authLoading) {
+        console.log('useAdmin: auth still loading, deferring admin check');
+        return;
+      }
+      console.log('useAdmin: no user found after auth loaded, setting admin to false');
       setIsAdmin(false);
       setAdminRole(null);
       setLoading(false);
@@ -61,8 +65,10 @@ export const useAdmin = () => {
   };
 
   useEffect(() => {
-    checkAdminStatus();
-  }, [user]);
+    if (!authLoading) {
+      checkAdminStatus();
+    }
+  }, [user, authLoading]);
 
   return {
     isAdmin,
