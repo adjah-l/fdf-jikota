@@ -14,6 +14,140 @@ export type Database = {
   }
   public: {
     Tables: {
+      admin_users: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["admin_role"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["admin_role"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["admin_role"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      dinner_groups: {
+        Row: {
+          approved_by: string | null
+          created_at: string
+          created_by: string | null
+          description: string | null
+          host_user_id: string | null
+          id: string
+          location_type: string | null
+          max_members: number
+          name: string
+          scheduled_date: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          approved_by?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          host_user_id?: string | null
+          id?: string
+          location_type?: string | null
+          max_members?: number
+          name: string
+          scheduled_date?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          approved_by?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          host_user_id?: string | null
+          id?: string
+          location_type?: string | null
+          max_members?: number
+          name?: string
+          scheduled_date?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      group_members: {
+        Row: {
+          added_at: string
+          group_id: string
+          id: string
+          status: string
+          user_id: string
+        }
+        Insert: {
+          added_at?: string
+          group_id: string
+          id?: string
+          status?: string
+          user_id: string
+        }
+        Update: {
+          added_at?: string
+          group_id?: string
+          id?: string
+          status?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "group_members_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "dinner_groups"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      matching_criteria: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          criteria_type: string
+          id: string
+          is_active: boolean
+          name: string
+          updated_at: string
+          weight: number
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          criteria_type: string
+          id?: string
+          is_active?: boolean
+          name: string
+          updated_at?: string
+          weight?: number
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          criteria_type?: string
+          id?: string
+          is_active?: boolean
+          name?: string
+          updated_at?: string
+          weight?: number
+        }
+        Relationships: []
+      }
       neighborhoods: {
         Row: {
           active_dinners_count: number | null
@@ -213,9 +347,17 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_admin_role: {
+        Args: { user_id_param?: string }
+        Returns: Database["public"]["Enums"]["admin_role"]
+      }
+      is_admin: {
+        Args: { user_id_param?: string }
+        Returns: boolean
+      }
     }
     Enums: {
+      admin_role: "super_admin" | "admin" | "moderator"
       age_group_type: "22-24" | "25-34" | "35-44" | "45-54" | "55+"
       family_profile_type:
         | "married_no_children"
@@ -351,6 +493,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      admin_role: ["super_admin", "admin", "moderator"],
       age_group_type: ["22-24", "25-34", "35-44", "45-54", "55+"],
       family_profile_type: [
         "married_no_children",
