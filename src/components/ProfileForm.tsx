@@ -11,6 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Checkbox } from '@/components/ui/checkbox';
 import { Loader2, Camera, Save, User, MapPin, Heart, Home } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
+import LocationAutocomplete from '@/components/LocationAutocomplete';
 
 const ProfileForm = () => {
   const { user } = useAuth();
@@ -398,93 +399,53 @@ const ProfileForm = () => {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div>
-              <Label htmlFor="city">City</Label>
-              {isEditing ? (
-                <Input
-                  id="city"
-                  value={formData.city}
-                  onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                  placeholder="Enter your city"
-                />
-              ) : (
-                <Input
-                  value={profile?.city || 'Not set'}
-                  disabled
-                  className="bg-muted"
-                />
-              )}
-            </div>
-            <div>
-              <Label htmlFor="state_region">State/Region</Label>
-              {isEditing ? (
-                <Input
-                  id="state_region"
-                  value={formData.state_region}
-                  onChange={(e) => setFormData({ ...formData, state_region: e.target.value })}
-                  placeholder="Enter your state/region"
-                />
-              ) : (
-                <Input
-                  value={profile?.state_region || 'Not set'}
-                  disabled
-                  className="bg-muted"
-                />
-              )}
-            </div>
-            <div>
-              <Label htmlFor="country">Country</Label>
-              {isEditing ? (
-                <Input
-                  id="country"
-                  value={formData.country}
-                  onChange={(e) => setFormData({ ...formData, country: e.target.value })}
-                  placeholder="Enter your country"
-                />
-              ) : (
-                <Input
-                  value={profile?.country || 'Not set'}
-                  disabled
-                  className="bg-muted"
-                />
-              )}
-            </div>
+            <LocationAutocomplete
+              label="City"
+              placeholder="Enter your city"
+              value={formData.city}
+              onChange={(value) => setFormData({ ...formData, city: value })}
+              types="(cities)"
+              disabled={!isEditing}
+              id="city"
+            />
+            <LocationAutocomplete
+              label="State/Region"
+              placeholder="Enter your state/region"
+              value={formData.state_region}
+              onChange={(value) => setFormData({ ...formData, state_region: value })}
+              types="(regions)"
+              disabled={!isEditing}
+              id="state_region"
+            />
+            <LocationAutocomplete
+              label="Country"
+              placeholder="Enter your country"
+              value={formData.country}
+              onChange={(value) => setFormData({ ...formData, country: value })}
+              types="(regions)"
+              disabled={!isEditing}
+              id="country"
+            />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <Label htmlFor="neighborhood_name">Neighborhood Name</Label>
-              {isEditing ? (
-                <Input
-                  id="neighborhood_name"
-                  value={formData.neighborhood_name}
-                  onChange={(e) => setFormData({ ...formData, neighborhood_name: e.target.value })}
-                  placeholder="Enter your neighborhood"
-                />
-              ) : (
-                <Input
-                  value={profile?.neighborhood_name || 'Not set'}
-                  disabled
-                  className="bg-muted"
-                />
-              )}
-            </div>
-            <div>
-              <Label htmlFor="development_subdivision">Development/Subdivision</Label>
-              {isEditing ? (
-                <Input
-                  id="development_subdivision"
-                  value={formData.development_subdivision}
-                  onChange={(e) => setFormData({ ...formData, development_subdivision: e.target.value })}
-                  placeholder="Enter your development/subdivision"
-                />
-              ) : (
-                <Input
-                  value={profile?.development_subdivision || 'Not set'}
-                  disabled
-                  className="bg-muted"
-                />
-              )}
-            </div>
+            <LocationAutocomplete
+              label="Neighborhood Name"
+              placeholder="Enter your neighborhood"
+              value={formData.neighborhood_name}
+              onChange={(value) => setFormData({ ...formData, neighborhood_name: value })}
+              types="geocode"
+              disabled={!isEditing}
+              id="neighborhood_name"
+            />
+            <LocationAutocomplete
+              label="Development/Subdivision"
+              placeholder="Enter your development/subdivision"
+              value={formData.development_subdivision}
+              onChange={(value) => setFormData({ ...formData, development_subdivision: value })}
+              types="geocode"
+              disabled={!isEditing}
+              id="development_subdivision"
+            />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
