@@ -34,6 +34,8 @@ interface MatchingCriteria {
 
 const AdminDashboard = () => {
   const { isAdmin, adminRole, loading: adminLoading } = useAdmin();
+  
+  console.log('AdminDashboard: isAdmin =', isAdmin, 'adminRole =', adminRole, 'loading =', adminLoading);
   const { loading: matchingLoading, generateMatches, approveGroup, exportGroups, sendNotifications } = useMatching();
   const [groups, setGroups] = useState<DinnerGroup[]>([]);
   const [criteria, setCriteria] = useState<MatchingCriteria[]>([]);
