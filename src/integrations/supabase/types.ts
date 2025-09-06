@@ -120,9 +120,11 @@ export type Database = {
           created_at: string
           created_by: string | null
           criteria_type: string
+          discrete_options: Json | null
           id: string
           is_active: boolean
           name: string
+          option_type: string | null
           updated_at: string
           weight: number
         }
@@ -130,9 +132,11 @@ export type Database = {
           created_at?: string
           created_by?: string | null
           criteria_type: string
+          discrete_options?: Json | null
           id?: string
           is_active?: boolean
           name: string
+          option_type?: string | null
           updated_at?: string
           weight?: number
         }
@@ -140,9 +144,11 @@ export type Database = {
           created_at?: string
           created_by?: string | null
           criteria_type?: string
+          discrete_options?: Json | null
           id?: string
           is_active?: boolean
           name?: string
+          option_type?: string | null
           updated_at?: string
           weight?: number
         }

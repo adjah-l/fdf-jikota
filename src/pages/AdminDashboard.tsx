@@ -30,6 +30,8 @@ interface MatchingCriteria {
   weight: number;
   is_active: boolean;
   criteria_type: string;
+  option_type: 'percentage' | 'discrete';
+  discrete_options: string[] | null;
 }
 
 const AdminDashboard = () => {
@@ -64,7 +66,15 @@ const AdminDashboard = () => {
         .order('weight', { ascending: false });
 
       if (criteriaError) throw criteriaError;
-      setCriteria(criteriaData);
+      
+      // Transform the data to match our interface
+      const transformedCriteria: MatchingCriteria[] = criteriaData.map(item => ({
+        ...item,
+        option_type: item.option_type as 'percentage' | 'discrete',
+        discrete_options: item.discrete_options ? (Array.isArray(item.discrete_options) ? item.discrete_options as string[] : null) : null
+      }));
+      
+      setCriteria(transformedCriteria);
 
     } catch (error: any) {
       console.error('Error fetching data:', error);
@@ -342,9 +352,26 @@ const AdminDashboard = () => {
                         <p className="text-sm text-muted-foreground capitalize">
                           {criterion.criteria_type.replace('_', ' ')}
                         </p>
+                        {criterion.option_type === 'discrete' && criterion.discrete_options && (
+                          <div className="mt-2">
+                            <p className="text-xs text-muted-foreground mb-1">Options:</p>
+                            <div className="flex flex-wrap gap-1">
+                              {criterion.discrete_options.map((option, index) => (
+                                <Badge key={index} variant="outline" className="text-xs">
+                                  {option}
+                                </Badge>
+                              ))}
+                            </div>
+                          </div>
+                        )}
                       </div>
                       <div className="flex items-center gap-4">
-                        <span className="text-sm font-medium">{Math.round(criterion.weight * 100)}%</span>
+                        <span className="text-sm font-medium">
+                          {criterion.option_type === 'percentage' 
+                            ? `${Math.round(criterion.weight * 100)}%`
+                            : 'Discrete'
+                          }
+                        </span>
                         <Badge variant={criterion.is_active ? 'default' : 'secondary'}>
                           {criterion.is_active ? 'Active' : 'Inactive'}
                         </Badge>
