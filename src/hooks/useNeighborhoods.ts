@@ -12,9 +12,14 @@ export interface Neighborhood {
   zip_codes: string[];
   member_count: number;
   active_dinners_count: number;
+  family_count: number;
+  family_groups_count: number;
+  current_season: string;
   community_tags: string[];
   latitude: number | null;
   longitude: number | null;
+  state_region: string | null;
+  country: string;
   created_at: string;
   updated_at: string;
 }

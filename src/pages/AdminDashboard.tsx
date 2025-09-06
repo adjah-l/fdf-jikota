@@ -11,8 +11,10 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Separator } from '@/components/ui/separator';
-import { Loader2, Users, Settings, FileDown, Mail, Play } from 'lucide-react';
+import { Loader2, Users, Settings, FileDown, Mail, Play, MapPin, Home, CalendarDays, Filter } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Input } from '@/components/ui/input';
 
 interface DinnerGroup {
   id: string;
@@ -34,12 +36,29 @@ interface MatchingCriteria {
   discrete_options: string[] | null;
 }
 
+interface Neighborhood {
+  id: string;
+  name: string;
+  city: string;
+  state: string;
+  member_count: number;
+  family_count: number;
+  family_groups_count: number;
+  active_dinners_count: number;
+  current_season: string;
+  state_region: string | null;
+  country: string;
+}
+
 const AdminDashboard = () => {
   const { isAdmin, adminRole, loading: adminLoading } = useAdmin();
   const { loading: matchingLoading, generateMatches, approveGroup, exportGroups, sendNotifications } = useMatching();
   const [groups, setGroups] = useState<DinnerGroup[]>([]);
   const [criteria, setCriteria] = useState<MatchingCriteria[]>([]);
+  const [neighborhoods, setNeighborhoods] = useState<Neighborhood[]>([]);
   const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
+  const [selectedState, setSelectedState] = useState<string>('all');
+  const [selectedCity, setSelectedCity] = useState<string>('all');
   const [loading, setLoading] = useState(true);
 
   const fetchData = async () => {
@@ -75,6 +94,15 @@ const AdminDashboard = () => {
       }));
       
       setCriteria(transformedCriteria);
+
+      // Fetch neighborhoods
+      const { data: neighborhoodsData, error: neighborhoodsError } = await supabase
+        .from('neighborhoods')
+        .select('*')
+        .order('name');
+
+      if (neighborhoodsError) throw neighborhoodsError;
+      setNeighborhoods(neighborhoodsData || []);
 
     } catch (error: any) {
       console.error('Error fetching data:', error);
@@ -208,6 +236,7 @@ const AdminDashboard = () => {
         <Tabs defaultValue="groups" className="space-y-6">
           <TabsList>
             <TabsTrigger value="groups">Groups Management</TabsTrigger>
+            <TabsTrigger value="neighborhoods">Neighborhoods</TabsTrigger>
             <TabsTrigger value="matching">Matching System</TabsTrigger>
             <TabsTrigger value="criteria">Criteria Settings</TabsTrigger>
           </TabsList>
@@ -308,6 +337,147 @@ const AdminDashboard = () => {
                                 Approve
                               </Button>
                             )}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="neighborhoods" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Neighborhoods Overview</CardTitle>
+                <CardDescription>Monitor neighborhood activity and metrics</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                {/* Overall Stats */}
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                  <Card>
+                    <CardHeader className="pb-2">
+                      <CardTitle className="text-sm font-medium">Total Neighborhoods</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-2xl font-bold">{neighborhoods.length}</div>
+                    </CardContent>
+                  </Card>
+                  <Card>
+                    <CardHeader className="pb-2">
+                      <CardTitle className="text-sm font-medium">Total Members</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-2xl font-bold">
+                        {neighborhoods.reduce((sum, n) => sum + n.member_count, 0)}
+                      </div>
+                    </CardContent>
+                  </Card>
+                  <Card>
+                    <CardHeader className="pb-2">
+                      <CardTitle className="text-sm font-medium">Total Families</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-2xl font-bold">
+                        {neighborhoods.reduce((sum, n) => sum + n.family_count, 0)}
+                      </div>
+                    </CardContent>
+                  </Card>
+                  <Card>
+                    <CardHeader className="pb-2">
+                      <CardTitle className="text-sm font-medium">Active Dinners</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="text-2xl font-bold">
+                        {neighborhoods.reduce((sum, n) => sum + n.active_dinners_count, 0)}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+
+                {/* Filters */}
+                <div className="flex gap-4 items-center">
+                  <div className="flex items-center gap-2">
+                    <Filter className="h-4 w-4" />
+                    <span className="text-sm font-medium">Filters:</span>
+                  </div>
+                  <Select value={selectedState} onValueChange={setSelectedState}>
+                    <SelectTrigger className="w-[200px]">
+                      <SelectValue placeholder="Filter by state" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All States</SelectItem>
+                      {Array.from(new Set(neighborhoods.map(n => n.state))).map(state => (
+                        <SelectItem key={state} value={state}>{state}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <Select value={selectedCity} onValueChange={setSelectedCity}>
+                    <SelectTrigger className="w-[200px]">
+                      <SelectValue placeholder="Filter by city" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All Cities</SelectItem>
+                      {Array.from(new Set(
+                        neighborhoods
+                          .filter(n => selectedState === 'all' || n.state === selectedState)
+                          .map(n => n.city)
+                      )).map(city => (
+                        <SelectItem key={city} value={city}>{city}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Neighborhoods Table */}
+                <div className="border rounded-lg">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Neighborhood</TableHead>
+                        <TableHead>Location</TableHead>
+                        <TableHead>Members</TableHead>
+                        <TableHead>Families</TableHead>
+                        <TableHead>Family Groups</TableHead>
+                        <TableHead>Active Dinners</TableHead>
+                        <TableHead>Season</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {neighborhoods
+                        .filter(n => selectedState === 'all' || n.state === selectedState)
+                        .filter(n => selectedCity === 'all' || n.city === selectedCity)
+                        .map((neighborhood) => (
+                        <TableRow key={neighborhood.id}>
+                          <TableCell className="font-medium">{neighborhood.name}</TableCell>
+                          <TableCell>
+                            <div className="flex items-center gap-1">
+                              <MapPin className="h-3 w-3" />
+                              {neighborhood.city}, {neighborhood.state}
+                            </div>
+                          </TableCell>
+                          <TableCell>
+                            <div className="flex items-center gap-1">
+                              <Users className="h-3 w-3" />
+                              {neighborhood.member_count}
+                            </div>
+                          </TableCell>
+                          <TableCell>
+                            <div className="flex items-center gap-1">
+                              <Home className="h-3 w-3" />
+                              {neighborhood.family_count}
+                            </div>
+                          </TableCell>
+                          <TableCell>{neighborhood.family_groups_count}</TableCell>
+                          <TableCell>
+                            <div className="flex items-center gap-1">
+                              <CalendarDays className="h-3 w-3" />
+                              {neighborhood.active_dinners_count}
+                            </div>
+                          </TableCell>
+                          <TableCell>
+                            <Badge variant="outline">{neighborhood.current_season}</Badge>
                           </TableCell>
                         </TableRow>
                       ))}

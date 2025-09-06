@@ -1,7 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { MapPin, Users, Calendar } from "lucide-react";
+import { MapPin, Users, Calendar, Home, CalendarDays } from "lucide-react";
 import { Neighborhood } from "@/hooks/useNeighborhoods";
 
 interface NeighborhoodCardProps {
@@ -38,16 +38,30 @@ const NeighborhoodCard = ({
           </p>
         )}
         
-        <div className="flex items-center gap-4 text-sm text-muted-foreground">
+        <div className="grid grid-cols-2 gap-3 text-sm text-muted-foreground">
           <div className="flex items-center gap-1">
             <Users className="h-4 w-4" />
             {neighborhood.member_count} members
           </div>
           <div className="flex items-center gap-1">
+            <Home className="h-4 w-4" />
+            {neighborhood.family_count} families
+          </div>
+          <div className="flex items-center gap-1">
             <Calendar className="h-4 w-4" />
             {neighborhood.active_dinners_count} active dinners
           </div>
+          <div className="flex items-center gap-1">
+            <CalendarDays className="h-4 w-4" />
+            {neighborhood.current_season} season
+          </div>
         </div>
+        
+        {neighborhood.family_groups_count > 0 && (
+          <div className="text-xs text-muted-foreground">
+            {neighborhood.family_groups_count} family groups
+          </div>
+        )}
         
         {neighborhood.community_tags.length > 0 && (
           <div className="flex flex-wrap gap-2">

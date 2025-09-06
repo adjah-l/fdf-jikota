@@ -159,14 +159,19 @@ export type Database = {
           active_dinners_count: number | null
           city: string
           community_tags: string[] | null
+          country: string | null
           created_at: string
+          current_season: string | null
           description: string | null
+          family_count: number | null
+          family_groups_count: number | null
           id: string
           latitude: number | null
           longitude: number | null
           member_count: number | null
           name: string
           state: string
+          state_region: string | null
           updated_at: string
           zip_codes: string[] | null
         }
@@ -174,14 +179,19 @@ export type Database = {
           active_dinners_count?: number | null
           city: string
           community_tags?: string[] | null
+          country?: string | null
           created_at?: string
+          current_season?: string | null
           description?: string | null
+          family_count?: number | null
+          family_groups_count?: number | null
           id?: string
           latitude?: number | null
           longitude?: number | null
           member_count?: number | null
           name: string
           state: string
+          state_region?: string | null
           updated_at?: string
           zip_codes?: string[] | null
         }
@@ -189,14 +199,19 @@ export type Database = {
           active_dinners_count?: number | null
           city?: string
           community_tags?: string[] | null
+          country?: string | null
           created_at?: string
+          current_season?: string | null
           description?: string | null
+          family_count?: number | null
+          family_groups_count?: number | null
           id?: string
           latitude?: number | null
           longitude?: number | null
           member_count?: number | null
           name?: string
           state?: string
+          state_region?: string | null
           updated_at?: string
           zip_codes?: string[] | null
         }
