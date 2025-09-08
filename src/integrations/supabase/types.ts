@@ -154,6 +154,148 @@ export type Database = {
         }
         Relationships: []
       }
+      matching_policies: {
+        Row: {
+          age_alignment: string
+          age_hard: boolean
+          age_weight: number
+          created_at: string
+          created_by: string | null
+          default_group_size: number
+          fallback_strategy: string
+          family_group_size: number
+          family_stage_alignment: string
+          family_stage_hard: boolean
+          family_stage_weight: number
+          gender_allowed: string[] | null
+          gender_hard: boolean
+          gender_mode: string
+          gender_weight: number
+          id: string
+          location_hard: boolean
+          location_scope: string
+          max_distance_miles: number | null
+          mode: string
+          neighborhood_id: string
+          same_community_weight: number
+          season_use: boolean
+          season_value: string | null
+          season_weight: number
+          stage_alignment: string
+          stage_hard: boolean
+          stage_weight: number
+          updated_at: string
+        }
+        Insert: {
+          age_alignment?: string
+          age_hard?: boolean
+          age_weight?: number
+          created_at?: string
+          created_by?: string | null
+          default_group_size?: number
+          fallback_strategy?: string
+          family_group_size?: number
+          family_stage_alignment?: string
+          family_stage_hard?: boolean
+          family_stage_weight?: number
+          gender_allowed?: string[] | null
+          gender_hard?: boolean
+          gender_mode?: string
+          gender_weight?: number
+          id?: string
+          location_hard?: boolean
+          location_scope?: string
+          max_distance_miles?: number | null
+          mode?: string
+          neighborhood_id: string
+          same_community_weight?: number
+          season_use?: boolean
+          season_value?: string | null
+          season_weight?: number
+          stage_alignment?: string
+          stage_hard?: boolean
+          stage_weight?: number
+          updated_at?: string
+        }
+        Update: {
+          age_alignment?: string
+          age_hard?: boolean
+          age_weight?: number
+          created_at?: string
+          created_by?: string | null
+          default_group_size?: number
+          fallback_strategy?: string
+          family_group_size?: number
+          family_stage_alignment?: string
+          family_stage_hard?: boolean
+          family_stage_weight?: number
+          gender_allowed?: string[] | null
+          gender_hard?: boolean
+          gender_mode?: string
+          gender_weight?: number
+          id?: string
+          location_hard?: boolean
+          location_scope?: string
+          max_distance_miles?: number | null
+          mode?: string
+          neighborhood_id?: string
+          same_community_weight?: number
+          season_use?: boolean
+          season_value?: string | null
+          season_weight?: number
+          stage_alignment?: string
+          stage_hard?: boolean
+          stage_weight?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "matching_policies_neighborhood_id_fkey"
+            columns: ["neighborhood_id"]
+            isOneToOne: true
+            referencedRelation: "neighborhoods"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      matching_policy_audit: {
+        Row: {
+          change_reason: string | null
+          changed_at: string
+          changed_by: string | null
+          id: string
+          new_policy: Json | null
+          old_policy: Json | null
+          policy_id: string
+        }
+        Insert: {
+          change_reason?: string | null
+          changed_at?: string
+          changed_by?: string | null
+          id?: string
+          new_policy?: Json | null
+          old_policy?: Json | null
+          policy_id: string
+        }
+        Update: {
+          change_reason?: string | null
+          changed_at?: string
+          changed_by?: string | null
+          id?: string
+          new_policy?: Json | null
+          old_policy?: Json | null
+          policy_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "matching_policy_audit_policy_id_fkey"
+            columns: ["policy_id"]
+            isOneToOne: false
+            referencedRelation: "matching_policies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       neighborhoods: {
         Row: {
           active_dinners_count: number | null
@@ -372,9 +514,52 @@ export type Database = {
         Args: { user_id_param?: string }
         Returns: Database["public"]["Enums"]["admin_role"]
       }
+      get_matching_policy: {
+        Args: { neighborhood_id_param: string }
+        Returns: {
+          age_alignment: string
+          age_hard: boolean
+          age_weight: number
+          created_at: string
+          created_by: string | null
+          default_group_size: number
+          fallback_strategy: string
+          family_group_size: number
+          family_stage_alignment: string
+          family_stage_hard: boolean
+          family_stage_weight: number
+          gender_allowed: string[] | null
+          gender_hard: boolean
+          gender_mode: string
+          gender_weight: number
+          id: string
+          location_hard: boolean
+          location_scope: string
+          max_distance_miles: number | null
+          mode: string
+          neighborhood_id: string
+          same_community_weight: number
+          season_use: boolean
+          season_value: string | null
+          season_weight: number
+          stage_alignment: string
+          stage_hard: boolean
+          stage_weight: number
+          updated_at: string
+        }
+      }
       is_admin: {
         Args: { user_id_param?: string }
         Returns: boolean
+      }
+      simulate_matching: {
+        Args: { neighborhood_id_param: string; policy_overrides?: Json }
+        Returns: {
+          eligible_members: number
+          potential_groups: number
+          simulation_details: Json
+          waitlist_members: number
+        }[]
       }
     }
     Enums: {

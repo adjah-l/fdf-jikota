@@ -11,10 +11,12 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Separator } from '@/components/ui/separator';
-import { Loader2, Users, Settings, FileDown, Mail, Play, MapPin, Home, CalendarDays, Filter } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Loader2, Users, Settings, FileDown, Mail, Play, MapPin, Home, CalendarDays, Filter, Sliders } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
+import { MatchingRulesForm } from '@/components/matching/MatchingRulesForm';
 
 interface DinnerGroup {
   id: string;
@@ -39,15 +41,22 @@ interface MatchingCriteria {
 interface Neighborhood {
   id: string;
   name: string;
+  description: string | null;
   city: string;
   state: string;
+  zip_codes: string[];
   member_count: number;
   family_count: number;
   family_groups_count: number;
   active_dinners_count: number;
   current_season: string;
+  community_tags: string[];
+  latitude: number | null;
+  longitude: number | null;
   state_region: string | null;
   country: string;
+  created_at: string;
+  updated_at: string;
 }
 
 const AdminDashboard = () => {
@@ -59,6 +68,7 @@ const AdminDashboard = () => {
   const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
   const [selectedState, setSelectedState] = useState<string>('all');
   const [selectedCity, setSelectedCity] = useState<string>('all');
+  const [selectedNeighborhood, setSelectedNeighborhood] = useState<Neighborhood | null>(null);
   const [loading, setLoading] = useState(true);
 
   const fetchData = async () => {
@@ -239,6 +249,7 @@ const AdminDashboard = () => {
             <TabsTrigger value="neighborhoods">Neighborhoods</TabsTrigger>
             <TabsTrigger value="matching">Matching System</TabsTrigger>
             <TabsTrigger value="criteria">Criteria Settings</TabsTrigger>
+            <TabsTrigger value="matching-rules">Matching Rules</TabsTrigger>
           </TabsList>
 
           <TabsContent value="groups" className="space-y-6">
@@ -548,6 +559,68 @@ const AdminDashboard = () => {
                       </div>
                     </div>
                   ))}
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Matching Rules Tab */}
+          <TabsContent value="matching-rules" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Sliders className="h-5 w-5" />
+                  Community Matching Rules
+                </CardTitle>
+                <CardDescription>
+                  Configure how groups are automatically formed for each neighborhood
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <p className="text-sm text-muted-foreground">
+                    Select a neighborhood to configure its matching rules. Each neighborhood can have unique rules for gender, age, stage of life, seasonal preferences, and location requirements.
+                  </p>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {neighborhoods.slice(0, 9).map((neighborhood) => (
+                      <Card key={neighborhood.id} className="p-4">
+                        <div className="flex flex-col space-y-2">
+                          <h4 className="font-medium">{neighborhood.name}</h4>
+                          <p className="text-sm text-muted-foreground">
+                            {neighborhood.city}, {neighborhood.state}
+                          </p>
+                          <div className="flex items-center justify-between text-xs text-muted-foreground">
+                            <span>{neighborhood.member_count} members</span>
+                            <span>{neighborhood.active_dinners_count} active dinners</span>
+                          </div>
+                          <Dialog>
+                            <DialogTrigger asChild>
+                              <Button 
+                                variant="outline" 
+                                size="sm"
+                                onClick={() => setSelectedNeighborhood(neighborhood)}
+                              >
+                                <Settings className="h-4 w-4 mr-1" />
+                                Configure Rules
+                              </Button>
+                            </DialogTrigger>
+                            <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto">
+                              <DialogHeader>
+                                <DialogTitle>Matching Rules - {neighborhood.name}</DialogTitle>
+                              </DialogHeader>
+                              {selectedNeighborhood && (
+                                <MatchingRulesForm 
+                                  neighborhood={selectedNeighborhood}
+                                  onClose={() => setSelectedNeighborhood(null)}
+                                />
+                              )}
+                            </DialogContent>
+                          </Dialog>
+                        </div>
+                      </Card>
+                    ))}
+                  </div>
                 </div>
               </CardContent>
             </Card>
