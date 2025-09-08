@@ -28,15 +28,6 @@ interface DinnerGroup {
   member_count?: number;
 }
 
-interface MatchingCriteria {
-  id: string;
-  name: string;
-  weight: number;
-  is_active: boolean;
-  criteria_type: string;
-  option_type: 'percentage' | 'discrete';
-  discrete_options: string[] | null;
-}
 
 interface Neighborhood {
   id: string;
@@ -63,7 +54,7 @@ const AdminDashboard = () => {
   const { isAdmin, adminRole, loading: adminLoading } = useAdmin();
   const { loading: matchingLoading, generateMatches, approveGroup, exportGroups, sendNotifications } = useMatching();
   const [groups, setGroups] = useState<DinnerGroup[]>([]);
-  const [criteria, setCriteria] = useState<MatchingCriteria[]>([]);
+  
   const [neighborhoods, setNeighborhoods] = useState<Neighborhood[]>([]);
   const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
   const [selectedState, setSelectedState] = useState<string>('all');
@@ -88,22 +79,6 @@ const AdminDashboard = () => {
 
       setGroups(groupsWithCounts);
 
-      // Fetch matching criteria
-      const { data: criteriaData, error: criteriaError } = await supabase
-        .from('matching_criteria')
-        .select('*')
-        .order('weight', { ascending: false });
-
-      if (criteriaError) throw criteriaError;
-      
-      // Transform the data to match our interface
-      const transformedCriteria: MatchingCriteria[] = criteriaData.map(item => ({
-        ...item,
-        option_type: item.option_type as 'percentage' | 'discrete',
-        discrete_options: item.discrete_options ? (Array.isArray(item.discrete_options) ? item.discrete_options as string[] : null) : null
-      }));
-      
-      setCriteria(transformedCriteria);
 
       // Fetch neighborhoods
       const { data: neighborhoodsData, error: neighborhoodsError } = await supabase
@@ -248,7 +223,7 @@ const AdminDashboard = () => {
             <TabsTrigger value="groups">Groups Management</TabsTrigger>
             <TabsTrigger value="neighborhoods">Neighborhoods</TabsTrigger>
             <TabsTrigger value="matching">Matching System</TabsTrigger>
-            <TabsTrigger value="criteria">Criteria Settings</TabsTrigger>
+            
             <TabsTrigger value="matching-rules">Matching Rules</TabsTrigger>
           </TabsList>
 
@@ -518,51 +493,6 @@ const AdminDashboard = () => {
             </Card>
           </TabsContent>
 
-          <TabsContent value="criteria" className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Matching Criteria</CardTitle>
-                <CardDescription>Adjust the weight of different matching factors</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {criteria.map((criterion) => (
-                    <div key={criterion.id} className="flex items-center justify-between p-4 border rounded-lg">
-                      <div>
-                        <h4 className="font-medium">{criterion.name}</h4>
-                        <p className="text-sm text-muted-foreground capitalize">
-                          {criterion.criteria_type.replace('_', ' ')}
-                        </p>
-                        {criterion.option_type === 'discrete' && criterion.discrete_options && (
-                          <div className="mt-2">
-                            <p className="text-xs text-muted-foreground mb-1">Options:</p>
-                            <div className="flex flex-wrap gap-1">
-                              {criterion.discrete_options.map((option, index) => (
-                                <Badge key={index} variant="outline" className="text-xs">
-                                  {option}
-                                </Badge>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                      <div className="flex items-center gap-4">
-                        <span className="text-sm font-medium">
-                          {criterion.option_type === 'percentage' 
-                            ? `${Math.round(criterion.weight * 100)}%`
-                            : 'Discrete'
-                          }
-                        </span>
-                        <Badge variant={criterion.is_active ? 'default' : 'secondary'}>
-                          {criterion.is_active ? 'Active' : 'Inactive'}
-                        </Badge>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
 
           {/* Matching Rules Tab */}
           <TabsContent value="matching-rules" className="space-y-6">
