@@ -118,6 +118,31 @@ export const CommunityCarePage = () => {
         </div>
       </div>
 
+      {/* How it Works */}
+      <div className="bg-muted/50 rounded-lg p-6 space-y-4">
+        <h2 className="text-xl font-semibold">How Community Care Works</h2>
+        <div className="grid md:grid-cols-3 gap-4 text-sm">
+          <div>
+            <h3 className="font-medium mb-2">🔄 Credit System</h3>
+            <p className="text-muted-foreground">
+              Use credits to request help or earn them by helping others. Everyone starts with credits to get the community going.
+            </p>
+          </div>
+          <div>
+            <h3 className="font-medium mb-2">🤝 Mutual Support</h3>
+            <p className="text-muted-foreground">
+              Help your neighbors with rides, meals, errands, childcare, and more. Building stronger communities together.
+            </p>
+          </div>
+          <div>
+            <h3 className="font-medium mb-2">💫 Credit Replenishment</h3>
+            <p className="text-muted-foreground">
+              Credits are automatically replenished monthly, and you earn additional credits by completing help requests from others.
+            </p>
+          </div>
+        </div>
+      </div>
+
       {/* Actions Bar */}
       <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
         <div className="flex gap-2">
@@ -137,6 +162,21 @@ export const CommunityCarePage = () => {
               </DialogHeader>
               <form onSubmit={requestForm.handleSubmit(onCreateRequest)} className="space-y-4">
                 <div>
+                  <Label htmlFor="request-category">Category</Label>
+                  <Select onValueChange={(value) => requestForm.setValue('category', value as any)}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {categoryOptions.map(option => (
+                        <SelectItem key={option.value} value={option.value}>
+                          {option.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
                   <Label htmlFor="request-title">What do you need help with?</Label>
                   <Input
                     id="request-title"
@@ -152,37 +192,20 @@ export const CommunityCarePage = () => {
                     {...requestForm.register('description')}
                   />
                 </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="request-category">Category</Label>
-                    <Select onValueChange={(value) => requestForm.setValue('category', value as any)}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select category" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {categoryOptions.map(option => (
-                          <SelectItem key={option.value} value={option.value}>
-                            {option.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div>
-                    <Label htmlFor="request-urgency">Urgency</Label>
-                    <Select onValueChange={(value) => requestForm.setValue('urgency', value as any)}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Normal" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {urgencyOptions.map(option => (
-                          <SelectItem key={option.value} value={option.value}>
-                            {option.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
+                <div>
+                  <Label htmlFor="request-urgency">Urgency</Label>
+                  <Select onValueChange={(value) => requestForm.setValue('urgency', value as any)}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Normal" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {urgencyOptions.map(option => (
+                        <SelectItem key={option.value} value={option.value}>
+                          {option.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
                 <div>
                   <Label htmlFor="request-credits">Credits to Offer</Label>
@@ -220,6 +243,21 @@ export const CommunityCarePage = () => {
               </DialogHeader>
               <form onSubmit={offerForm.handleSubmit(onCreateOffer)} className="space-y-4">
                 <div>
+                  <Label htmlFor="offer-category">Category</Label>
+                  <Select onValueChange={(value) => offerForm.setValue('category', value as any)}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {categoryOptions.map(option => (
+                        <SelectItem key={option.value} value={option.value}>
+                          {option.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
                   <Label htmlFor="offer-title">What can you help with?</Label>
                   <Input
                     id="offer-title"
@@ -234,21 +272,6 @@ export const CommunityCarePage = () => {
                     placeholder="Describe what you can help with..."
                     {...offerForm.register('description')}
                   />
-                </div>
-                <div>
-                  <Label htmlFor="offer-category">Category</Label>
-                  <Select onValueChange={(value) => offerForm.setValue('category', value as any)}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select category" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {categoryOptions.map(option => (
-                        <SelectItem key={option.value} value={option.value}>
-                          {option.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
                 </div>
                 <div>
                   <Label htmlFor="offer-credits">Credits per Request</Label>
