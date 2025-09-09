@@ -1,24 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Check, X, Users, MapPin } from 'lucide-react';
+import { Check, X, Users, MapPin, Download, FileText, Table as TableIcon } from 'lucide-react';
 import { ExternalGroup } from '@/hooks/useExternalData';
 
 interface ExternalGroupsTableProps {
   groups: ExternalGroup[];
   onApprove: (groupId: string) => void;
   onReject?: (groupId: string) => void;
+  onExport: (format: 'pdf' | 'excel', groupIds?: string[], batchId?: string) => void;
   loading?: boolean;
+  batchId?: string;
 }
 
 export const ExternalGroupsTable: React.FC<ExternalGroupsTableProps> = ({
   groups,
   onApprove,
   onReject,
-  loading = false
+  onExport,
+  loading = false,
+  batchId
 }) => {
+  const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
   const getStatusBadge = (status: string) => {
     const variants: Record<string, 'default' | 'secondary' | 'destructive' | 'outline'> = {
       pending_approval: 'outline',
@@ -64,13 +69,39 @@ export const ExternalGroupsTable: React.FC<ExternalGroupsTableProps> = ({
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Users className="h-5 w-5" />
-          External Groups ({groups.length})
-        </CardTitle>
-        <CardDescription>
-          Groups generated from external data sources
-        </CardDescription>
+        <div className="flex items-center justify-between">
+          <div>
+            <CardTitle className="flex items-center gap-2">
+              <Users className="h-5 w-5" />
+              External Groups ({groups.length})
+            </CardTitle>
+            <CardDescription>
+              Groups generated from external data sources
+            </CardDescription>
+          </div>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => onExport('excel', selectedGroups.length > 0 ? selectedGroups : undefined, batchId)}
+              disabled={loading}
+              className="h-8"
+            >
+              <TableIcon className="h-4 w-4 mr-1" />
+              Excel
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => onExport('pdf', selectedGroups.length > 0 ? selectedGroups : undefined, batchId)}
+              disabled={loading}
+              className="h-8"
+            >
+              <FileText className="h-4 w-4 mr-1" />
+              PDF
+            </Button>
+          </div>
+        </div>
       </CardHeader>
       <CardContent>
         <div className="overflow-x-auto">

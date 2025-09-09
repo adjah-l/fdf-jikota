@@ -253,6 +253,45 @@ export const useExternalData = () => {
     }
   };
 
+  const exportExternalGroups = async (format: 'pdf' | 'excel', groupIds?: string[], batchId?: string) => {
+    setLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('export-external-groups', {
+        body: { format, groupIds, batchId }
+      });
+
+      if (error) throw error;
+
+      // Create a blob from the response and trigger download
+      const blob = new Blob([data], { 
+        type: format === 'excel' ? 'text/csv' : 'text/html' 
+      });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `external-dinner-groups.${format === 'excel' ? 'csv' : 'html'}`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+
+      toast({
+        title: "Export successful",
+        description: `External groups exported in ${format.toUpperCase()} format.`,
+      });
+    } catch (error: any) {
+      console.error('Error exporting external groups:', error);
+      toast({
+        variant: "destructive",
+        title: "Error exporting groups",
+        description: error.message,
+      });
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return {
     loading,
     uploadFile,
@@ -261,5 +300,6 @@ export const useExternalData = () => {
     getExternalGroups,
     approveExternalGroup,
     generateExternalMatches,
+    exportExternalGroups,
   };
 };

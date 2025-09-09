@@ -16,6 +16,9 @@ verify_jwt = true
 [functions.export-groups]
 verify_jwt = true
 
+[functions.export-external-groups]
+verify_jwt = true
+
 [functions.send-group-notifications]
 verify_jwt = true
 

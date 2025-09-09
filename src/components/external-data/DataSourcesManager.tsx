@@ -20,6 +20,7 @@ export const DataSourcesManager: React.FC = () => {
     getExternalGroups,
     approveExternalGroup,
     generateExternalMatches,
+    exportExternalGroups,
     loading: actionLoading 
   } = useExternalData();
 
@@ -245,6 +246,7 @@ export const DataSourcesManager: React.FC = () => {
       <ExternalGroupsTable 
         groups={externalGroups}
         onApprove={handleApproveGroup}
+        onExport={exportExternalGroups}
         loading={actionLoading}
       />
     </div>
