@@ -83,6 +83,198 @@ export type Database = {
         }
         Relationships: []
       }
+      external_data_sources: {
+        Row: {
+          configuration: Json | null
+          created_at: string
+          created_by: string | null
+          field_mapping: Json | null
+          id: string
+          is_active: boolean
+          name: string
+          source_identifier: string | null
+          source_type: string
+          updated_at: string
+        }
+        Insert: {
+          configuration?: Json | null
+          created_at?: string
+          created_by?: string | null
+          field_mapping?: Json | null
+          id?: string
+          is_active?: boolean
+          name: string
+          source_identifier?: string | null
+          source_type: string
+          updated_at?: string
+        }
+        Update: {
+          configuration?: Json | null
+          created_at?: string
+          created_by?: string | null
+          field_mapping?: Json | null
+          id?: string
+          is_active?: boolean
+          name?: string
+          source_identifier?: string | null
+          source_type?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      external_group_members: {
+        Row: {
+          added_at: string
+          group_id: string
+          id: string
+          profile_id: string
+          status: string
+        }
+        Insert: {
+          added_at?: string
+          group_id: string
+          id?: string
+          profile_id: string
+          status?: string
+        }
+        Update: {
+          added_at?: string
+          group_id?: string
+          id?: string
+          profile_id?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "external_group_members_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "external_groups"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "external_group_members_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "external_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      external_groups: {
+        Row: {
+          approved_by: string | null
+          batch_id: string
+          compatibility_score: number | null
+          created_at: string
+          description: string | null
+          group_size: number
+          id: string
+          matching_policy_used: Json | null
+          name: string
+          neighborhood_id: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          approved_by?: string | null
+          batch_id: string
+          compatibility_score?: number | null
+          created_at?: string
+          description?: string | null
+          group_size: number
+          id?: string
+          matching_policy_used?: Json | null
+          name: string
+          neighborhood_id?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          approved_by?: string | null
+          batch_id?: string
+          compatibility_score?: number | null
+          created_at?: string
+          description?: string | null
+          group_size?: number
+          id?: string
+          matching_policy_used?: Json | null
+          name?: string
+          neighborhood_id?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "external_groups_batch_id_fkey"
+            columns: ["batch_id"]
+            isOneToOne: false
+            referencedRelation: "import_batches"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "external_groups_neighborhood_id_fkey"
+            columns: ["neighborhood_id"]
+            isOneToOne: false
+            referencedRelation: "neighborhoods"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      external_profiles: {
+        Row: {
+          batch_id: string
+          created_at: string
+          id: string
+          mapped_data: Json
+          neighborhood_id: string | null
+          raw_data: Json
+          source_id: string
+          updated_at: string
+          validation_errors: Json | null
+          validation_status: string
+        }
+        Insert: {
+          batch_id: string
+          created_at?: string
+          id?: string
+          mapped_data: Json
+          neighborhood_id?: string | null
+          raw_data: Json
+          source_id: string
+          updated_at?: string
+          validation_errors?: Json | null
+          validation_status?: string
+        }
+        Update: {
+          batch_id?: string
+          created_at?: string
+          id?: string
+          mapped_data?: Json
+          neighborhood_id?: string | null
+          raw_data?: Json
+          source_id?: string
+          updated_at?: string
+          validation_errors?: Json | null
+          validation_status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "external_profiles_neighborhood_id_fkey"
+            columns: ["neighborhood_id"]
+            isOneToOne: false
+            referencedRelation: "neighborhoods"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "external_profiles_source_id_fkey"
+            columns: ["source_id"]
+            isOneToOne: false
+            referencedRelation: "external_data_sources"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       group_members: {
         Row: {
           added_at: string
@@ -111,6 +303,56 @@ export type Database = {
             columns: ["group_id"]
             isOneToOne: false
             referencedRelation: "dinner_groups"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      import_batches: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          error_summary: Json | null
+          filename: string | null
+          id: string
+          invalid_records: number
+          source_id: string
+          status: string
+          total_records: number
+          updated_at: string
+          valid_records: number
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          error_summary?: Json | null
+          filename?: string | null
+          id?: string
+          invalid_records?: number
+          source_id: string
+          status?: string
+          total_records?: number
+          updated_at?: string
+          valid_records?: number
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          error_summary?: Json | null
+          filename?: string | null
+          id?: string
+          invalid_records?: number
+          source_id?: string
+          status?: string
+          total_records?: number
+          updated_at?: string
+          valid_records?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "import_batches_source_id_fkey"
+            columns: ["source_id"]
+            isOneToOne: false
+            referencedRelation: "external_data_sources"
             referencedColumns: ["id"]
           },
         ]

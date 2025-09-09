@@ -17,6 +17,7 @@ import { toast } from '@/hooks/use-toast';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { MatchingRulesForm } from '@/components/matching/MatchingRulesForm';
+import { DataSourcesManager } from '@/components/external-data/DataSourcesManager';
 
 interface DinnerGroup {
   id: string;
@@ -223,7 +224,7 @@ const AdminDashboard = () => {
             <TabsTrigger value="groups">Groups Management</TabsTrigger>
             <TabsTrigger value="neighborhoods">Neighborhoods</TabsTrigger>
             <TabsTrigger value="matching">Matching System</TabsTrigger>
-            
+            <TabsTrigger value="external-sources">External Sources</TabsTrigger>
             <TabsTrigger value="matching-rules">Matching Rules</TabsTrigger>
           </TabsList>
 
@@ -493,6 +494,10 @@ const AdminDashboard = () => {
             </Card>
           </TabsContent>
 
+          {/* External Sources Tab */}
+          <TabsContent value="external-sources" className="space-y-6">
+            <DataSourcesManager />
+          </TabsContent>
 
           {/* Matching Rules Tab */}
           <TabsContent value="matching-rules" className="space-y-6">
