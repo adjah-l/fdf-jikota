@@ -49,7 +49,7 @@ export const CommunityCarePage = () => {
   } = useMutualCare()
 
   const [searchTerm, setSearchTerm] = useState('')
-  const [categoryFilter, setCategoryFilter] = useState<string>('')
+  const [categoryFilter, setCategoryFilter] = useState<string>('all')
   const [offerDialogOpen, setOfferDialogOpen] = useState(false)
   const [requestDialogOpen, setRequestDialogOpen] = useState(false)
 
@@ -87,14 +87,14 @@ export const CommunityCarePage = () => {
   const filteredRequests = serviceRequests.filter(request => {
     const matchesSearch = request.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          request.description?.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesCategory = !categoryFilter || request.category === categoryFilter
+    const matchesCategory = categoryFilter === 'all' || request.category === categoryFilter
     return matchesSearch && matchesCategory && request.status === 'open'
   })
 
   const filteredOffers = serviceOffers.filter(offer => {
     const matchesSearch = offer.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          offer.description?.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesCategory = !categoryFilter || offer.category === categoryFilter
+    const matchesCategory = categoryFilter === 'all' || offer.category === categoryFilter
     return matchesSearch && matchesCategory
   })
 
@@ -285,7 +285,7 @@ export const CommunityCarePage = () => {
               <SelectValue placeholder="Category" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All Categories</SelectItem>
+              <SelectItem value="all">All Categories</SelectItem>
               {categoryOptions.map(option => (
                 <SelectItem key={option.value} value={option.value}>
                   {option.label}
