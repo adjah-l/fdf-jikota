@@ -5,6 +5,9 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Search, Filter, Plus, Calendar } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
+import AuthModal from "./auth/AuthModal";
 import DinnerCard from "./DinnerCard";
 
 // Mock data for dinner listings
@@ -70,6 +73,26 @@ const mockDinners = [
 const DinnerListings = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedFilter, setSelectedFilter] = useState("all");
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const navigate = useNavigate();
+  const { user } = useAuth();
+
+  const handleHostDinner = () => {
+    if (!user) {
+      setShowAuthModal(true);
+    } else {
+      navigate('/dashboard');
+    }
+  };
+
+  const handleMoreFilters = () => {
+    navigate('/groups');
+  };
+
+  const handleLoadMore = () => {
+    // In a real app, this would load more dinners from an API
+    console.log('Loading more dinners...');
+  };
 
   return (
     <section className="py-20 bg-secondary/20">
@@ -112,7 +135,7 @@ const DinnerListings = () => {
                   <SelectItem value="next-week">Next Week</SelectItem>
                 </SelectContent>
               </Select>
-              <Button variant="outline" size="lg" className="h-12">
+              <Button variant="outline" size="lg" className="h-12" onClick={handleMoreFilters}>
                 <Filter className="w-4 h-4 mr-2" />
                 More Filters
               </Button>
@@ -128,7 +151,7 @@ const DinnerListings = () => {
               Hosting a dinner is a wonderful way to strengthen your community connections. 
               We'll help you every step of the way!
             </p>
-            <Button variant="hero" size="lg">
+            <Button variant="hero" size="lg" onClick={handleHostDinner}>
               <Plus className="w-4 h-4 mr-2" />
               Host a Dinner
             </Button>
@@ -144,12 +167,18 @@ const DinnerListings = () => {
 
         {/* Load More */}
         <div className="text-center">
-          <Button variant="outline" size="lg">
+          <Button variant="outline" size="lg" onClick={handleLoadMore}>
             <Calendar className="w-4 h-4 mr-2" />
             Load More Dinners
           </Button>
         </div>
       </div>
+      
+      <AuthModal
+        open={showAuthModal}
+        onOpenChange={setShowAuthModal}
+        defaultMode="login"
+      />
     </section>
   );
 };

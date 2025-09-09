@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { HandHeart, Link, MessageCircle, Shield, Sparkles } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const principles = [
   {
@@ -41,6 +42,12 @@ const principles = [
 ];
 
 const FiveCPrinciples = () => {
+  const navigate = useNavigate();
+
+  const handleJoinCareGroup = () => {
+    navigate('/community-care');
+  };
+
   return (
     <section className="py-20 bg-background">
       <div className="container mx-auto px-6">
@@ -76,7 +83,7 @@ const FiveCPrinciples = () => {
         </div>
         
         <div className="text-center">
-          <Button variant="community" size="lg">
+          <Button variant="community" size="lg" onClick={handleJoinCareGroup}>
             Join a 5C Care Group
           </Button>
         </div>

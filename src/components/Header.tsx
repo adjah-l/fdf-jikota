@@ -60,16 +60,16 @@ const Header = () => {
 
           {/* Navigation - Desktop */}
           <nav className="hidden md:flex items-center space-x-6">
-            <a href="/neighborhoods" className="text-foreground hover:text-primary transition-colors font-medium">
+            <a href="/groups" className="text-foreground hover:text-primary transition-colors font-medium">
               Find Dinners
             </a>
-            <a href="#" className="text-foreground hover:text-primary transition-colors font-medium">
+            <a href="/dashboard" className="text-foreground hover:text-primary transition-colors font-medium">
               Host
             </a>
-            <a href="#" className="text-foreground hover:text-primary transition-colors font-medium">
+            <a href="/community-care" className="text-foreground hover:text-primary transition-colors font-medium">
               5C Groups
             </a>
-            <a href="#" className="text-foreground hover:text-primary transition-colors font-medium">
+            <a href="/community-care" className="text-foreground hover:text-primary transition-colors font-medium">
               Community
             </a>
           </nav>
@@ -77,7 +77,7 @@ const Header = () => {
           {/* Actions */}
           <div className="flex items-center gap-3">
             {/* Notifications */}
-            <Button variant="ghost" size="icon" className="relative">
+            <Button variant="ghost" size="icon" className="relative" onClick={() => navigate('/dashboard')}>
               <Bell className="w-5 h-5" />
               <Badge className="absolute -top-1 -right-1 w-5 h-5 rounded-full p-0 flex items-center justify-center text-xs bg-primary">
                 3
@@ -111,7 +111,7 @@ const Header = () => {
                     <UserCircle className="w-4 h-4 mr-2" />
                     Profile
                   </DropdownMenuItem>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => navigate('/dashboard')}>
                     <Settings className="w-4 h-4 mr-2" />
                     Settings
                   </DropdownMenuItem>
@@ -123,7 +123,7 @@ const Header = () => {
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <Button variant="ghost" size="icon">
+              <Button variant="ghost" size="icon" onClick={() => handleAuthClick('login')}>
                 <User className="w-5 h-5" />
               </Button>
             )}
