@@ -54,23 +54,57 @@ serve(async (req) => {
     const errors: string[] = [];
 
     // Process file based on type
-    if (file.type === 'text/csv' || file.name.endsWith('.csv')) {
+if (file.type === 'text/csv' || file.name.endsWith('.csv')) {
+      // Parse CSV robustly using SheetJS to avoid comma/quote misalignment
       const text = await file.text();
-      const lines = text.split('\n').filter(line => line.trim());
-      
-      if (lines.length < 2) {
+      const workbook = XLSX.read(text, { type: 'string' });
+      const sheetName = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[sheetName];
+
+      // Convert to JSON rows (header + data)
+      const jsonData = XLSX.utils.sheet_to_json(worksheet, {
+        header: 1,
+        raw: false,
+        defval: ''
+      });
+
+      if (jsonData.length < 2) {
         throw new Error('CSV file must have at least a header row and one data row');
       }
 
-      const headers = lines[0].split(',').map(h => h.trim().replace(/['"]/g, ''));
-      
-      for (let i = 1; i < lines.length; i++) {
-        const values = lines[i].split(',').map(v => v.trim().replace(/['"]/g, ''));
+      // Clean and normalize headers
+      const headers = (jsonData[0] as any[]).map((header, index) => {
+        const cleanHeader = String(header || `Column_${index}`)
+          .replace(/\uFEFF/g, '') // remove BOM
+          .replace(/\s+/g, ' ') // collapse whitespace
+          .trim();
+        console.log(`Header ${index}: "${cleanHeader}"`);
+        return cleanHeader;
+      });
+
+      console.log('CSV headers found:', headers);
+      console.log('Field mapping:', fieldMapping);
+
+      for (let i = 1; i < jsonData.length; i++) {
+        const values = jsonData[i] as any[];
         const rawData: any = {};
-        
+
+        // Ensure we have the right number of values
+        const normalizedValues = Array(headers.length)
+          .fill('')
+          .map((_, index) => {
+            const value = values[index];
+            return value !== undefined && value !== null ? String(value).trim() : '';
+          });
+
         headers.forEach((header, index) => {
-          rawData[header] = values[index] || '';
+          rawData[header] = normalizedValues[index];
         });
+
+        // Log first few records for debugging
+        if (i <= 3) {
+          console.log(`Row ${i} raw data:`, rawData);
+        }
 
         // Map to profile fields
         const mappedData: any = {};
@@ -78,11 +112,22 @@ serve(async (req) => {
         const recordErrors: string[] = [];
 
         Object.entries(fieldMapping).forEach(([fileColumn, profileField]) => {
-          if (profileField && rawData[fileColumn] !== undefined && rawData[fileColumn] !== '') {
-            const value = String(rawData[fileColumn]).trim();
-            mappedData[profileField] = value;
+          const val = rawData[fileColumn as string];
+          if (profileField && val !== undefined && val !== '') {
+            const value = String(val).trim();
+            mappedData[profileField as string] = value;
+
+            // Log mapping for debugging (first few records only)
+            if (i <= 3) {
+              console.log(`Mapping: "${fileColumn}" -> "${profileField}" = "${value}"`);
+            }
           }
         });
+
+        // Log mapped data for first few records
+        if (i <= 3) {
+          console.log(`Row ${i} mapped data:`, mappedData);
+        }
 
         // Basic validation
         if (!mappedData.full_name && !mappedData.first_name) {
@@ -149,7 +194,10 @@ serve(async (req) => {
 
       // Clean and normalize headers
       const headers = (jsonData[0] as any[]).map((header, index) => {
-        const cleanHeader = String(header || `Column_${index}`).trim();
+        const cleanHeader = String(header || `Column_${index}`)
+          .replace(/\uFEFF/g, '') // remove BOM
+          .replace(/\s+/g, ' ')   // collapse whitespace
+          .trim();
         console.log(`Header ${index}: "${cleanHeader}"`);
         return cleanHeader;
       });
