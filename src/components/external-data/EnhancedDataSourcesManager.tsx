@@ -65,8 +65,13 @@ export const EnhancedDataSourcesManager: React.FC = () => {
       setDataSources(sourcesData || []);
       setImportBatches(batchesData || []);
       
-      // If we have a selected batch, fetch its groups
-      if (selectedBatch) {
+      // Auto-select a default batch if none is selected
+      if (!selectedBatch && (batchesData && batchesData.length > 0)) {
+        const defaultBatch = (batchesData.find(b => b.status === 'completed') || batchesData[0]);
+        setSelectedBatch(defaultBatch.id);
+        await fetchExternalGroups(defaultBatch.id);
+      } else if (selectedBatch) {
+        // If we have a selected batch, refresh its groups
         await fetchExternalGroups(selectedBatch);
       }
     } catch (error) {
