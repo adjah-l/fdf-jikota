@@ -93,10 +93,15 @@ export const FileUploadDialog: React.FC<FileUploadDialogProps> = ({ children, on
   };
 
   const handleMappingChange = (fileColumn: string, profileField: string) => {
-    setColumnMapping(prev => ({
-      ...prev,
-      [fileColumn]: profileField
-    }));
+    setColumnMapping(prev => {
+      const newMapping = { ...prev };
+      if (profileField === 'skip' || profileField === '') {
+        delete newMapping[fileColumn];
+      } else {
+        newMapping[fileColumn] = profileField;
+      }
+      return newMapping;
+    });
   };
 
   const handleUpload = async () => {
@@ -219,7 +224,7 @@ export const FileUploadDialog: React.FC<FileUploadDialogProps> = ({ children, on
                         <SelectValue placeholder="Select profile field..." />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="">-- Skip this column --</SelectItem>
+                        <SelectItem value="skip">-- Skip this column --</SelectItem>
                         {PROFILE_FIELDS.map((field) => (
                           <SelectItem key={field.key} value={field.key}>
                             {field.label} {field.required && '*'}
