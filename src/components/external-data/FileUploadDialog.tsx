@@ -84,12 +84,50 @@ export const FileUploadDialog: React.FC<FileUploadDialogProps> = ({ children, on
       
       setPreviewData(preview);
       setStep('mapping');
-    } else {
-      // For Excel files, we'll handle parsing in the backend
-      // For now, show common column names for mapping
-      const commonColumns = ['Name', 'Email', 'Phone', 'Age', 'City', 'Neighborhood'];
-      setColumns(commonColumns);
-      setStep('mapping');
+    } else if (file.type.includes('sheet') || file.name.endsWith('.xlsx') || file.name.endsWith('.xls')) {
+      // For Excel files, parse them on the client side to get column names
+      const arrayBuffer = await file.arrayBuffer();
+      
+      try {
+        // Use dynamic import to load xlsx
+        const XLSX = await import('xlsx');
+        const workbook = XLSX.read(arrayBuffer, { type: 'array' });
+        
+        // Get the first worksheet
+        const sheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[sheetName];
+        
+        // Get headers from the first row
+        const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+        
+        if (jsonData.length > 0) {
+          const headers = jsonData[0] as string[];
+          setColumns(headers.filter(h => h && h.toString().trim()));
+          
+          // Get preview data from first few rows
+          const preview = jsonData.slice(1, 6).map((row: any) => {
+            const rowData: any = {};
+            headers.forEach((header, index) => {
+              if (header) {
+                rowData[header] = row[index] || '';
+              }
+            });
+            return rowData;
+          }).filter(row => Object.values(row).some(val => val));
+          
+          setPreviewData(preview);
+        } else {
+          throw new Error('Excel file appears to be empty');
+        }
+        
+        setStep('mapping');
+      } catch (error) {
+        console.error('Error parsing Excel file:', error);
+        // Fallback to common columns if parsing fails
+        const commonColumns = ['Name', 'Email', 'Phone', 'Age', 'City', 'Neighborhood'];
+        setColumns(commonColumns);
+        setStep('mapping');
+      }
     }
   };
 

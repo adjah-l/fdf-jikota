@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+import * as XLSX from 'https://esm.sh/xlsx@0.18.5'
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -113,10 +114,79 @@ serve(async (req) => {
           validation_errors: recordErrors
         });
       }
+    } else if (file.type.includes('sheet') || file.name.endsWith('.xlsx') || file.name.endsWith('.xls')) {
+      // Process Excel files
+      const arrayBuffer = await file.arrayBuffer();
+      const workbook = XLSX.read(arrayBuffer, { type: 'array' });
+      
+      // Get the first worksheet
+      const sheetName = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[sheetName];
+      
+      // Convert to JSON
+      const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+      
+      if (jsonData.length < 2) {
+        throw new Error('Excel file must have at least a header row and one data row');
+      }
+
+      const headers = jsonData[0] as string[];
+      
+      for (let i = 1; i < jsonData.length; i++) {
+        const values = jsonData[i] as string[];
+        const rawData: any = {};
+        
+        headers.forEach((header, index) => {
+          rawData[header] = values[index] || '';
+        });
+
+        // Map to profile fields
+        const mappedData: any = {};
+        let isValid = true;
+        const recordErrors: string[] = [];
+
+        Object.entries(fieldMapping).forEach(([fileColumn, profileField]) => {
+          if (profileField && rawData[fileColumn]) {
+            mappedData[profileField] = rawData[fileColumn];
+          }
+        });
+
+        // Basic validation
+        if (!mappedData.full_name && !mappedData.first_name) {
+          isValid = false;
+          recordErrors.push('Missing name information');
+        }
+
+        // Validate email format if provided
+        if (mappedData.email && !isValidEmail(mappedData.email)) {
+          recordErrors.push('Invalid email format');
+        }
+
+        // Validate phone format if provided
+        if (mappedData.phone_number && !isValidPhone(mappedData.phone_number)) {
+          recordErrors.push('Invalid phone format');
+        }
+
+        totalRecords++;
+        
+        if (isValid && recordErrors.length === 0) {
+          validRecords++;
+        } else {
+          invalidRecords++;
+          errors.push(`Row ${i}: ${recordErrors.join(', ')}`);
+        }
+
+        records.push({
+          source_id: sourceId,
+          batch_id: batchData.id,
+          raw_data: rawData,
+          mapped_data: mappedData,
+          validation_status: isValid && recordErrors.length === 0 ? 'valid' : 'invalid',
+          validation_errors: recordErrors
+        });
+      }
     } else {
-      // For Excel files, you would use a library like xlsx
-      // For now, we'll return an error
-      throw new Error('Excel file processing not yet implemented');
+      throw new Error('Unsupported file type. Please upload a CSV or Excel file.');
     }
 
     // Insert all profiles
