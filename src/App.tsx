@@ -60,26 +60,29 @@ const AppContent = () => (
   </QueryClientProvider>
 );
 
-// Wrap app with error boundary
-const App = AppErrorBoundary(() => <AppContent />, {
-  fallback: ({ error, resetError }) => (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="max-w-md p-6 text-center">
-        <h1 className="text-2xl font-bold text-destructive mb-4">
-          Something went wrong
-        </h1>
-        <p className="text-muted-foreground mb-6">
-          We're sorry, but something unexpected happened. Our team has been notified.
-        </p>
-        <button
-          onClick={resetError}
-          className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90"
-        >
-          Try Again
-        </button>
-      </div>
+// Error boundary fallback component
+const ErrorFallback = ({ error, resetError }: { error: unknown; resetError: () => void }) => (
+  <div className="min-h-screen flex items-center justify-center bg-background">
+    <div className="max-w-md p-6 text-center">
+      <h1 className="text-2xl font-bold text-destructive mb-4">
+        Something went wrong
+      </h1>
+      <p className="text-muted-foreground mb-6">
+        We're sorry, but something unexpected happened. Our team has been notified.
+      </p>
+      <button
+        onClick={resetError}
+        className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90"
+      >
+        Try Again
+      </button>
     </div>
-  )
+  </div>
+);
+
+// Wrap app with error boundary
+const App = AppErrorBoundary(AppContent, {
+  fallback: ErrorFallback,
 });
 
 export default App;
