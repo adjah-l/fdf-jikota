@@ -21,6 +21,7 @@ const ProfileForm = () => {
   const [formData, setFormData] = useState({
     first_name: '',
     last_name: '',
+    email: '',
     avatar_url: '',
     bio: '',
     phone_number: '',
@@ -101,6 +102,7 @@ const ProfileForm = () => {
       setFormData({
         first_name: profile.first_name || '',
         last_name: profile.last_name || '',
+        email: profile.email || '',
         avatar_url: profile.avatar_url || '',
         bio: profile.bio || '',
         phone_number: profile.phone_number || '',
@@ -161,6 +163,7 @@ const ProfileForm = () => {
       setFormData({
         first_name: profile.first_name || '',
         last_name: profile.last_name || '',
+        email: profile.email || '',
         avatar_url: profile.avatar_url || '',
         bio: profile.bio || '',
         phone_number: profile.phone_number || '',
@@ -266,13 +269,22 @@ const ProfileForm = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                value={user?.email || ''}
-                disabled
-                className="bg-muted"
-              />
+              <Label htmlFor="email">Email Address</Label>
+              {isEditing ? (
+                <Input
+                  id="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  placeholder="Enter your email address"
+                />
+              ) : (
+                <Input
+                  value={profile?.email || user?.email || 'Not set'}
+                  disabled
+                  className="bg-muted"
+                />
+              )}
             </div>
             <div>
               <Label htmlFor="phone_number">Phone Number</Label>

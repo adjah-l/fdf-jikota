@@ -614,6 +614,7 @@ export type Database = {
           created_at: string
           date_of_birth: string | null
           development_subdivision: string | null
+          email: string | null
           family_profile: string | null
           favorite_dessert: string | null
           favorite_dinner_meal: string | null
@@ -651,6 +652,7 @@ export type Database = {
           created_at?: string
           date_of_birth?: string | null
           development_subdivision?: string | null
+          email?: string | null
           family_profile?: string | null
           favorite_dessert?: string | null
           favorite_dinner_meal?: string | null
@@ -688,6 +690,7 @@ export type Database = {
           created_at?: string
           date_of_birth?: string | null
           development_subdivision?: string | null
+          email?: string | null
           family_profile?: string | null
           favorite_dessert?: string | null
           favorite_dinner_meal?: string | null

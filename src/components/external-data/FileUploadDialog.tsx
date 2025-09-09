@@ -22,6 +22,7 @@ const PROFILE_FIELDS = [
   { key: 'full_name', label: 'Full Name', required: true },
   { key: 'first_name', label: 'First Name' },
   { key: 'last_name', label: 'Last Name' },
+  { key: 'email', label: 'Email Address', required: true },
   { key: 'phone_number', label: 'Phone Number' },
   { key: 'age_group', label: 'Age Group' },
   { key: 'family_profile', label: 'Family Profile' },
