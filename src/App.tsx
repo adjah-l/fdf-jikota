@@ -17,6 +17,8 @@ import { GroupsPage } from "./pages/Groups";
 import { AdminMatchingPage } from "./pages/admin/AdminMatching";
 import { AdminDataPage } from "./pages/admin/AdminData";
 import { AdminMessagingPage } from "./pages/admin/AdminMessaging";
+import OrganizationsPage from "./pages/Organizations";
+import CreateOrganizationPage from "./pages/CreateOrganization";
 
 // Initialize monitoring
 initMonitoring();
@@ -48,6 +50,8 @@ const AppContent = () => (
               <Route path="/admin/matching" element={<AdminMatchingPage />} />
               <Route path="/admin/data" element={<AdminDataPage />} />
               <Route path="/admin/messaging" element={<AdminMessagingPage />} />
+              <Route path="/organizations" element={<OrganizationsPage />} />
+              <Route path="/organizations/new" element={<CreateOrganizationPage />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Route>
