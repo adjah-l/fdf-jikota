@@ -66,18 +66,50 @@ export const FileUploadDialog: React.FC<FileUploadDialogProps> = ({ children, on
   });
 
   const parseFileColumns = async (file: File) => {
-    if (file.type === 'text/csv') {
+    // Use dynamic import to load xlsx for both CSV and Excel files
+    const XLSX = await import('xlsx');
+    
+    if (file.type === 'text/csv' || file.name.endsWith('.csv')) {
+      // Parse CSV using SheetJS to match server-side logic exactly
       const text = await file.text();
-      const lines = text.split('\n');
-      const headers = lines[0].split(',').map(h => h.trim().replace(/['"]/g, ''));
+      const workbook = XLSX.read(text, { type: 'string' });
+      const sheetName = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[sheetName];
+
+      // Convert to JSON rows (header + data) - same as server
+      const jsonData = XLSX.utils.sheet_to_json(worksheet, {
+        header: 1,
+        raw: false,
+        defval: ''
+      });
+
+      if (jsonData.length < 2) {
+        throw new Error('CSV file must have at least a header row and one data row');
+      }
+
+      // Clean and normalize headers exactly like server
+      const headers = (jsonData[0] as any[]).map((header, index) => {
+        const cleanHeader = String(header || `Column_${index}`)
+          .replace(/\uFEFF/g, '') // remove BOM
+          .replace(/\s+/g, ' ')   // collapse whitespace
+          .trim();
+        return cleanHeader;
+      });
+
       setColumns(headers);
       
-      // Parse first few rows for preview
-      const preview = lines.slice(1, 6).map(line => {
-        const values = line.split(',').map(v => v.trim().replace(/['"]/g, ''));
+      // Parse preview rows using same logic as server
+      const preview = jsonData.slice(1, 6).map((values: any[]) => {
+        const normalizedValues = Array(headers.length)
+          .fill('')
+          .map((_, index) => {
+            const value = values[index];
+            return value !== undefined && value !== null ? String(value).trim() : '';
+          });
+
         const row: any = {};
         headers.forEach((header, index) => {
-          row[header] = values[index] || '';
+          row[header] = normalizedValues[index];
         });
         return row;
       }).filter(row => Object.values(row).some(val => val));
@@ -85,48 +117,57 @@ export const FileUploadDialog: React.FC<FileUploadDialogProps> = ({ children, on
       setPreviewData(preview);
       setStep('mapping');
     } else if (file.type.includes('sheet') || file.name.endsWith('.xlsx') || file.name.endsWith('.xls')) {
-      // For Excel files, parse them on the client side to get column names
+      // For Excel files, use same logic as server
       const arrayBuffer = await file.arrayBuffer();
       
       try {
-        // Use dynamic import to load xlsx
-        const XLSX = await import('xlsx');
         const workbook = XLSX.read(arrayBuffer, { type: 'array' });
-        
-        // Get the first worksheet
         const sheetName = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[sheetName];
         
-        // Get headers from the first row
-        const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+        // Convert to JSON rows exactly like server
+        const jsonData = XLSX.utils.sheet_to_json(worksheet, {
+          header: 1,
+          raw: false,
+          defval: ''
+        });
         
-        if (jsonData.length > 0) {
-          const headers = jsonData[0] as string[];
-          setColumns(headers.filter(h => h && h.toString().trim()));
-          
-          // Get preview data from first few rows
-          const preview = jsonData.slice(1, 6).map((row: any) => {
-            const rowData: any = {};
-            headers.forEach((header, index) => {
-              if (header) {
-                rowData[header] = row[index] || '';
-              }
-            });
-            return rowData;
-          }).filter(row => Object.values(row).some(val => val));
-          
-          setPreviewData(preview);
-        } else {
-          throw new Error('Excel file appears to be empty');
+        if (jsonData.length < 2) {
+          throw new Error('Excel file must have at least a header row and one data row');
         }
+
+        // Clean and normalize headers exactly like server
+        const headers = (jsonData[0] as any[]).map((header, index) => {
+          const cleanHeader = String(header || `Column_${index}`)
+            .replace(/\uFEFF/g, '') // remove BOM
+            .replace(/\s+/g, ' ')   // collapse whitespace
+            .trim();
+          return cleanHeader;
+        });
+
+        setColumns(headers);
         
+        // Parse preview rows using same logic as server
+        const preview = jsonData.slice(1, 6).map((values: any[]) => {
+          const normalizedValues = Array(headers.length)
+            .fill('')
+            .map((_, index) => {
+              const value = values[index];
+              return value !== undefined && value !== null ? String(value).trim() : '';
+            });
+
+          const row: any = {};
+          headers.forEach((header, index) => {
+            row[header] = normalizedValues[index];
+          });
+          return row;
+        }).filter(row => Object.values(row).some(val => val));
+        
+        setPreviewData(preview);
         setStep('mapping');
       } catch (error) {
         console.error('Error parsing Excel file:', error);
-        // Fallback to common columns if parsing fails
-        const commonColumns = ['Name', 'Email', 'Phone', 'Age', 'City', 'Neighborhood'];
-        setColumns(commonColumns);
-        setStep('mapping');
+        throw error;
       }
     }
   };
@@ -145,6 +186,18 @@ export const FileUploadDialog: React.FC<FileUploadDialogProps> = ({ children, on
 
   const handleUpload = async () => {
     if (!file) return;
+
+    // Validate required fields are mapped
+    const requiredFields = PROFILE_FIELDS.filter(f => f.required).map(f => f.key);
+    const mappedFields = Object.values(columnMapping);
+    const missingRequired = requiredFields.filter(field => !mappedFields.includes(field));
+    
+    if (missingRequired.length > 0) {
+      alert(`Please map required fields: ${missingRequired.map(field => 
+        PROFILE_FIELDS.find(f => f.key === field)?.label
+      ).join(', ')}`);
+      return;
+    }
 
     try {
       const sourceType = file.type === 'text/csv' ? 'csv_upload' : 'excel_upload';
@@ -252,6 +305,24 @@ export const FileUploadDialog: React.FC<FileUploadDialogProps> = ({ children, on
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
+                {/* Required fields status */}
+                <div className="mb-4 p-3 bg-muted/50 rounded-lg">
+                  <h4 className="font-medium mb-2">Required Fields Status:</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {PROFILE_FIELDS.filter(f => f.required).map((field) => {
+                      const isMapped = Object.values(columnMapping).includes(field.key);
+                      return (
+                        <Badge 
+                          key={field.key} 
+                          variant={isMapped ? "default" : "destructive"}
+                        >
+                          {field.label} {isMapped ? '✓' : '✗'}
+                        </Badge>
+                      );
+                    })}
+                  </div>
+                </div>
+                
                 {columns.map((column) => (
                   <div key={column} className="flex items-center gap-4">
                     <Label className="w-1/3 font-medium">{column}</Label>
