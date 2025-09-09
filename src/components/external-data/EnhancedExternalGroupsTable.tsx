@@ -16,8 +16,10 @@ import {
   Users,
   MapPin,
   FileText,
-  Download
+  Download,
+  Trash2
 } from 'lucide-react';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { ExternalGroup } from '@/hooks/useExternalData';
 import { useEnhancedExternalData } from '@/hooks/useEnhancedExternalData';
 import { useToast } from '@/hooks/use-toast';
@@ -44,6 +46,7 @@ export const EnhancedExternalGroupsTable: React.FC<EnhancedExternalGroupsTablePr
   const { 
     revertGroupApproval, 
     sendGroupIntroduction, 
+    clearAllGroups,
     loading: actionLoading 
   } = useEnhancedExternalData();
   const { toast } = useToast();
@@ -105,6 +108,24 @@ export const EnhancedExternalGroupsTable: React.FC<EnhancedExternalGroupsTablePr
         title: "Error",
         description: "Failed to send introduction email.",
         variant: "destructive"
+      });
+    }
+  };
+
+  const handleClearAllGroups = async () => {
+    if (!batchId) return;
+    
+    try {
+      await clearAllGroups(batchId);
+      toast({
+        title: "Success",
+        description: "All groups cleared successfully",
+      });
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to clear groups",
+        variant: "destructive",
       });
     }
   };
@@ -192,6 +213,29 @@ export const EnhancedExternalGroupsTable: React.FC<EnhancedExternalGroupsTablePr
                   <Download className="h-4 w-4 mr-1" />
                   Export All
                 </Button>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button variant="destructive" size="sm" disabled={loading || groups.length === 0}>
+                      <Trash2 className="h-4 w-4 mr-1" />
+                      Clear All
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Clear All Groups</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        This will permanently delete all groups in this batch. This action cannot be undone.
+                        Are you sure you want to continue?
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction onClick={handleClearAllGroups} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+                        Clear All Groups
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               </>
             )}
           </div>
@@ -315,6 +359,18 @@ export const EnhancedExternalGroupsTable: React.FC<EnhancedExternalGroupsTablePr
                             Revert
                           </Button>
                         </>
+                      )}
+                      
+                      {group.status === 'rejected' && (
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleRevertApproval(group.id)}
+                          disabled={actionLoading}
+                        >
+                          <Undo2 className="h-3 w-3 mr-1" />
+                          Undo Reject
+                        </Button>
                       )}
                     </div>
                   </TableCell>

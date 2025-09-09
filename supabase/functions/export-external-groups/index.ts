@@ -72,50 +72,95 @@ const handler = async (req: Request): Promise<Response> => {
 };
 
 function exportToExcel(groups: any[]): Response {
-  // Create CSV content (simple Excel-compatible format)
-  let csvContent = 'Group Name,Status,Member Count,Source File,Source Type,Member Names,Member Emails,Member Phones,Compatibility Score,Created Date\n';
+  // Create CSV content with detailed member information (one row per member)
+  let csvContent = 'Group ID,Group Name,Group Status,Group Size,Compatibility Score,Source File,Source Type,Batch ID,Member Name,Member Email,Member Phone,Member City,Age Group,Family Profile,Activities,Group Interest,Original First Name,Original Last Name,Member Status,Group Created Date\n';
   
   for (const group of groups) {
     const members = group.external_group_members || [];
-    const memberNames = members
-      .map((gm: any) => gm.external_profiles?.mapped_data?.full_name || 
-                        `${gm.external_profiles?.mapped_data?.first_name || ''} ${gm.external_profiles?.mapped_data?.last_name || ''}`.trim() ||
-                        'Unknown')
-      .join('; ');
-    
-    const memberEmails = members
-      .map((gm: any) => gm.external_profiles?.mapped_data?.email || 'N/A')
-      .join('; ');
-
-    const memberPhones = members
-      .map((gm: any) => gm.external_profiles?.mapped_data?.phone_number || 'N/A')
-      .join('; ');
-    
     const sourceFile = group.import_batches?.filename || 'Unknown';
     const sourceType = group.import_batches?.external_data_sources?.source_type || 'Unknown';
     const compatibilityScore = group.compatibility_score ? `${Math.round(group.compatibility_score * 100)}%` : 'N/A';
+    const groupCreatedDate = new Date(group.created_at).toLocaleDateString();
     
-    const row = [
-      `"${group.name}"`,
-      `"${group.status}"`,
-      members.length,
-      `"${sourceFile}"`,
-      `"${sourceType}"`,
-      `"${memberNames}"`,
-      `"${memberEmails}"`,
-      `"${memberPhones}"`,
-      `"${compatibilityScore}"`,
-      `"${new Date(group.created_at).toLocaleDateString()}"`
-    ].join(',');
-    
-    csvContent += row + '\n';
+    // If no members, create one row with group info
+    if (members.length === 0) {
+      const row = [
+        `"${group.id}"`,
+        `"${group.name}"`,
+        `"${group.status}"`,
+        group.group_size,
+        `"${compatibilityScore}"`,
+        `"${sourceFile}"`,
+        `"${sourceType}"`,
+        `"${group.batch_id}"`,
+        '"No Members"',
+        '"N/A"',
+        '"N/A"',
+        '"N/A"',
+        '"N/A"',
+        '"N/A"',
+        '"N/A"',
+        '"N/A"',
+        '"N/A"',
+        '"N/A"',
+        '"N/A"',
+        `"${groupCreatedDate}"`
+      ].join(',');
+      csvContent += row + '\n';
+    } else {
+      // Create one row per member
+      for (const member of members) {
+        const profile = member.external_profiles;
+        const mappedData = profile?.mapped_data || {};
+        const rawData = profile?.raw_data || {};
+        
+        const memberName = mappedData.full_name || 
+                          `${mappedData.first_name || ''} ${mappedData.last_name || ''}`.trim() ||
+                          'Unknown';
+        const memberEmail = mappedData.email || 'N/A';
+        const memberPhone = mappedData.phone_number || 'N/A';
+        const memberCity = mappedData.city || rawData.city || 'N/A';
+        const ageGroup = mappedData.age_group || rawData.age_group || 'N/A';
+        const familyProfile = mappedData.family_profile || rawData.family_profile || 'N/A';
+        const activities = Array.isArray(mappedData.activities) ? mappedData.activities.join('; ') : 
+                          (mappedData.activities || rawData.activities || 'N/A');
+        const groupInterest = mappedData.group_interest || rawData.group_interest || 'N/A';
+        const originalFirstName = rawData.first_name || mappedData.first_name || 'N/A';
+        const originalLastName = rawData.last_name || mappedData.last_name || 'N/A';
+        
+        const row = [
+          `"${group.id}"`,
+          `"${group.name}"`,
+          `"${group.status}"`,
+          group.group_size,
+          `"${compatibilityScore}"`,
+          `"${sourceFile}"`,
+          `"${sourceType}"`,
+          `"${group.batch_id}"`,
+          `"${memberName}"`,
+          `"${memberEmail}"`,
+          `"${memberPhone}"`,
+          `"${memberCity}"`,
+          `"${ageGroup}"`,
+          `"${familyProfile}"`,
+          `"${activities}"`,
+          `"${groupInterest}"`,
+          `"${originalFirstName}"`,
+          `"${originalLastName}"`,
+          `"${member.status}"`,
+          `"${groupCreatedDate}"`
+        ].join(',');
+        
+        csvContent += row + '\n';
+      }
+    }
   }
 
   return new Response(csvContent, {
     headers: {
       ...corsHeaders,
       'Content-Type': 'text/csv',
-      'Content-Disposition': 'attachment; filename="external-dinner-groups.csv"'
+      'Content-Disposition': 'attachment; filename="external-dinner-groups-detailed.csv"'
     }
   });
 }

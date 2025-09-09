@@ -222,6 +222,25 @@ export const useEnhancedExternalData = () => {
     }
   };
 
+  // Clear all groups for a batch
+  const clearAllGroups = async (batchId: string): Promise<void> => {
+    setLoading(true);
+    try {
+      const { error } = await supabase
+        .from('external_groups')
+        .delete()
+        .eq('batch_id', batchId);
+
+      if (error) throw error;
+      console.log('All groups cleared for batch:', batchId);
+    } catch (error: any) {
+      console.error('Error clearing groups:', error);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return {
     loading,
     getMatchingPolicy,
@@ -231,6 +250,7 @@ export const useEnhancedExternalData = () => {
     generateMatchesWithPolicy,
     revertGroupApproval,
     sendGroupIntroduction,
+    clearAllGroups,
     ...externalData
   };
 };
