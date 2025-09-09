@@ -18,6 +18,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Input } from '@/components/ui/input';
 import { MatchingRulesForm } from '@/components/matching/MatchingRulesForm';
 import { EnhancedDataSourcesManager } from '@/components/external-data/EnhancedDataSourcesManager';
+import { UserManagement } from '@/components/admin/UserManagement';
 
 interface DinnerGroup {
   id: string;
@@ -219,14 +220,19 @@ const AdminDashboard = () => {
           </Card>
         </div>
 
-        <Tabs defaultValue="groups" className="space-y-6">
+        <Tabs defaultValue="users" className="space-y-6">
           <TabsList>
+            <TabsTrigger value="users">User Management</TabsTrigger>
             <TabsTrigger value="groups">Groups Management</TabsTrigger>
             <TabsTrigger value="neighborhoods">Neighborhoods</TabsTrigger>
             <TabsTrigger value="matching">Matching System</TabsTrigger>
             <TabsTrigger value="external-sources">External Sources</TabsTrigger>
             <TabsTrigger value="matching-rules">Matching Rules</TabsTrigger>
           </TabsList>
+
+          <TabsContent value="users" className="space-y-6">
+            <UserManagement />
+          </TabsContent>
 
           <TabsContent value="groups" className="space-y-6">
             <Card>
