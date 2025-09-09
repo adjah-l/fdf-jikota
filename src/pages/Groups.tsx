@@ -24,8 +24,8 @@ interface DinnerGroup {
   description: string
   status: string
   max_members: number
-  scheduled_date: string
-  location_type: string
+  scheduled_date?: string
+  location_type?: string
   created_at: string
   group_members: any[]
   neighborhood?: {
@@ -45,36 +45,53 @@ export const GroupsPage = () => {
     if (!user) return
 
     try {
-      // Build query to get groups where user is a member
-      let query = supabase
-        .from('dinner_groups')
-        .select(`
-          *,
-          group_members!inner (
-            *,
-            profiles (
-              full_name,
-              avatar_url
-            )
-          ),
-          neighborhoods (
-            name,
-            city,
-            state
-          )
-        `)
-        .eq('group_members.user_id', user.id)
-        .order('created_at', { ascending: false })
-
-      // If user has an organization, filter by it as well
       if (currentOrg) {
-        query = query.eq('org_id', currentOrg.id)
+        // Full access for organization members
+        const { data, error } = await supabase
+          .from('dinner_groups')
+          .select(`
+            *,
+            group_members!inner (
+              *,
+              profiles (
+                full_name,
+                avatar_url
+              )
+            ),
+            neighborhoods (
+              name,
+              city,
+              state
+            )
+          `)
+          .eq('group_members.user_id', user.id)
+          .eq('org_id', currentOrg.id)
+          .order('created_at', { ascending: false })
+
+        if (error) throw error
+        setGroups(data || [])
+      } else {
+        // Limited access for non-organization members - show general info only
+        const { data, error } = await supabase
+          .from('dinner_groups')
+          .select(`
+            id,
+            name,
+            description,
+            status,
+            max_members,
+            created_at,
+            group_members!inner (
+              id,
+              user_id
+            )
+          `)
+          .eq('group_members.user_id', user.id)
+          .order('created_at', { ascending: false })
+
+        if (error) throw error
+        setGroups(data || [])
       }
-
-      const { data, error } = await query
-
-      if (error) throw error
-      setGroups(data || [])
     } catch (error) {
       console.error('Error fetching groups:', error)
     } finally {
@@ -159,6 +176,30 @@ export const GroupsPage = () => {
       </div>
 
       {/* Groups Content */}
+      {!currentOrg && (
+        <Card className="mb-6 bg-muted/50 border-dashed">
+          <CardContent className="py-6">
+            <div className="flex items-start gap-4">
+              <AlertCircle className="h-6 w-6 text-amber-500 flex-shrink-0 mt-1" />
+              <div>
+                <h3 className="font-semibold text-lg mb-2">Limited Access</h3>
+                <p className="text-muted-foreground mb-4">
+                  You're viewing basic group information. To see full details including locations, member information, and participate in messaging, you need to join an organization.
+                </p>
+                <div className="flex gap-2">
+                  <Button size="sm" asChild>
+                    <a href="/organizations">Join Organization</a>
+                  </Button>
+                  <Button size="sm" variant="outline" asChild>
+                    <a href="/profile">Complete Profile</a>
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+      
       {groups.length === 0 ? (
         <Card>
           <CardContent className="py-12 text-center">
@@ -224,22 +265,28 @@ export const GroupsPage = () => {
                           <Users className="h-4 w-4 text-muted-foreground" />
                           <span>{group.group_members?.length || 0}/{group.max_members} members</span>
                         </div>
-                        {group.scheduled_date && (
+                        {currentOrg && group.scheduled_date && (
                           <div className="flex items-center gap-2">
                             <Calendar className="h-4 w-4 text-muted-foreground" />
                             <span>{format(new Date(group.scheduled_date), 'MMM d, yyyy')}</span>
                           </div>
                         )}
-                        {group.neighborhood && (
+                        {currentOrg && group.neighborhood && (
                           <div className="flex items-center gap-2 col-span-2">
                             <MapPin className="h-4 w-4 text-muted-foreground" />
                             <span>{group.neighborhood.name}, {group.neighborhood.city}</span>
                           </div>
                         )}
+                        {!currentOrg && (
+                          <div className="flex items-center gap-2 col-span-2 text-muted-foreground">
+                            <AlertCircle className="h-4 w-4" />
+                            <span className="text-sm">Join organization to see location details</span>
+                          </div>
+                        )}
                       </div>
 
                       {/* Members */}
-                      {group.group_members && group.group_members.length > 0 && (
+                      {currentOrg && group.group_members && group.group_members.length > 0 && (
                         <div>
                           <h4 className="text-sm font-medium mb-2">Group Members</h4>
                           <div className="flex -space-x-2">
@@ -260,14 +307,28 @@ export const GroupsPage = () => {
                         </div>
                       )}
 
+                      {!currentOrg && (
+                        <div className="text-sm text-muted-foreground italic">
+                          Member details available after joining an organization
+                        </div>
+                      )}
+
                       {/* Actions */}
                       <div className="flex gap-2 pt-2">
-                        <Button size="sm" className="flex-1">
-                          View Details
-                        </Button>
-                        {group.status === 'active' && (
-                          <Button size="sm" variant="outline">
-                            Message Group
+                        {currentOrg ? (
+                          <>
+                            <Button size="sm" className="flex-1">
+                              View Details
+                            </Button>
+                            {group.status === 'active' && (
+                              <Button size="sm" variant="outline">
+                                Message Group
+                              </Button>
+                            )}
+                          </>
+                        ) : (
+                          <Button size="sm" className="flex-1" asChild>
+                            <a href="/organizations">Join Organization for Full Access</a>
                           </Button>
                         )}
                       </div>
@@ -308,16 +369,22 @@ export const GroupsPage = () => {
                             <Users className="h-4 w-4" />
                             {group.group_members?.length || 0} members
                           </span>
-                          {group.scheduled_date && (
+                          {currentOrg && group.scheduled_date && (
                             <span className="flex items-center gap-1">
                               <Calendar className="h-4 w-4" />
                               {format(new Date(group.scheduled_date), 'MMM d, yyyy')}
                             </span>
                           )}
                         </div>
-                        <Button size="sm" variant="outline">
-                          View Memories
-                        </Button>
+                        {currentOrg ? (
+                          <Button size="sm" variant="outline">
+                            View Memories
+                          </Button>
+                        ) : (
+                          <Button size="sm" variant="outline" asChild>
+                            <a href="/organizations">Join Organization</a>
+                          </Button>
+                        )}
                       </div>
                     </CardContent>
                   </Card>
