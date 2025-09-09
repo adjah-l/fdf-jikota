@@ -78,8 +78,9 @@ serve(async (req) => {
         const recordErrors: string[] = [];
 
         Object.entries(fieldMapping).forEach(([fileColumn, profileField]) => {
-          if (profileField && rawData[fileColumn]) {
-            mappedData[profileField] = rawData[fileColumn];
+          if (profileField && rawData[fileColumn] !== undefined && rawData[fileColumn] !== '') {
+            const value = String(rawData[fileColumn]).trim();
+            mappedData[profileField] = value;
           }
         });
 
@@ -97,6 +98,15 @@ serve(async (req) => {
         // Validate phone format if provided
         if (mappedData.phone_number && !isValidPhone(mappedData.phone_number)) {
           recordErrors.push('Invalid phone format');
+        }
+        
+        // Validate data type consistency to catch parsing issues
+        if (mappedData.new_to_city && !isYesNoResponse(mappedData.new_to_city)) {
+          recordErrors.push(`"Are you new to city" field contains unexpected value: "${mappedData.new_to_city}"`);
+        }
+        
+        if (mappedData.city && (mappedData.city.toLowerCase().includes('yes') || mappedData.city.toLowerCase().includes('no'))) {
+          recordErrors.push(`City field contains yes/no response: "${mappedData.city}"`);
         }
 
         totalRecords++;
@@ -126,22 +136,45 @@ serve(async (req) => {
       const sheetName = workbook.SheetNames[0];
       const worksheet = workbook.Sheets[sheetName];
       
-      // Convert to JSON
-      const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+      // Convert to JSON with proper handling of headers
+      const jsonData = XLSX.utils.sheet_to_json(worksheet, { 
+        header: 1,
+        raw: false,
+        defval: ''
+      });
       
       if (jsonData.length < 2) {
         throw new Error('Excel file must have at least a header row and one data row');
       }
 
-      const headers = jsonData[0] as string[];
+      // Clean and normalize headers
+      const headers = (jsonData[0] as any[]).map((header, index) => {
+        const cleanHeader = String(header || `Column_${index}`).trim();
+        console.log(`Header ${index}: "${cleanHeader}"`);
+        return cleanHeader;
+      });
+      
+      console.log('Excel headers found:', headers);
+      console.log('Field mapping:', fieldMapping);
       
       for (let i = 1; i < jsonData.length; i++) {
-        const values = jsonData[i] as string[];
+        const values = jsonData[i] as any[];
         const rawData: any = {};
         
-        headers.forEach((header, index) => {
-          rawData[header] = values[index] || '';
+        // Ensure we have the right number of values
+        const normalizedValues = Array(headers.length).fill('').map((_, index) => {
+          const value = values[index];
+          return value !== undefined && value !== null ? String(value).trim() : '';
         });
+        
+        headers.forEach((header, index) => {
+          rawData[header] = normalizedValues[index];
+        });
+        
+        // Log first few records for debugging
+        if (i <= 3) {
+          console.log(`Row ${i} raw data:`, rawData);
+        }
 
         // Map to profile fields
         const mappedData: any = {};
@@ -149,10 +182,21 @@ serve(async (req) => {
         const recordErrors: string[] = [];
 
         Object.entries(fieldMapping).forEach(([fileColumn, profileField]) => {
-          if (profileField && rawData[fileColumn]) {
-            mappedData[profileField] = rawData[fileColumn];
+          if (profileField && rawData[fileColumn] !== undefined && rawData[fileColumn] !== '') {
+            const value = String(rawData[fileColumn]).trim();
+            mappedData[profileField] = value;
+            
+            // Log mapping for debugging (first few records only)
+            if (i <= 3) {
+              console.log(`Mapping: "${fileColumn}" -> "${profileField}" = "${value}"`);
+            }
           }
         });
+        
+        // Log mapped data for first few records
+        if (i <= 3) {
+          console.log(`Row ${i} mapped data:`, mappedData);
+        }
 
         // Basic validation
         if (!mappedData.full_name && !mappedData.first_name) {
@@ -168,6 +212,15 @@ serve(async (req) => {
         // Validate phone format if provided
         if (mappedData.phone_number && !isValidPhone(mappedData.phone_number)) {
           recordErrors.push('Invalid phone format');
+        }
+        
+        // Validate data type consistency to catch parsing issues
+        if (mappedData.new_to_city && !isYesNoResponse(mappedData.new_to_city)) {
+          recordErrors.push(`"Are you new to city" field contains unexpected value: "${mappedData.new_to_city}"`);
+        }
+        
+        if (mappedData.city && (mappedData.city.toLowerCase().includes('yes') || mappedData.city.toLowerCase().includes('no'))) {
+          recordErrors.push(`City field contains yes/no response: "${mappedData.city}"`);
         }
 
         totalRecords++;
@@ -275,4 +328,9 @@ function isValidPhone(phone: string): boolean {
   const digits = phone.replace(/\D/g, '');
   // Check if it's a valid length (10-15 digits)
   return digits.length >= 10 && digits.length <= 15;
+}
+
+function isYesNoResponse(value: string): boolean {
+  const normalized = value.toLowerCase().trim();
+  return ['yes', 'no', 'y', 'n', 'true', 'false', '1', '0', ''].includes(normalized);
 }
