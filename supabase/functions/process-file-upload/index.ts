@@ -19,6 +19,8 @@ serve(async (req) => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
     );
 
+    let batchId: string | null = null;
+
     const formData = await req.formData();
     const file = formData.get('file') as File;
     const sourceId = formData.get('source_id') as string;
@@ -43,6 +45,7 @@ serve(async (req) => {
       .single();
 
     if (batchError) throw batchError;
+    batchId = batchData.id;
 
     let records: any[] = [];
     let totalRecords = 0;
@@ -233,6 +236,22 @@ serve(async (req) => {
 
   } catch (error) {
     console.error('Error processing file:', error);
+
+    try {
+      // Attempt to mark batch as failed if it was created
+      const supabaseClient = createClient(
+        Deno.env.get('SUPABASE_URL') ?? '',
+        Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
+      );
+      if (batchId) {
+        await supabaseClient
+          .from('import_batches')
+          .update({ status: 'failed', error_summary: [String(error?.message || error)] })
+          .eq('id', batchId);
+      }
+    } catch (innerErr) {
+      console.error('Also failed to update batch status:', innerErr);
+    }
     
     return new Response(
       JSON.stringify({ 

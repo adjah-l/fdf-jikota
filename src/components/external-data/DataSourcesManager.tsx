@@ -7,6 +7,7 @@ import { FileUploadDialog } from './FileUploadDialog';
 import { ExternalGroupsTable } from './ExternalGroupsTable';
 import { Upload, Database, Loader2, FileSpreadsheet, Users } from 'lucide-react';
 import { useExternalData, ExternalDataSource, ImportBatch, ExternalGroup } from '@/hooks/useExternalData';
+import { supabase } from '@/integrations/supabase/client';
 
 export const DataSourcesManager: React.FC = () => {
   const [dataSources, setDataSources] = useState<ExternalDataSource[]>([]);
@@ -26,17 +27,22 @@ export const DataSourcesManager: React.FC = () => {
 
   useEffect(() => {
     fetchData();
-    
-    // Auto-refresh every 30 seconds if there are processing batches
-    const interval = setInterval(() => {
-      if (importBatches.some(batch => batch.status === 'processing')) {
-        console.log('Auto-refreshing due to processing batches...');
-        fetchData();
+
+    // Auto-refresh every 30s by checking server for any processing batches
+    const interval = setInterval(async () => {
+      try {
+        const batches = await getImportBatches();
+        if (batches?.some(b => b.status === 'processing')) {
+          console.log('Auto-refreshing due to processing batches...');
+          fetchData();
+        }
+      } catch (e) {
+        console.warn('Auto-refresh check failed', e);
       }
     }, 30000);
-    
+
     return () => clearInterval(interval);
-  }, [importBatches]);
+  }, []);
 
   const fetchData = async () => {
     setLoading(true);
@@ -77,6 +83,17 @@ export const DataSourcesManager: React.FC = () => {
     }
   };
 
+  const handleMarkBatchFailed = async (batchId: string) => {
+    try {
+      await supabase
+        .from('import_batches')
+        .update({ status: 'failed' })
+        .eq('id', batchId);
+      fetchData();
+    } catch (error) {
+      console.error('Error marking batch as failed:', error);
+    }
+  };
   const handleGenerateMatches = async (batchId: string) => {
     try {
       await generateExternalMatches(batchId);
@@ -276,7 +293,7 @@ export const DataSourcesManager: React.FC = () => {
                       {formatDate(batch.created_at)}
                     </TableCell>
                     <TableCell>
-                      {batch.status === 'completed' && batch.valid_records > 0 && (
+                      {batch.status === 'completed' && batch.valid_records > 0 ? (
                         <Button
                           size="sm"
                           variant="outline"
@@ -286,7 +303,16 @@ export const DataSourcesManager: React.FC = () => {
                           <Users className="h-3 w-3 mr-1" />
                           Generate Groups
                         </Button>
-                      )}
+                      ) : batch.status === 'processing' ? (
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleMarkBatchFailed(batch.id)}
+                          disabled={actionLoading}
+                        >
+                          Mark Failed
+                        </Button>
+                      ) : null}
                     </TableCell>
                   </TableRow>
                 ))}
