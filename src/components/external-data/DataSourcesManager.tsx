@@ -26,22 +26,39 @@ export const DataSourcesManager: React.FC = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+    
+    // Auto-refresh every 30 seconds if there are processing batches
+    const interval = setInterval(() => {
+      if (importBatches.some(batch => batch.status === 'processing')) {
+        console.log('Auto-refreshing due to processing batches...');
+        fetchData();
+      }
+    }, 30000);
+    
+    return () => clearInterval(interval);
+  }, [importBatches]);
 
   const fetchData = async () => {
     setLoading(true);
     try {
+      console.log('Fetching external data...');
       const [sources, batches, groups] = await Promise.all([
         getDataSources(),
         getImportBatches(),
         getExternalGroups()
       ]);
       
-      setDataSources(sources);
-      setImportBatches(batches);
-      setExternalGroups(groups);
+      console.log('Fetched data:', { sources: sources?.length, batches: batches?.length, groups: groups?.length });
+      
+      setDataSources(sources || []);
+      setImportBatches(batches || []);
+      setExternalGroups(groups || []);
     } catch (error) {
       console.error('Error fetching data:', error);
+      // Set empty arrays to prevent crash
+      setDataSources([]);
+      setImportBatches([]);
+      setExternalGroups([]);
     } finally {
       setLoading(false);
     }
@@ -177,10 +194,22 @@ export const DataSourcesManager: React.FC = () => {
       {importBatches.length > 0 && (
         <Card>
           <CardHeader>
-            <CardTitle>Import History</CardTitle>
-            <CardDescription>
-              Recent data imports and their status
-            </CardDescription>
+            <div className="flex items-center justify-between">
+              <div>
+                <CardTitle>Import History</CardTitle>
+                <CardDescription>
+                  Recent data imports and their status. File processing typically takes 10-30 seconds.
+                </CardDescription>
+              </div>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={fetchData}
+                disabled={loading}
+              >
+                {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Refresh"}
+              </Button>
+            </div>
           </CardHeader>
           <CardContent>
             <Table>
@@ -189,6 +218,7 @@ export const DataSourcesManager: React.FC = () => {
                   <TableHead>Filename</TableHead>
                   <TableHead>Records</TableHead>
                   <TableHead>Status</TableHead>
+                  <TableHead>Processing Time</TableHead>
                   <TableHead>Created</TableHead>
                   <TableHead>Actions</TableHead>
                 </TableRow>
@@ -209,14 +239,38 @@ export const DataSourcesManager: React.FC = () => {
                       </div>
                     </TableCell>
                     <TableCell>
-                      <Badge 
-                        variant={
-                          batch.status === 'completed' ? 'default' : 
-                          batch.status === 'failed' ? 'destructive' : 'outline'
-                        }
-                      >
-                        {batch.status.toUpperCase()}
-                      </Badge>
+                      <div className="flex items-center gap-2">
+                        <Badge 
+                          variant={
+                            batch.status === 'completed' ? 'default' : 
+                            batch.status === 'failed' ? 'destructive' : 
+                            batch.status === 'processing' ? 'outline' : 'secondary'
+                          }
+                        >
+                          {batch.status === 'processing' && (
+                            <Loader2 className="h-3 w-3 mr-1 animate-spin" />
+                          )}
+                          {batch.status.toUpperCase()}
+                        </Badge>
+                        {batch.status === 'processing' && (
+                          <span className="text-xs text-muted-foreground">
+                            This usually takes 10-30 seconds
+                          </span>
+                        )}
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="text-sm text-muted-foreground">
+                        {batch.status === 'completed' ? (
+                          <span>
+                            {Math.round((new Date(batch.updated_at).getTime() - new Date(batch.created_at).getTime()) / 1000)}s
+                          </span>
+                        ) : batch.status === 'processing' ? (
+                          <span>Processing...</span>
+                        ) : (
+                          <span>—</span>
+                        )}
+                      </div>
                     </TableCell>
                     <TableCell>
                       {formatDate(batch.created_at)}
