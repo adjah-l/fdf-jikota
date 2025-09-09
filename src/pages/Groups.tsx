@@ -42,10 +42,11 @@ export const GroupsPage = () => {
   const [loading, setLoading] = useState(true)
 
   const fetchGroups = async () => {
-    if (!user || !currentOrg) return
+    if (!user) return
 
     try {
-      const { data, error } = await supabase
+      // Build query to get groups where user is a member
+      let query = supabase
         .from('dinner_groups')
         .select(`
           *,
@@ -62,9 +63,15 @@ export const GroupsPage = () => {
             state
           )
         `)
-        .eq('org_id', currentOrg.id)
         .eq('group_members.user_id', user.id)
         .order('created_at', { ascending: false })
+
+      // If user has an organization, filter by it as well
+      if (currentOrg) {
+        query = query.eq('org_id', currentOrg.id)
+      }
+
+      const { data, error } = await query
 
       if (error) throw error
       setGroups(data || [])
