@@ -5,6 +5,7 @@ import { Users, Heart, Home, Calendar } from "lucide-react";
 import heroDinner from "@/assets/hero-dinner.jpg";
 import NeighborhoodSelector from "@/components/neighborhood/NeighborhoodSelector";
 import AuthModal from "@/components/auth/AuthModal";
+import InviteFriend from "@/components/InviteFriend";
 import { useAuth } from "@/contexts/AuthContext";
 
 const Hero = () => {
@@ -49,7 +50,7 @@ const Hero = () => {
             Build belonging and community health through the simple act of sharing dinner with your neighbors.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
             <Button 
               variant="hero" 
               size="lg" 
@@ -66,6 +67,10 @@ const Hero = () => {
             >
               Host a Dinner
             </Button>
+          </div>
+          
+          <div className="flex justify-center mb-12">
+            <InviteFriend />
           </div>
           
           {/* Stats Cards */}
