@@ -17,7 +17,7 @@ import { toast } from '@/hooks/use-toast';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { MatchingRulesForm } from '@/components/matching/MatchingRulesForm';
-import { DataSourcesManager } from '@/components/external-data/DataSourcesManager';
+import { EnhancedDataSourcesManager } from '@/components/external-data/EnhancedDataSourcesManager';
 
 interface DinnerGroup {
   id: string;
@@ -496,7 +496,7 @@ const AdminDashboard = () => {
 
           {/* External Sources Tab */}
           <TabsContent value="external-sources" className="space-y-6">
-            <DataSourcesManager />
+            <EnhancedDataSourcesManager />
           </TabsContent>
 
           {/* Matching Rules Tab */}
