@@ -27,3 +27,6 @@ verify_jwt = true
 
 [functions.generate-external-matches]
 verify_jwt = true
+
+[functions.send-group-introduction]
+verify_jwt = true

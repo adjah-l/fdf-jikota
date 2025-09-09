@@ -48,6 +48,19 @@ export interface ExternalGroup {
   status: 'pending_approval' | 'approved' | 'rejected' | 'active' | 'completed';
   group_size: number;
   neighborhood_id?: string;
+  is_reverted?: boolean;
+  email_sent_at?: string;
+  email_sent_by?: string;
+  external_group_members?: Array<{
+    id: string;
+    status: string;
+    external_profiles?: {
+      id: string;
+      mapped_data: any;
+      raw_data?: any;
+      validation_status?: string;
+    };
+  }>;
   matching_policy_used?: Record<string, any>;
   compatibility_score?: number;
   approved_by?: string;

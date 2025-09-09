@@ -83,6 +83,50 @@ export type Database = {
         }
         Relationships: []
       }
+      external_batch_email_configs: {
+        Row: {
+          batch_id: string
+          body_template: string
+          created_at: string
+          created_by: string | null
+          from_email: string
+          from_name: string
+          id: string
+          subject: string
+          updated_at: string
+        }
+        Insert: {
+          batch_id: string
+          body_template?: string
+          created_at?: string
+          created_by?: string | null
+          from_email?: string
+          from_name?: string
+          id?: string
+          subject?: string
+          updated_at?: string
+        }
+        Update: {
+          batch_id?: string
+          body_template?: string
+          created_at?: string
+          created_by?: string | null
+          from_email?: string
+          from_name?: string
+          id?: string
+          subject?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "external_batch_email_configs_batch_id_fkey"
+            columns: ["batch_id"]
+            isOneToOne: false
+            referencedRelation: "import_batches"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       external_data_sources: {
         Row: {
           configuration: Json | null
@@ -168,8 +212,11 @@ export type Database = {
           compatibility_score: number | null
           created_at: string
           description: string | null
+          email_sent_at: string | null
+          email_sent_by: string | null
           group_size: number
           id: string
+          is_reverted: boolean
           matching_policy_used: Json | null
           name: string
           neighborhood_id: string | null
@@ -182,8 +229,11 @@ export type Database = {
           compatibility_score?: number | null
           created_at?: string
           description?: string | null
+          email_sent_at?: string | null
+          email_sent_by?: string | null
           group_size: number
           id?: string
+          is_reverted?: boolean
           matching_policy_used?: Json | null
           name: string
           neighborhood_id?: string | null
@@ -196,8 +246,11 @@ export type Database = {
           compatibility_score?: number | null
           created_at?: string
           description?: string | null
+          email_sent_at?: string | null
+          email_sent_by?: string | null
           group_size?: number
           id?: string
+          is_reverted?: boolean
           matching_policy_used?: Json | null
           name?: string
           neighborhood_id?: string | null
@@ -217,6 +270,56 @@ export type Database = {
             columns: ["neighborhood_id"]
             isOneToOne: false
             referencedRelation: "neighborhoods"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      external_matching_policies: {
+        Row: {
+          age_weight: number
+          batch_id: string
+          created_at: string
+          created_by: string | null
+          default_group_size: number
+          family_stage_weight: number
+          id: string
+          interests_weight: number
+          location_weight: number
+          max_distance_miles: number | null
+          updated_at: string
+        }
+        Insert: {
+          age_weight?: number
+          batch_id: string
+          created_at?: string
+          created_by?: string | null
+          default_group_size?: number
+          family_stage_weight?: number
+          id?: string
+          interests_weight?: number
+          location_weight?: number
+          max_distance_miles?: number | null
+          updated_at?: string
+        }
+        Update: {
+          age_weight?: number
+          batch_id?: string
+          created_at?: string
+          created_by?: string | null
+          default_group_size?: number
+          family_stage_weight?: number
+          id?: string
+          interests_weight?: number
+          location_weight?: number
+          max_distance_miles?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "external_matching_policies_batch_id_fkey"
+            columns: ["batch_id"]
+            isOneToOne: false
+            referencedRelation: "import_batches"
             referencedColumns: ["id"]
           },
         ]
