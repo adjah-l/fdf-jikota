@@ -99,7 +99,7 @@ const DinnerListings = () => {
       <div className="container mx-auto px-6">
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
-            Upcoming <span className="bg-gradient-primary bg-clip-text text-transparent">Neighborhood Dinners</span>
+            Upcoming <span className="text-primary">Neighborhood Dinners</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Join your neighbors for shared meals and meaningful connections right in your community.

@@ -42,7 +42,7 @@ const Hero = () => {
         <div className="max-w-4xl mx-auto">
           <h1 className="text-5xl md:text-6xl font-bold mb-6 text-foreground">
             Connect with neighbors through
-            <span className="bg-gradient-primary bg-clip-text text-transparent"> shared meals</span>
+            <span className="text-primary"> shared meals</span>
           </h1>
           
           <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
