@@ -44,7 +44,7 @@ export default function AdminGroups() {
         <div>
           <h1 className="text-3xl font-bold">Groups</h1>
           <p className="text-muted-foreground">
-            Manage activity groups and dinner groups
+            Manage activity groups and legacy data
           </p>
         </div>
         <Link to="/admin2/groups/new">

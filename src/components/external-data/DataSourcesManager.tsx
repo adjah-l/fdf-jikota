@@ -145,7 +145,7 @@ export const DataSourcesManager: React.FC = () => {
             Upload External Data
           </CardTitle>
           <CardDescription>
-            Upload CSV or Excel files with participant data to generate dinner groups
+            Upload CSV or Excel files with participant data to generate groups
           </CardDescription>
         </CardHeader>
         <CardContent>

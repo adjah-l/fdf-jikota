@@ -295,7 +295,7 @@ export const EnhancedDataSourcesManager: React.FC = () => {
             Import External Data
           </CardTitle>
           <CardDescription>
-            Upload CSV or Excel files containing member information to create dinner groups.
+            Upload CSV or Excel files containing member information to create groups.
           </CardDescription>
         </CardHeader>
         <CardContent>

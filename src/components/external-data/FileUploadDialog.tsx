@@ -240,7 +240,7 @@ export const FileUploadDialog: React.FC<FileUploadDialogProps> = ({ children, on
               <CardHeader>
                 <CardTitle>Upload CSV or Excel File</CardTitle>
                 <CardDescription>
-                  Upload a file containing participant data to generate dinner groups
+                  Upload a file containing participant data to generate groups
                 </CardDescription>
               </CardHeader>
               <CardContent>

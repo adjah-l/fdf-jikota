@@ -26,7 +26,7 @@ import {
 
 const mainNavItems = [
   { title: 'Dashboard', url: '/', icon: Home },
-  { title: 'Dinner Groups', url: '/groups', icon: Users },
+  { title: 'Groups', url: '/groups', icon: Users },
   { title: 'Neighborhoods', url: '/neighborhoods', icon: MapPin },
   { title: 'Mutual Care', url: '/care', icon: Heart },
 ]
