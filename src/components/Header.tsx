@@ -49,8 +49,12 @@ const Header = () => {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center">
-              <Users className="w-6 h-6 text-white" />
+            <div className="w-10 h-10 flex items-center justify-center">
+              <img 
+                src="/lovable-uploads/5ed33293-854d-4706-bcba-782b8b7f340b.png" 
+                alt="mbio logo"
+                className="w-8 h-8 object-contain"
+              />
             </div>
             <div>
               <h1 className="font-bold text-lg text-foreground">mbio</h1>
