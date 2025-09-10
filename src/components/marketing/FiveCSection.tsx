@@ -1,31 +1,31 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Heart, Users, Gift, PartyPopper, Clock } from "lucide-react";
+import { Heart, MessageCircle, Users, AlertTriangle, PartyPopper } from "lucide-react";
 
 const fiveCItems = [
   {
+    title: "Commitment",
+    icon: Heart,
+    description: "Dedicated to showing up and being present for one another"
+  },
+  {
+    title: "Communication", 
+    icon: MessageCircle,
+    description: "Open, honest dialogue that builds trust and understanding"
+  },
+  {
     title: "Connection",
     icon: Users,
-    description: "Build meaningful relationships through regular interaction"
+    description: "Building meaningful relationships through regular interaction"
   },
   {
-    title: "Care", 
-    icon: Heart,
-    description: "Support each other through life's challenges and needs"
-  },
-  {
-    title: "Contribution",
-    icon: Gift,
-    description: "Everyone shares their unique gifts and talents"
+    title: "Crisis",
+    icon: AlertTriangle,
+    description: "Supporting each other through life's challenges and difficult times"
   },
   {
     title: "Celebration",
     icon: PartyPopper,
-    description: "Recognize milestones and celebrate together"
-  },
-  {
-    title: "Consistency",
-    icon: Clock,
-    description: "Maintain regular rhythms that build trust over time"
+    description: "Recognizing milestones and celebrating life's joys together"
   }
 ];
 
@@ -38,7 +38,7 @@ export function FiveCSection() {
             Built on the 5C Framework
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Every group follows five practices that create durable community. Connection, Care, Contribution, Celebration, Consistency.
+            Every group follows five practices that create durable community. Commitment, Communication, Connection, Crisis, Celebration.
           </p>
         </div>
         
