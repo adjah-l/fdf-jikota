@@ -7,11 +7,13 @@ import { Calendar, MapPin, Users, MessageSquare, Phone, Mail, Clock } from "luci
 import { FiveCMeter } from "@/components/fivec/FiveCMeter";
 import { FiveCStatus } from "@/lib/fiveC";
 import { flags } from "@/config/flags";
+import { getActivityTypeLabel } from "@/lib/activityTypes";
 
 const MemberGroup = () => {
   // TODO: Replace with real data from API
   const groupData = {
-    name: "Downtown Dinner Group",
+    name: "Downtown Group",
+    activity_type: "dinner" as const,
     status: "Active",
     description: "A friendly group of neighbors who love good food and great conversation. We meet monthly for potluck dinners and seasonal activities.",
     nextMeeting: {
@@ -58,6 +60,9 @@ const MemberGroup = () => {
             <h1 className="text-3xl font-bold">{groupData.name}</h1>
             <Badge className="bg-green-100 text-green-800">{groupData.status}</Badge>
           </div>
+          <p className="text-lg text-muted-foreground mb-2">
+            Your {getActivityTypeLabel(groupData.activity_type)} Group
+          </p>
           <p className="text-muted-foreground max-w-2xl">{groupData.description}</p>
         </div>
         <div className="flex gap-2">

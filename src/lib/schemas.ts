@@ -217,6 +217,26 @@ export const externalDataSourceSchema = z.object({
   updated_at: z.string().datetime(),
 })
 
+// Activity Groups schema
+export const activityGroupSchema = z.object({
+  id: z.string().uuid(),
+  org_id: z.string().uuid().nullable(),
+  name: z.string(),
+  activity_type: z.enum(['dinner', 'prayer_study', 'workout', 'sports', 'flexible']),
+  description: z.string().nullable(),
+  criteria_snapshot: z.record(z.any()).nullable(),
+  five_c_focus: z.string().nullable(),
+  status: z.string(),
+  scheduled_date: z.string().nullable(),
+  host_user_id: z.string().uuid().nullable(),
+  approved_by: z.string().uuid().nullable(),
+  created_by: z.string().uuid().nullable(),
+  max_members: z.number(),
+  location_type: z.string().nullable(),
+  created_at: z.string(),
+  updated_at: z.string(),
+});
+
 // Form validation schemas for user input
 export const createOrganizationSchema = organizationSchema.pick({
   name: true,
@@ -249,6 +269,15 @@ export const createServiceRequestSchema = serviceRequestSchema.pick({
   credits_offered: true,
 })
 
+export const createActivityGroupSchema = activityGroupSchema.pick({
+  name: true,
+  activity_type: true,
+  description: true,
+  five_c_focus: true,
+  max_members: true,
+  location_type: true,
+})
+
 // Type exports
 export type Organization = z.infer<typeof organizationSchema>
 export type OrganizationMember = z.infer<typeof organizationMemberSchema>
@@ -262,9 +291,11 @@ export type ServiceOffer = z.infer<typeof serviceOfferSchema>
 export type ServiceRequest = z.infer<typeof serviceRequestSchema>
 export type Transaction = z.infer<typeof transactionSchema>
 export type ExternalDataSource = z.infer<typeof externalDataSourceSchema>
+export type ActivityGroup = z.infer<typeof activityGroupSchema>
 
 // Form types
 export type CreateOrganizationInput = z.infer<typeof createOrganizationSchema>
 export type UpdateProfileInput = z.infer<typeof updateProfileSchema>
 export type CreateServiceOfferInput = z.infer<typeof createServiceOfferSchema>
 export type CreateServiceRequestInput = z.infer<typeof createServiceRequestSchema>
+export type CreateActivityGroupInput = z.infer<typeof createActivityGroupSchema>

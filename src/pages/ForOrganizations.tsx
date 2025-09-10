@@ -13,19 +13,19 @@ const organizationTypes = [
     title: "Churches",
     icon: Church,
     description: "Create small groups that practice connection, care, and community across your congregation.",
-    features: ["Bible study groups", "Care ministries", "Fellowship dinners", "Service projects"]
+    features: ["Prayer and study groups", "Fellowship gatherings", "Service groups", "Fitness ministries"]
   },
   {
     title: "HOAs & Communities", 
     icon: Home,
     description: "Build stronger neighborhoods through regular gatherings and mutual support systems.",
-    features: ["Neighborhood dinners", "Block parties", "Emergency support", "Community projects"]
+    features: ["Dinner groups", "Workout clubs", "Sports viewing", "Flexible social groups"]
   },
   {
     title: "Professional Organizations",
     icon: Building,
     description: "Foster meaningful connections beyond networking through structured relationship building.",
-    features: ["Professional mentoring", "Career support", "Industry groups", "Leadership circles"]
+    features: ["Lunch groups", "Fitness clubs", "Networking dinners", "Study circles"]
   }
 ];
 
@@ -42,7 +42,7 @@ const ForOrganizations = () => {
             For Organizations
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-            Whether you lead a church, HOA, or professional organization, the 5C framework creates lasting community connections.
+            Whether you lead a church, HOA, or professional organization, the 5C framework creates lasting community connections through diverse group activities.
           </p>
           <Button size="lg" className="text-lg px-8" onClick={() => navigate('/organizations/new')}>
             Get Started

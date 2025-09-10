@@ -5,12 +5,14 @@ import { Users, Heart, MessageSquare, Calendar, MapPin, Clock, ArrowRight } from
 import { FiveCMeter } from "@/components/fivec/FiveCMeter";
 import { FiveCStatus, getNextAction } from "@/lib/fiveC";
 import { flags } from "@/config/flags";
+import { getActivityTypeLabel } from "@/lib/activityTypes";
 
 const MemberHome = () => {
   // TODO: Replace with real data from API
   const memberData = {
     currentGroup: {
-      name: "Downtown Dinner Group",
+      name: "Downtown Group",
+      activity_type: "dinner" as const,
       nextMeeting: "Thursday, Dec 12 at 7:00 PM",
       location: "Sarah's House - 123 Main St",
       members: 6
@@ -126,11 +128,14 @@ const MemberHome = () => {
               <Users className="w-5 h-5" />
               My Group
             </CardTitle>
-            <CardDescription>Your current dinner group details</CardDescription>
+            <CardDescription>Your current group details</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
               <h3 className="font-semibold mb-2">{memberData.currentGroup.name}</h3>
+              <p className="text-xs text-muted-foreground mb-2">
+                {getActivityTypeLabel(memberData.currentGroup.activity_type)} Group • {memberData.currentGroup.members} members
+              </p>
               <div className="space-y-2 text-sm">
                 <div className="flex items-center gap-2">
                   <Calendar className="w-4 h-4 text-muted-foreground" />

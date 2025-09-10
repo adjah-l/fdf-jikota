@@ -13,7 +13,7 @@ export function MarketingHero() {
         </h1>
         
         <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-          One platform for members to gather and care for one another, and for leaders to form groups rooted in mutual care.
+          One platform for members to gather and care for one another. Create meaningful connections through dinner, prayer, fitness, or any shared activity.
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">

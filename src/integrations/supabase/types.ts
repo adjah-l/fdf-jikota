@@ -14,6 +14,103 @@ export type Database = {
   }
   public: {
     Tables: {
+      activity_group_members: {
+        Row: {
+          added_at: string
+          group_id: string
+          id: string
+          status: string
+          user_id: string
+        }
+        Insert: {
+          added_at?: string
+          group_id: string
+          id?: string
+          status?: string
+          user_id: string
+        }
+        Update: {
+          added_at?: string
+          group_id?: string
+          id?: string
+          status?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "activity_group_members_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "activity_groups"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      activity_groups: {
+        Row: {
+          activity_type: Database["public"]["Enums"]["group_activity_type"]
+          approved_by: string | null
+          created_at: string
+          created_by: string | null
+          criteria_snapshot: Json | null
+          description: string | null
+          five_c_focus: string | null
+          host_user_id: string | null
+          id: string
+          location_type: string | null
+          max_members: number
+          name: string
+          org_id: string | null
+          scheduled_date: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          activity_type?: Database["public"]["Enums"]["group_activity_type"]
+          approved_by?: string | null
+          created_at?: string
+          created_by?: string | null
+          criteria_snapshot?: Json | null
+          description?: string | null
+          five_c_focus?: string | null
+          host_user_id?: string | null
+          id?: string
+          location_type?: string | null
+          max_members?: number
+          name: string
+          org_id?: string | null
+          scheduled_date?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          activity_type?: Database["public"]["Enums"]["group_activity_type"]
+          approved_by?: string | null
+          created_at?: string
+          created_by?: string | null
+          criteria_snapshot?: Json | null
+          description?: string | null
+          five_c_focus?: string | null
+          host_user_id?: string | null
+          id?: string
+          location_type?: string | null
+          max_members?: number
+          name?: string
+          org_id?: string | null
+          scheduled_date?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "activity_groups_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       admin_users: {
         Row: {
           created_at: string
@@ -49,6 +146,7 @@ export type Database = {
           id: string
           location_type: string | null
           max_members: number
+          migrated_to: string | null
           name: string
           org_id: string | null
           scheduled_date: string | null
@@ -65,6 +163,7 @@ export type Database = {
           id?: string
           location_type?: string | null
           max_members?: number
+          migrated_to?: string | null
           name: string
           org_id?: string | null
           scheduled_date?: string | null
@@ -81,6 +180,7 @@ export type Database = {
           id?: string
           location_type?: string | null
           max_members?: number
+          migrated_to?: string | null
           name?: string
           org_id?: string | null
           scheduled_date?: string | null
@@ -88,6 +188,13 @@ export type Database = {
           updated_at?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "dinner_groups_migrated_to_fkey"
+            columns: ["migrated_to"]
+            isOneToOne: false
+            referencedRelation: "activity_groups"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "dinner_groups_org_id_fkey"
             columns: ["org_id"]
@@ -1581,6 +1688,12 @@ export type Database = {
         | "single_no_children"
         | "married_with_children"
         | "single_with_children"
+      group_activity_type:
+        | "dinner"
+        | "prayer_study"
+        | "workout"
+        | "sports"
+        | "flexible"
       new_to_city_type: "yes_less_3_months" | "yes_less_year" | "no"
       org_role: "owner" | "admin" | "moderator" | "member"
       work_from_home_type: "yes_100_percent" | "yes_3_days" | "hybrid" | "no"
@@ -1718,6 +1831,13 @@ export const Constants = {
         "single_no_children",
         "married_with_children",
         "single_with_children",
+      ],
+      group_activity_type: [
+        "dinner",
+        "prayer_study",
+        "workout",
+        "sports",
+        "flexible",
       ],
       new_to_city_type: ["yes_less_3_months", "yes_less_year", "no"],
       org_role: ["owner", "admin", "moderator", "member"],
