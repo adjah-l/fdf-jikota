@@ -117,7 +117,7 @@ const AppContent = () => (
             
             {/* Public routes outside AppShell */}
             <Route path="/legacy-home" element={<Index />} />
-            <Route path="/welcome" element={<Index />} />
+            <Route path="/welcome" element={flags.enableNewMarketing ? <HomeNew /> : <Index />} />
             <Route path="/sms-respond/:token" element={<SMSRespond />} />
           </Routes>
         </BrowserRouter>
