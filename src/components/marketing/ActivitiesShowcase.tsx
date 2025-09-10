@@ -20,7 +20,7 @@ export function ActivitiesShowcase() {
         </p>
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           {items.map((it) => (
-            <Card key={it.key} className="p-5 flex flex-col justify-between">
+            <Card key={it.key} className="flex flex-col justify-between p-5">
               <div>
                 <h3 className="text-lg font-medium">{it.title}</h3>
                 <p className="mt-1 text-sm text-muted-foreground">{it.blurb}</p>
