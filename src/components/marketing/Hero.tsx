@@ -1,7 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Play } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export function MarketingHero() {
+  const navigate = useNavigate();
+  
   return (
     <section className="relative py-20 px-4 text-center bg-gradient-to-br from-background to-muted/20">
       <div className="container mx-auto max-w-4xl">
@@ -26,7 +29,7 @@ export function MarketingHero() {
         </div>
         
         <div className="mt-8">
-          <Button variant="link" className="text-muted-foreground">
+          <Button variant="link" className="text-muted-foreground" onClick={() => navigate('/for-organizations')}>
             For Organizations →
           </Button>
         </div>
