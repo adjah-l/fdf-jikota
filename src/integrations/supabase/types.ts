@@ -44,6 +44,13 @@ export type Database = {
             referencedRelation: "activity_groups"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "activity_group_members_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "groups_all"
+            referencedColumns: ["id"]
+          },
         ]
       }
       activity_groups: {
@@ -196,6 +203,13 @@ export type Database = {
             columns: ["migrated_to"]
             isOneToOne: false
             referencedRelation: "activity_groups"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "dinner_groups_migrated_to_fkey"
+            columns: ["migrated_to"]
+            isOneToOne: false
+            referencedRelation: "groups_all"
             referencedColumns: ["id"]
           },
           {
@@ -1601,7 +1615,53 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      groups_all: {
+        Row: {
+          activity_type:
+            | Database["public"]["Enums"]["group_activity_type"]
+            | null
+          created_at: string | null
+          criteria_snapshot: Json | null
+          description: string | null
+          five_c_focus: string | null
+          id: string | null
+          name: string | null
+          org_id: string | null
+        }
+        Insert: {
+          activity_type?:
+            | Database["public"]["Enums"]["group_activity_type"]
+            | null
+          created_at?: string | null
+          criteria_snapshot?: Json | null
+          description?: string | null
+          five_c_focus?: string | null
+          id?: string | null
+          name?: string | null
+          org_id?: string | null
+        }
+        Update: {
+          activity_type?:
+            | Database["public"]["Enums"]["group_activity_type"]
+            | null
+          created_at?: string | null
+          criteria_snapshot?: Json | null
+          description?: string | null
+          five_c_focus?: string | null
+          id?: string | null
+          name?: string | null
+          org_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "activity_groups_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
       get_admin_role: {
