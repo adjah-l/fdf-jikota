@@ -30,3 +30,9 @@ verify_jwt = true
 
 [functions.send-group-introduction]
 verify_jwt = true
+
+[functions.send-sms-notification]
+verify_jwt = false
+
+[functions.sms-webhook]
+verify_jwt = false

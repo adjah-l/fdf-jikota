@@ -44,6 +44,9 @@ import MemberProfile from "./app/member/pages/Profile";
 // Admin pages
 import AdminOverview from "./app/admin/pages/Overview";
 
+// SMS pages
+import SMSRespond from "./pages/SMSRespond";
+
 // Initialize monitoring
 initMonitoring();
 
@@ -113,6 +116,7 @@ const AppContent = () => (
             
             {/* Public routes outside AppShell */}
             <Route path="/welcome" element={<Index />} />
+            <Route path="/sms-respond/:token" element={<SMSRespond />} />
           </Routes>
         </BrowserRouter>
       </TooltipProvider>

@@ -5,13 +5,18 @@ import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { MessageSquare, Send, Search, Users, Bell, Settings } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
+import { MessageSquare, Send, Search, Users, Bell, Settings, Smartphone, Link } from "lucide-react";
 import { flags } from "@/config/flags";
+import { useSMS } from "@/hooks/useSMS";
+import { toast } from "sonner";
 
 const MemberMessages = () => {
   const [selectedChat, setSelectedChat] = useState<number | null>(1);
   const [messageInput, setMessageInput] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+  const [sendSMSNotification, setSendSMSNotification] = useState(true);
+  const { sendGroupNotification, loading: smsLoading } = useSMS();
 
   // TODO: Replace with real data from API
   const messagesData = {
@@ -24,7 +29,8 @@ const MemberMessages = () => {
         lastMessageTime: "2:30 PM",
         unreadCount: 2,
         avatar: "",
-        participants: ["Sarah Johnson", "Mike Chen", "Emma Davis", "John Smith", "Lisa Wilson"]
+        participants: ["Sarah Johnson", "Mike Chen", "Emma Davis", "John Smith", "Lisa Wilson"],
+        phoneNumbers: ["+1234567890", "+1234567891", "+1234567892", "+1234567893", "+1234567894"] // SMS integration
       },
       {
         id: 2,
@@ -34,7 +40,8 @@ const MemberMessages = () => {
         lastMessageTime: "Yesterday",
         unreadCount: 0,
         avatar: "",
-        participants: ["Sarah Johnson"]
+        participants: ["Sarah Johnson"],
+        phoneNumbers: ["+1234567890"]
       },
       {
         id: 3,
@@ -44,7 +51,8 @@ const MemberMessages = () => {
         lastMessageTime: "Yesterday",
         unreadCount: 1,
         avatar: "",
-        participants: ["System"]
+        participants: ["System"],
+        phoneNumbers: []
       }
     ],
     messages: [
@@ -83,10 +91,22 @@ const MemberMessages = () => {
     ]
   };
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (!messageInput.trim() || !selectedChat) return;
     
-    // TODO: Implement API call to send message
+    const chatData = messagesData.chats.find(chat => chat.id === selectedChat);
+    
+    // Send SMS notifications if enabled and chat has phone numbers
+    if (sendSMSNotification && chatData?.phoneNumbers && chatData.phoneNumbers.length > 0) {
+      await sendGroupNotification(
+        chatData.phoneNumbers,
+        messageInput,
+        chatData.name,
+        "You" // In real app, use actual user name
+      );
+    }
+    
+    // TODO: Implement API call to send message to web platform
     console.log("Sending message:", messageInput);
     setMessageInput("");
   };
@@ -218,6 +238,12 @@ const MemberMessages = () => {
                     <Button size="sm" variant="ghost">
                       <Bell className="w-4 h-4" />
                     </Button>
+                    {selectedChatData.phoneNumbers && selectedChatData.phoneNumbers.length > 0 && (
+                      <Badge variant="outline" className="text-xs">
+                        <Smartphone className="w-3 h-3 mr-1" />
+                        SMS Enabled
+                      </Badge>
+                    )}
                   </div>
                 </div>
               </div>
@@ -252,18 +278,55 @@ const MemberMessages = () => {
 
               {/* Message Input */}
               <div className="p-4 border-t bg-background">
+                {/* SMS Options */}
+                {selectedChatData.phoneNumbers && selectedChatData.phoneNumbers.length > 0 && (
+                  <div className="mb-3 p-3 bg-muted/30 rounded-lg">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-2">
+                        <Checkbox
+                          id="sms-notification"
+                          checked={sendSMSNotification}
+                          onCheckedChange={(checked) => setSendSMSNotification(checked as boolean)}
+                        />
+                        <label htmlFor="sms-notification" className="text-sm font-medium">
+                          Send SMS notifications
+                        </label>
+                      </div>
+                      <Badge variant="secondary" className="text-xs">
+                        <Smartphone className="w-3 h-3 mr-1" />
+                        {selectedChatData.phoneNumbers.length} recipients
+                      </Badge>
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Group members will receive SMS notifications and can respond via text or web link
+                    </p>
+                  </div>
+                )}
+                
                 <div className="flex items-center gap-2">
                   <Input
                     placeholder="Type a message..."
                     value={messageInput}
                     onChange={(e) => setMessageInput(e.target.value)}
-                    onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                    onKeyPress={(e) => e.key === 'Enter' && !e.shiftKey && handleSendMessage()}
                     className="flex-1"
                   />
-                  <Button size="sm" onClick={handleSendMessage}>
-                    <Send className="w-4 h-4" />
+                  <Button 
+                    size="sm" 
+                    onClick={handleSendMessage}
+                    disabled={smsLoading}
+                  >
+                    {smsLoading ? (
+                      <div className="w-4 h-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                    ) : (
+                      <Send className="w-4 h-4" />
+                    )}
                   </Button>
                 </div>
+                
+                <p className="text-xs text-muted-foreground mt-2">
+                  Press Enter to send, Shift+Enter for new line
+                </p>
               </div>
             </>
           ) : (

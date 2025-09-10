@@ -1019,6 +1019,8 @@ export type Database = {
           new_to_city: string | null
           phone_number: string | null
           season_interest: string | null
+          sms_notifications: boolean | null
+          sms_replies: boolean | null
           spouse_email: string | null
           spouse_first_name: string | null
           spouse_last_name: string | null
@@ -1060,6 +1062,8 @@ export type Database = {
           new_to_city?: string | null
           phone_number?: string | null
           season_interest?: string | null
+          sms_notifications?: boolean | null
+          sms_replies?: boolean | null
           spouse_email?: string | null
           spouse_first_name?: string | null
           spouse_last_name?: string | null
@@ -1101,6 +1105,8 @@ export type Database = {
           new_to_city?: string | null
           phone_number?: string | null
           season_interest?: string | null
+          sms_notifications?: boolean | null
+          sms_replies?: boolean | null
           spouse_email?: string | null
           spouse_first_name?: string | null
           spouse_last_name?: string | null
@@ -1229,6 +1235,101 @@ export type Database = {
           },
         ]
       }
+      sms_messages: {
+        Row: {
+          body: string
+          created_at: string
+          direction: string
+          from_number: string
+          id: string
+          message_sid: string | null
+          status: string | null
+          thread_id: string | null
+          to_number: string
+        }
+        Insert: {
+          body: string
+          created_at?: string
+          direction: string
+          from_number: string
+          id?: string
+          message_sid?: string | null
+          status?: string | null
+          thread_id?: string | null
+          to_number: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          direction?: string
+          from_number?: string
+          id?: string
+          message_sid?: string | null
+          status?: string | null
+          thread_id?: string | null
+          to_number?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sms_messages_thread_id_fkey"
+            columns: ["thread_id"]
+            isOneToOne: false
+            referencedRelation: "sms_threads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      sms_threads: {
+        Row: {
+          created_at: string
+          group_id: string | null
+          id: string
+          is_active: boolean
+          org_id: string | null
+          phone_number: string
+          thread_token: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          group_id?: string | null
+          id?: string
+          is_active?: boolean
+          org_id?: string | null
+          phone_number: string
+          thread_token?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          group_id?: string | null
+          id?: string
+          is_active?: boolean
+          org_id?: string | null
+          phone_number?: string
+          thread_token?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sms_threads_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "dinner_groups"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "sms_threads_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       transactions: {
         Row: {
           amount: number
@@ -1350,6 +1451,20 @@ export type Database = {
           stage_hard: boolean
           stage_weight: number
           updated_at: string
+        }
+      }
+      get_thread_by_token: {
+        Args: { token_param: string }
+        Returns: {
+          created_at: string
+          group_id: string | null
+          id: string
+          is_active: boolean
+          org_id: string | null
+          phone_number: string
+          thread_token: string
+          updated_at: string
+          user_id: string | null
         }
       }
       get_user_orgs: {

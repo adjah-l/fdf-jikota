@@ -9,10 +9,11 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { User, MapPin, Heart, Settings, Shield, Camera, CheckCircle } from "lucide-react";
+import { User, MapPin, Heart, Settings, Shield, Camera, CheckCircle, MessageSquare } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { flags } from "@/config/flags";
 import { DocumentVerification } from "@/components/DocumentVerification";
+import { SMSSettings } from "@/components/SMSSettings";
 
 const MemberProfile = () => {
   const { toast } = useToast();
@@ -139,11 +140,12 @@ const MemberProfile = () => {
       </div>
 
       <Tabs defaultValue="basic" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className="grid w-full grid-cols-5">
           <TabsTrigger value="basic">Basic Info</TabsTrigger>
           <TabsTrigger value="preferences">Preferences</TabsTrigger>
           <TabsTrigger value="services">Services</TabsTrigger>
           <TabsTrigger value="verification">Verification</TabsTrigger>
+          <TabsTrigger value="sms">SMS</TabsTrigger>
         </TabsList>
 
         <TabsContent value="basic" className="space-y-6">
@@ -547,6 +549,24 @@ const MemberProfile = () => {
                   <h3 className="text-lg font-semibold mb-2">Verification Coming Soon</h3>
                   <p className="text-muted-foreground">
                     Trust verification features are currently in development.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+        </TabsContent>
+
+        <TabsContent value="sms" className="space-y-6">
+          {flags.enableMessaging ? (
+            <SMSSettings />
+          ) : (
+            <Card>
+              <CardContent className="flex items-center justify-center py-12">
+                <div className="text-center">
+                  <MessageSquare className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
+                  <h3 className="text-lg font-semibold mb-2">SMS Features Coming Soon</h3>
+                  <p className="text-muted-foreground">
+                    SMS integration and notification features are currently in development.
                   </p>
                 </div>
               </CardContent>
