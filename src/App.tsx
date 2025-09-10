@@ -6,6 +6,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { AppShell } from "@/components/layout/AppShell";
 import { initMonitoring, AppErrorBoundary } from "@/lib/monitoring";
+import { flags } from "@/config/flags";
+
+// Existing pages
 import Index from "./pages/Index";
 import ProfilePage from "./pages/Profile";
 import NeighborhoodsPage from "./pages/Neighborhoods";
@@ -19,6 +22,27 @@ import { AdminDataPage } from "./pages/admin/AdminData";
 import { AdminMessagingPage } from "./pages/admin/AdminMessaging";
 import OrganizationsPage from "./pages/Organizations";
 import CreateOrganizationPage from "./pages/CreateOrganization";
+
+// New marketing pages (gated by enableNewMarketing flag)
+import UseCases from "./pages/UseCases";
+import Pricing from "./pages/Pricing";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import ForOrganizations from "./pages/ForOrganizations";
+
+// New app shells (gated by flags)
+import { MemberAppShell } from "./app/member/MemberAppShell";
+import { AdminAppShell } from "./app/admin/AdminAppShell";
+
+// Member pages
+import MemberHome from "./app/member/pages/Home";
+import MemberGroup from "./app/member/pages/Group";
+import MemberCare from "./app/member/pages/Care";
+import MemberMessages from "./app/member/pages/Messages";
+import MemberProfile from "./app/member/pages/Profile";
+
+// Admin pages
+import AdminOverview from "./app/admin/pages/Overview";
 
 // Initialize monitoring
 initMonitoring();
@@ -40,6 +64,37 @@ const AppContent = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
+            {/* New Member App Shell (gated by enableMemberShell flag) */}
+            {flags.enableMemberShell && (
+              <Route path="/app/*" element={<MemberAppShell />}>
+                <Route index element={<MemberHome />} />
+                <Route path="group" element={<MemberGroup />} />
+                <Route path="care" element={<MemberCare />} />
+                <Route path="messages" element={<MemberMessages />} />
+                <Route path="profile" element={<MemberProfile />} />
+              </Route>
+            )}
+
+            {/* New Admin App Shell (gated by enableAdminShell flag) */}
+            {flags.enableAdminShell && (
+              <Route path="/admin2/*" element={<AdminAppShell />}>
+                <Route index element={<AdminOverview />} />
+                {/* TODO: Add remaining admin pages */}
+              </Route>
+            )}
+
+            {/* New Marketing Pages (gated by enableNewMarketing flag) */}
+            {flags.enableNewMarketing && (
+              <>
+                <Route path="/use-cases" element={<UseCases />} />
+                <Route path="/pricing" element={<Pricing />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/for-organizations" element={<ForOrganizations />} />
+              </>
+            )}
+
+            {/* Existing App Shell and Routes */}
             <Route path="/" element={<AppShell />}>
               <Route index element={<DashboardPage />} />
               <Route path="/groups" element={<GroupsPage />} />
@@ -55,6 +110,7 @@ const AppContent = () => (
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Route>
+            
             {/* Public routes outside AppShell */}
             <Route path="/welcome" element={<Index />} />
           </Routes>
