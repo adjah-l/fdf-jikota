@@ -1026,6 +1026,9 @@ export type Database = {
           state_region: string | null
           updated_at: string
           user_id: string
+          verification_document_status: string | null
+          verification_document_type: string | null
+          verification_document_url: string | null
           ways_to_serve: string[] | null
           willing_to_welcome: boolean | null
           work_from_home: string | null
@@ -1064,6 +1067,9 @@ export type Database = {
           state_region?: string | null
           updated_at?: string
           user_id: string
+          verification_document_status?: string | null
+          verification_document_type?: string | null
+          verification_document_url?: string | null
           ways_to_serve?: string[] | null
           willing_to_welcome?: boolean | null
           work_from_home?: string | null
@@ -1102,6 +1108,9 @@ export type Database = {
           state_region?: string | null
           updated_at?: string
           user_id?: string
+          verification_document_status?: string | null
+          verification_document_type?: string | null
+          verification_document_url?: string | null
           ways_to_serve?: string[] | null
           willing_to_welcome?: boolean | null
           work_from_home?: string | null

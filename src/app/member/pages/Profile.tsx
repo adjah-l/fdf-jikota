@@ -12,6 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { User, MapPin, Heart, Settings, Shield, Camera, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { flags } from "@/config/flags";
+import { DocumentVerification } from "@/components/DocumentVerification";
 
 const MemberProfile = () => {
   const { toast } = useToast();
@@ -428,30 +429,102 @@ const MemberProfile = () => {
                     </Badge>
                   </div>
 
-                  <div className="space-y-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="churchAffiliation">Church Affiliation (Optional)</Label>
-                      <Input
-                        id="churchAffiliation"
-                        value={profileData.churchAffiliation}
-                        onChange={(e) => setProfileData({...profileData, churchAffiliation: e.target.value})}
-                        placeholder="Your church or faith community"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="workEmail">Work Email (Optional)</Label>
-                      <Input
-                        id="workEmail"
-                        type="email"
-                        value={profileData.workEmail}
-                        onChange={(e) => setProfileData({...profileData, workEmail: e.target.value})}
-                        placeholder="Your workplace email for verification"
-                      />
-                    </div>
+                  <div className="bg-blue-50 p-4 rounded-lg">
+                    <h4 className="font-medium mb-2">Verification Options</h4>
+                    <p className="text-sm text-muted-foreground mb-3">
+                      Choose one or more verification methods to build trust in the community
+                    </p>
+                    <ul className="text-sm space-y-1 text-muted-foreground">
+                      <li>• <strong>Address:</strong> Share your location for neighbor matching</li>
+                      <li>• <strong>Church:</strong> Connect through faith community</li>
+                      <li>• <strong>Work Email:</strong> Verify through professional organization</li>
+                      <li>• <strong>ID Document:</strong> Upload driver's license or passport</li>
+                    </ul>
                   </div>
 
-                  <div className="bg-blue-50 p-4 rounded-lg">
-                    <h4 className="font-medium mb-2">Why verify?</h4>
+                  <div className="space-y-6">
+                    {/* Address Verification */}
+                    <Card>
+                      <CardHeader className="pb-3">
+                        <CardTitle className="text-base">Address Verification</CardTitle>
+                        <CardDescription>Share your address for local community matching</CardDescription>
+                      </CardHeader>
+                      <CardContent className="space-y-3">
+                        <div className="space-y-2">
+                          <Label htmlFor="address">Street Address</Label>
+                          <Input
+                            id="address"
+                            value={profileData.address}
+                            onChange={(e) => setProfileData({...profileData, address: e.target.value})}
+                            placeholder="123 Main Street"
+                          />
+                        </div>
+                        <div className="grid grid-cols-2 gap-3">
+                          <div className="space-y-2">
+                            <Label htmlFor="city">City</Label>
+                            <Input
+                              id="city"
+                              value={profileData.city}
+                              onChange={(e) => setProfileData({...profileData, city: e.target.value})}
+                              placeholder="Austin"
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="postalCode">Postal Code</Label>
+                            <Input
+                              id="postalCode"
+                              value={profileData.postalCode}
+                              onChange={(e) => setProfileData({...profileData, postalCode: e.target.value})}
+                              placeholder="78701"
+                            />
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    {/* Other Verification Methods */}
+                    <Card>
+                      <CardHeader className="pb-3">
+                        <CardTitle className="text-base">Additional Verification</CardTitle>
+                        <CardDescription>Optional methods to further verify your identity</CardDescription>
+                      </CardHeader>
+                      <CardContent className="space-y-4">
+                        <div className="space-y-2">
+                          <Label htmlFor="churchAffiliation">Church Affiliation</Label>
+                          <Input
+                            id="churchAffiliation"
+                            value={profileData.churchAffiliation}
+                            onChange={(e) => setProfileData({...profileData, churchAffiliation: e.target.value})}
+                            placeholder="Your church or faith community"
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="workEmail">Work Email</Label>
+                          <Input
+                            id="workEmail"
+                            type="email"
+                            value={profileData.workEmail}
+                            onChange={(e) => setProfileData({...profileData, workEmail: e.target.value})}
+                            placeholder="your.email@company.com"
+                          />
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    {/* Document Verification */}
+                    <DocumentVerification 
+                      onVerificationComplete={() => {
+                        setProfileData({...profileData, verificationStatus: 'pending'});
+                        toast({
+                          title: "Document uploaded",
+                          description: "Your document has been submitted for review.",
+                        });
+                      }}
+                    />
+                  </div>
+
+                  <div className="bg-green-50 p-4 rounded-lg">
+                    <h4 className="font-medium mb-2">Benefits of Verification</h4>
                     <ul className="text-sm space-y-1 text-muted-foreground">
                       <li>• Build trust with community members</li>
                       <li>• Get better group matches</li>
@@ -461,7 +534,7 @@ const MemberProfile = () => {
                   </div>
 
                   <Button onClick={handleVerificationSubmit}>
-                    Submit for Verification
+                    Update Verification Info
                   </Button>
                 </CardContent>
               </Card>
