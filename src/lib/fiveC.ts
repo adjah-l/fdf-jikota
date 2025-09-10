@@ -4,14 +4,14 @@
  */
 
 export interface FiveCStatus {
+  commitment: { active: boolean; lastActivity?: Date };
+  communication: { active: boolean; lastActivity?: Date };
   connection: { active: boolean; lastActivity?: Date };
-  care: { active: boolean; lastActivity?: Date };
-  contribution: { active: boolean; lastActivity?: Date };
+  crisis: { active: boolean; lastActivity?: Date };
   celebration: { active: boolean; lastActivity?: Date };
-  consistency: { active: boolean; lastActivity?: Date };
 }
 
-export type FiveCKey = 'connection' | 'care' | 'contribution' | 'celebration' | 'consistency';
+export type FiveCKey = 'commitment' | 'communication' | 'connection' | 'crisis' | 'celebration';
 
 export interface FiveCEvent {
   id: string;
@@ -45,39 +45,27 @@ export function computeFiveCStatus(
     };
   };
 
+  // Commitment: active if there's a commitment event in the last 14 days
+  const commitment = hasRecentEvent('commitment', 14);
+
+  // Communication: active if there's a communication event in the last 14 days
+  const communication = hasRecentEvent('communication', 14);
+
   // Connection: active if there's a connection event in the last 14 days
   const connection = hasRecentEvent('connection', 14);
 
-  // Care: active if there's a care event in the last 30 days
-  const care = hasRecentEvent('care', 30);
-
-  // Contribution: active if there's a contribution event in the last 60 days
-  const contribution = hasRecentEvent('contribution', 60);
+  // Crisis: active if there's a crisis event in the last 30 days
+  const crisis = hasRecentEvent('crisis', 30);
 
   // Celebration: active if there's a celebration event in the last 60 days
   const celebration = hasRecentEvent('celebration', 60);
 
-  // Consistency: active if group met within target cadence
-  let consistency = { active: false, lastActivity: undefined as Date | undefined };
-  if (groupData?.lastMeetingDate && groupData?.targetCadenceDays) {
-    const daysSinceMeeting = Math.floor(
-      (now.getTime() - groupData.lastMeetingDate.getTime()) / (24 * 60 * 60 * 1000)
-    );
-    consistency = {
-      active: daysSinceMeeting <= groupData.targetCadenceDays,
-      lastActivity: groupData.lastMeetingDate
-    };
-  } else {
-    // Fallback: check for consistency events
-    consistency = hasRecentEvent('consistency', 30);
-  }
-
   return {
+    commitment,
+    communication,
     connection,
-    care,
-    contribution,
-    celebration,
-    consistency
+    crisis,
+    celebration
   };
 }
 
@@ -86,25 +74,25 @@ export function computeFiveCStatus(
  */
 export function getNextAction(key: FiveCKey): { title: string; description: string } {
   const actions = {
+    commitment: {
+      title: "Renew commitment",
+      description: "Reaffirm your dedication to the group"
+    },
+    communication: {
+      title: "Start a conversation",
+      description: "Check in with group members"
+    },
     connection: {
-      title: "Log a check-in",
-      description: "Share how you're doing with your group"
+      title: "Deepen relationships",
+      description: "Share more personally with your group"
     },
-    care: {
-      title: "Offer help",
-      description: "Post a service you can provide to others"
-    },
-    contribution: {
-      title: "Host next meeting",
-      description: "Take a turn hosting or organizing"
+    crisis: {
+      title: "Offer support",
+      description: "Help someone through a difficult time"
     },
     celebration: {
       title: "Share a win",
       description: "Celebrate a milestone or good news"
-    },
-    consistency: {
-      title: "Schedule next meeting",
-      description: "Keep your regular gathering rhythm"
     }
   };
 

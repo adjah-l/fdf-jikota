@@ -42,11 +42,11 @@ const MemberGroup = () => {
 
   // Mock 5C status - replace with real data
   const fiveCStatus: FiveCStatus = {
-    connection: { active: true, lastActivity: new Date('2024-12-09') },
-    care: { active: false },
-    contribution: { active: true, lastActivity: new Date('2024-12-01') },
-    celebration: { active: false },
-    consistency: { active: true, lastActivity: new Date('2024-12-05') }
+    commitment: { active: true, lastActivity: new Date('2024-12-09') },
+    communication: { active: false },
+    connection: { active: true, lastActivity: new Date('2024-12-01') },
+    crisis: { active: false },
+    celebration: { active: true, lastActivity: new Date('2024-12-05') }
   };
 
   return (

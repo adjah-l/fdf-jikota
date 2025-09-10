@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { FiveCStatus, FiveCKey, getFiveCHealthScore } from "@/lib/fiveC";
-import { Heart, Users, Gift, PartyPopper, Clock } from "lucide-react";
+import { Heart, MessageCircle, Users, AlertTriangle, PartyPopper } from "lucide-react";
 
 interface FiveCMeterProps {
   status: FiveCStatus;
@@ -11,35 +11,35 @@ interface FiveCMeterProps {
 }
 
 const fiveCConfig = {
+  commitment: {
+    label: 'Commitment',
+    icon: Heart,
+    color: 'bg-red-500',
+    description: 'Dedicated to showing up for one another'
+  },
+  communication: {
+    label: 'Communication',
+    icon: MessageCircle,
+    color: 'bg-blue-500',
+    description: 'Open, honest dialogue that builds trust'
+  },
   connection: {
     label: 'Connection',
     icon: Users,
     color: 'bg-blue-500',
-    description: 'Regular check-ins and communication'
+    description: 'Building meaningful relationships'
   },
-  care: {
-    label: 'Care',
-    icon: Heart,
-    color: 'bg-red-500',
-    description: 'Mutual support and help'
-  },
-  contribution: {
-    label: 'Contribution',
-    icon: Gift,
-    color: 'bg-green-500',
-    description: 'Everyone contributes their gifts'
+  crisis: {
+    label: 'Crisis',
+    icon: AlertTriangle,
+    color: 'bg-orange-500',
+    description: 'Supporting each other through challenges'
   },
   celebration: {
     label: 'Celebration',
     icon: PartyPopper,
     color: 'bg-yellow-500',
     description: 'Recognize wins and milestones'
-  },
-  consistency: {
-    label: 'Consistency',
-    icon: Clock,
-    color: 'bg-purple-500',
-    description: 'Regular meeting rhythm'
   }
 } as const;
 
