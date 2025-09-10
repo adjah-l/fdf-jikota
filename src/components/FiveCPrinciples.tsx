@@ -52,14 +52,9 @@ const FiveCPrinciples = () => {
     <section className="py-20 bg-background">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground flex flex-wrap items-center justify-center gap-4">
-            <span>The</span>
-            <span className="h-4 w-32 bg-gradient-community rounded-full"></span>
-            <span>Practice</span>
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
+            The <span className="bg-gradient-community bg-clip-text text-transparent">5C Mutual Care</span> Practice
           </h2>
-          <h3 className="text-2xl md:text-3xl font-semibold mb-6 text-foreground">
-            5C Mutual Care
-          </h3>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             We're teaching people how to be human again. Beyond shared meals, we foster deep community connections 
             through five core principles that create a mutual care framework for neighbors.
