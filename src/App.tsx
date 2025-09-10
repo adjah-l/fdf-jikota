@@ -46,6 +46,8 @@ import MemberProfile from "./app/member/pages/Profile";
 
 // Admin pages
 import AdminOverview from "./app/admin/pages/Overview";
+import AdminGroups from "./app/admin/pages/Groups";
+import AdminGroupForm from "./app/admin/pages/GroupForm";
 
 // SMS pages
 import SMSRespond from "./pages/SMSRespond";
@@ -85,7 +87,9 @@ const AppContent = () => (
             {flags.enableAdminShell && (
               <Route path="/admin2/*" element={<AdminAppShell />}>
                 <Route index element={<AdminOverview />} />
-                {/* TODO: Add remaining admin pages */}
+                <Route path="groups" element={<AdminGroups />} />
+                <Route path="groups/new" element={<AdminGroupForm />} />
+                <Route path="groups/:id/edit" element={<AdminGroupForm />} />
               </Route>
             )}
 
