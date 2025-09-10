@@ -11,7 +11,7 @@ const UseCases = () => {
       features: [
         "Seasonal group formation with life stage matching",
         "Care networks for pastoral support at scale", 
-        "Dinner groups that build lasting relationships",
+        "Groups that build lasting relationships",
         "Member-to-member service exchange"
       ],
       cta: "Perfect for churches of 200+ members"
@@ -21,7 +21,7 @@ const UseCases = () => {
       title: "HOAs & Neighborhoods", 
       description: "Turn neighbors into community through structured connection",
       features: [
-        "5C dinner groups by neighborhood zones",
+        "Activity-based groups by neighborhood zones",
         "Neighbor-to-neighbor care requests",
         "New resident integration programs",
         "Community event coordination"
@@ -35,7 +35,7 @@ const UseCases = () => {
       features: [
         "Industry peer mentoring circles",
         "Professional development cohorts", 
-        "Networking dinner groups",
+        "Professional networking groups",
         "Knowledge and resource sharing"
       ],
       cta: "Built for professional associations and alumni networks"

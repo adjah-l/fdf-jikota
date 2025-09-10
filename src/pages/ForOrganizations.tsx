@@ -13,19 +13,19 @@ const organizationTypes = [
     title: "Churches",
     icon: Church,
     description: "Create small groups that practice connection, care, and community across your congregation.",
-    features: ["Prayer and study groups", "Fellowship gatherings", "Service groups", "Fitness ministries"]
+    features: ["Dinner", "Prayer / Bible Study", "Working Out", "Watch Sporting Events", "Flexible"]
   },
   {
     title: "HOAs & Communities", 
     icon: Home,
     description: "Build stronger neighborhoods through regular gatherings and mutual support systems.",
-    features: ["Dinner groups", "Workout clubs", "Sports viewing", "Flexible social groups"]
+    features: ["Dinner", "Prayer / Bible Study", "Working Out", "Watch Sporting Events", "Flexible"]
   },
   {
     title: "Professional Organizations",
     icon: Building,
     description: "Foster meaningful connections beyond networking through structured relationship building.",
-    features: ["Lunch groups", "Fitness clubs", "Networking dinners", "Study circles"]
+    features: ["Dinner", "Prayer / Bible Study", "Working Out", "Watch Sporting Events", "Flexible"]
   }
 ];
 

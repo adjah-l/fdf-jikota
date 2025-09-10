@@ -42,11 +42,11 @@ const Hero = () => {
         <div className="max-w-4xl mx-auto">
           <h1 className="text-5xl md:text-6xl font-bold mb-6 text-foreground">
             Connect with neighbors through
-            <span className="text-primary"> shared meals</span>
+            <span className="text-primary"> shared activities</span>
           </h1>
           
           <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
-            Build belonging and community health through the simple act of sharing dinner with your neighbors.
+            Build belonging and community health through gatherings that bring neighbors together—dinner is one way to start.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
@@ -64,7 +64,7 @@ const Hero = () => {
               className="min-w-[200px]"
               onClick={handleHostDinner}
             >
-              Host a Dinner
+              Host a Group
             </Button>
           </div>
           
@@ -86,7 +86,7 @@ const Hero = () => {
               <CardContent className="p-6 text-center">
                 <Calendar className="w-8 h-8 text-primary mx-auto mb-2" />
                 <div className="text-2xl font-bold text-foreground">850+</div>
-                <div className="text-sm text-muted-foreground">Dinners Hosted</div>
+                <div className="text-sm text-muted-foreground">Groups Hosted</div>
               </CardContent>
             </Card>
             
