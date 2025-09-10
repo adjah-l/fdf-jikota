@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { FiveCSection } from "@/components/marketing/FiveCSection";
 import { Church, Home, Building, Users, ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const organizationTypes = [
   {
@@ -27,6 +28,8 @@ const organizationTypes = [
 ];
 
 const ForOrganizations = () => {
+  const navigate = useNavigate();
+  
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -39,7 +42,7 @@ const ForOrganizations = () => {
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
             Whether you lead a church, HOA, or professional organization, the 5C framework creates lasting community connections.
           </p>
-          <Button size="lg" className="text-lg px-8">
+          <Button size="lg" className="text-lg px-8" onClick={() => navigate('/organizations/new')}>
             Get Started
             <ArrowRight className="ml-2 w-5 h-5" />
           </Button>
@@ -88,8 +91,8 @@ const ForOrganizations = () => {
                 Join organizations using the 5C framework to build stronger communities.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button size="lg">Schedule Demo</Button>
-                <Button size="lg" variant="outline">Learn More</Button>
+                <Button size="lg" onClick={() => navigate('/contact')}>Schedule Demo</Button>
+                <Button size="lg" variant="outline" onClick={() => navigate('/about')}>Learn More</Button>
               </div>
             </CardContent>
           </Card>
