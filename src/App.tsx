@@ -30,6 +30,8 @@ import Pricing from "./pages/Pricing";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import ForOrganizations from "./pages/ForOrganizations";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
 
 // New app shells (gated by flags)
 import { MemberAppShell } from "./app/member/MemberAppShell";
@@ -118,6 +120,8 @@ const AppContent = () => (
             {/* Public routes outside AppShell */}
             <Route path="/legacy-home" element={<Index />} />
             <Route path="/welcome" element={flags.enableNewMarketing ? <HomeNew /> : <Index />} />
+            <Route path="/signin" element={<SignIn />} />
+            <Route path="/signup" element={<SignUp />} />
             <Route path="/sms-respond/:token" element={<SMSRespond />} />
           </Routes>
         </BrowserRouter>

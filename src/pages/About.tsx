@@ -1,6 +1,10 @@
+import Header from "@/components/Header";
+import { HeaderNew } from "@/components/layout/HeaderNew";
+import Footer from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Users, Heart, Lightbulb, Target } from "lucide-react";
+import { flags } from "@/config/flags";
 
 const About = () => {
   const values = [
@@ -49,6 +53,7 @@ const About = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      {flags.enableNewMarketing ? <HeaderNew /> : <Header />}
       <div className="container mx-auto px-4 py-16">
         {/* Hero Section */}
         <div className="text-center mb-16">
@@ -159,6 +164,7 @@ const About = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

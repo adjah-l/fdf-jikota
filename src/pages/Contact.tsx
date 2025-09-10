@@ -1,4 +1,7 @@
 import { useState } from "react";
+import Header from "@/components/Header";
+import { HeaderNew } from "@/components/layout/HeaderNew";
+import Footer from "@/components/Footer";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,6 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { flags } from "@/config/flags";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -42,6 +46,7 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      {flags.enableNewMarketing ? <HeaderNew /> : <Header />}
       <div className="container mx-auto px-4 py-16">
         {/* Hero Section */}
         <div className="text-center mb-16">
@@ -241,6 +246,7 @@ const Contact = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

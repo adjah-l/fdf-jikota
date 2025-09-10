@@ -1,10 +1,12 @@
 import Header from "@/components/Header";
+import { HeaderNew } from "@/components/layout/HeaderNew";
 import Footer from "@/components/Footer";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { FiveCSection } from "@/components/marketing/FiveCSection";
 import { Church, Home, Building, Users, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { flags } from "@/config/flags";
 
 const organizationTypes = [
   {
@@ -32,7 +34,7 @@ const ForOrganizations = () => {
   
   return (
     <div className="min-h-screen bg-background">
-      <Header />
+      {flags.enableNewMarketing ? <HeaderNew /> : <Header />}
       <main className="py-12">
         {/* Hero Section */}
         <section className="container mx-auto px-4 text-center mb-16">
