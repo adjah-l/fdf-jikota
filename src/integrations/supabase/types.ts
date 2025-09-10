@@ -62,6 +62,7 @@ export type Database = {
           name: string
           org_id: string | null
           scheduled_date: string | null
+          source_dg_id: string | null
           status: string
           updated_at: string
         }
@@ -80,6 +81,7 @@ export type Database = {
           name: string
           org_id?: string | null
           scheduled_date?: string | null
+          source_dg_id?: string | null
           status?: string
           updated_at?: string
         }
@@ -98,6 +100,7 @@ export type Database = {
           name?: string
           org_id?: string | null
           scheduled_date?: string | null
+          source_dg_id?: string | null
           status?: string
           updated_at?: string
         }
