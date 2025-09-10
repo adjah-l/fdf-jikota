@@ -4,22 +4,22 @@
  */
 export const flags = {
   // Public marketing site updates with partner entrypoint
-  enableNewMarketing: false,
+  enableNewMarketing: true,
   
   // Member-first navigation and app shell
-  enableMemberShell: false,
+  enableMemberShell: true,
   
   // Leader/Admin app shell (mounts at /admin2 to avoid collision)
-  enableAdminShell: false,
+  enableAdminShell: true,
   
   // Messaging system with templates and campaigns
-  enableMessaging: false,
+  enableMessaging: true,
   
   // Mutual care ledger with credits and service exchange
-  enableCareLedger: false,
+  enableCareLedger: true,
   
   // Trust verification via address, church, or workplace email
-  enableVerification: false,
+  enableVerification: true,
 } as const;
 
 export type FeatureFlag = keyof typeof flags;
