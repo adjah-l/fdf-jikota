@@ -88,7 +88,7 @@ const ProfileForm = () => {
 
   const waysToServeOptions = [
     'Willing to Lead My Family (5C) Group',
-    'Willing to Host a Dinner or Game Night at My Home/Community Center',
+    'Willing to Host a Group or Game Night at My Home/Community Center',
     'Willing to Host a Movie Night Out at a Local Theater',
     'Willing to Pick-Up or Drop-Off from/to Airport',
     'Willing to Organize A Gathering/Social Event for Kids',

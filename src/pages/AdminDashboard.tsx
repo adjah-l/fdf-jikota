@@ -181,7 +181,7 @@ const AdminDashboard = () => {
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-3xl font-bold">Admin Dashboard</h1>
-            <p className="text-muted-foreground">Manage dinner groups and matching system</p>
+            <p className="text-muted-foreground">Manage groups and matching system</p>
           </div>
           <Badge variant="outline" className="capitalize">{adminRole} Access</Badge>
         </div>
@@ -237,8 +237,8 @@ const AdminDashboard = () => {
           <TabsContent value="groups" className="space-y-6">
             <Card>
               <CardHeader>
-                <CardTitle>Dinner Groups</CardTitle>
-                <CardDescription>Manage and approve dinner group assignments</CardDescription>
+                <CardTitle>Groups</CardTitle>
+                <CardDescription>Manage and approve group assignments</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex gap-2 flex-wrap">
@@ -485,11 +485,11 @@ const AdminDashboard = () => {
             <Card>
               <CardHeader>
                 <CardTitle>Matching Algorithm</CardTitle>
-                <CardDescription>Configure how members are matched into dinner groups</CardDescription>
+                <CardDescription>Configure how members are matched into groups</CardDescription>
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-muted-foreground mb-4">
-                  The matching algorithm considers multiple factors to create balanced dinner groups.
+                  The matching algorithm considers multiple factors to create balanced groups.
                   Click "Generate New Matches" to create preliminary groups that require your approval.
                 </p>
                 <Button onClick={handleGenerateMatches} disabled={matchingLoading}>

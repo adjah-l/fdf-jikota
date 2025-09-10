@@ -148,12 +148,12 @@ const DinnerListings = () => {
           <CardContent className="p-8 text-center">
             <h3 className="text-2xl font-bold mb-4 text-foreground">Want to host your neighbors?</h3>
             <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-              Hosting a dinner is a wonderful way to strengthen your community connections. 
+              Hosting a group is a wonderful way to strengthen your community connections. 
               We'll help you every step of the way!
             </p>
             <Button variant="hero" size="lg" onClick={handleHostDinner}>
               <Plus className="w-4 h-4 mr-2" />
-              Host a Dinner
+              Host a Group
             </Button>
           </CardContent>
         </Card>

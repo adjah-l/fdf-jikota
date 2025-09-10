@@ -162,10 +162,10 @@ export const GroupsPage = () => {
         <div>
           <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
             <Users className="h-8 w-8 text-primary" />
-            My Dinner Groups
+            My Groups
           </h1>
           <p className="text-muted-foreground mt-2">
-            Your journey of connection through shared meals
+            Your journey of connection through shared activities
           </p>
         </div>
         <div className="flex items-center gap-2">
@@ -204,9 +204,9 @@ export const GroupsPage = () => {
         <Card>
           <CardContent className="py-12 text-center">
             <Users className="h-16 w-16 mx-auto text-muted-foreground/50 mb-4" />
-            <h3 className="text-lg font-medium mb-2">No dinner groups yet</h3>
+            <h3 className="text-lg font-medium mb-2">No groups yet</h3>
             <p className="text-muted-foreground mb-6">
-              You haven't been matched to any dinner groups yet. Complete your profile and join a neighborhood to get started!
+              You haven't been matched to any groups yet. Complete your profile and join a neighborhood to get started!
             </p>
             <div className="flex gap-2 justify-center">
               <Button variant="outline" asChild>
@@ -341,7 +341,7 @@ export const GroupsPage = () => {
                 <CheckCircle className="h-16 w-16 mx-auto text-muted-foreground/50 mb-4" />
                 <h3 className="text-lg font-medium mb-2">No active groups</h3>
                 <p className="text-muted-foreground">
-                  You don't have any active dinner groups at the moment.
+                  You don't have any active groups at the moment.
                 </p>
               </div>
             )}
@@ -395,7 +395,7 @@ export const GroupsPage = () => {
                 <Star className="h-16 w-16 mx-auto text-muted-foreground/50 mb-4" />
                 <h3 className="text-lg font-medium mb-2">No completed groups yet</h3>
                 <p className="text-muted-foreground">
-                  Your completed dinner groups will appear here.
+                  Your completed groups will appear here.
                 </p>
               </div>
             )}

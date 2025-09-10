@@ -41,12 +41,12 @@ const Footer = () => {
             <ul className="space-y-3">
               <li>
                 <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                  Find Dinners
+                  Find Groups
                 </a>
               </li>
               <li>
                 <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                  Host a Dinner
+                  Host a Group
                 </a>
               </li>
               <li>

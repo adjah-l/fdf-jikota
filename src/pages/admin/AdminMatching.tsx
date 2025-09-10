@@ -220,7 +220,7 @@ export const AdminMatchingPage = () => {
             Matching Engine
           </h1>
           <p className="text-muted-foreground mt-2">
-            Configure intelligent matching algorithms for dinner groups
+            Configure intelligent matching algorithms for groups
           </p>
         </div>
         <div className="flex items-center gap-2">

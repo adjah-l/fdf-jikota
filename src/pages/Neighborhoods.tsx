@@ -332,10 +332,10 @@ const NeighborhoodsPage = () => {
           <CardContent className="p-6 text-center">
             <h3 className="text-xl font-semibold mb-2">Want to Host?</h3>
             <p className="text-muted-foreground mb-4">
-              Bring your neighbors together by hosting a dinner in {selectedNeighborhood?.name || 'your neighborhood'}.
+              Bring your neighbors together by hosting a group in {selectedNeighborhood?.name || 'your neighborhood'}.
             </p>
             <Button size="lg">
-              Host a Dinner
+              Host a Group
             </Button>
           </CardContent>
         </Card>
