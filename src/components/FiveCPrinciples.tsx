@@ -53,7 +53,7 @@ const FiveCPrinciples = () => {
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
-            The <span className="bg-gradient-community bg-clip-text text-transparent">5C Mutual Care</span> Practice
+            The 5C Mutual Care Practice
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             We're teaching people how to be human again. Beyond shared meals, we foster deep community connections 
