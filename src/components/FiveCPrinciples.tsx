@@ -8,35 +8,35 @@ const principles = [
     id: "commitment",
     icon: HandHeart,
     title: "Commitment",
-    description: "Weekly one-to-one calls and biweekly gatherings to stay connected with your care group.",
+    description: "Pledged commitment to your group for a specified period. Weekly communication and biweekly gatherings with rotating leads to stay deeply connected.",
     color: "text-primary"
   },
   {
-    id: "connection", 
-    icon: Link,
-    title: "Connection",
-    description: "Build meaningful relationships with neighbors who share similar life stages and values.",
-    color: "text-info"
+    id: "communication", 
+    icon: MessageCircle,
+    title: "Communication",
+    description: "Consistent weekly communication with each group member to maintain strong relational bonds and mutual understanding.",
+    color: "text-success"
   },
   {
-    id: "communication",
-    icon: MessageCircle, 
-    title: "Communication",
-    description: "Open, honest dialogue that strengthens understanding and trust within the community.",
-    color: "text-success"
+    id: "connection",
+    icon: Link,
+    title: "Connection",
+    description: "Building meaningful relationships through regular gatherings and intentional community that goes beyond surface-level interactions.",
+    color: "text-info"
   },
   {
     id: "crisis",
     icon: Shield,
     title: "Crisis Support", 
-    description: "Be there for each other during difficult times with practical help and emotional support.",
+    description: "Individual call within 24 hours plus tangible group care within a week when a member faces personal or emotional crisis.",
     color: "text-destructive"
   },
   {
     id: "celebration",
     icon: Sparkles,
     title: "Celebration",
-    description: "Share in life's joyful moments, from birthdays to achievements and community milestones.",
+    description: "Individual call within 24 hours plus tangible group care within a week when a member reaches milestones worth celebrating.",
     color: "text-primary-glow"
   }
 ];
@@ -56,8 +56,8 @@ const FiveCPrinciples = () => {
             The <span className="bg-gradient-community bg-clip-text text-transparent">5C Mutual Care</span> Practice
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Beyond shared meals, we foster deep community connections through five core principles 
-            that help neighbors truly care for one another.
+            We're teaching people how to be human again. Beyond shared meals, we foster deep community connections 
+            through five core principles that create a mutual care framework for neighbors.
           </p>
         </div>
         

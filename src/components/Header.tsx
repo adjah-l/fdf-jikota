@@ -53,8 +53,8 @@ const Header = () => {
               <Users className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="font-bold text-lg text-foreground">Family Dinner Foundation</h1>
-              <p className="text-xs text-muted-foreground">Connecting the world as a family at and beyond the dinner table</p>
+              <h1 className="font-bold text-lg text-foreground">mbio</h1>
+              <p className="text-xs text-muted-foreground">Powered by Family Dinner Foundation</p>
             </div>
           </div>
 

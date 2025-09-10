@@ -15,7 +15,8 @@ const Footer = () => {
                 <Users className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h2 className="font-bold text-lg text-foreground">Family Dinner Foundation</h2>
+                <h2 className="font-bold text-lg text-foreground">mbio</h2>
+                <p className="text-xs text-muted-foreground">Powered by Family Dinner Foundation</p>
               </div>
             </div>
             <p className="text-muted-foreground mb-6 leading-relaxed">
@@ -133,7 +134,7 @@ const Footer = () => {
 
         <div className="flex flex-col md:flex-row justify-between items-center">
           <p className="text-muted-foreground text-sm">
-            © 2024 Family Dinner Foundation. All rights reserved.
+            © 2024 mbio - Powered by Family Dinner Foundation. All rights reserved.
           </p>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <a href="#" className="text-muted-foreground hover:text-primary text-sm transition-colors">
