@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Users, Heart, Home, Calendar } from "lucide-react";
-import heroDinner from "@/assets/hero-dinner.jpg";
 import NeighborhoodSelector from "@/components/neighborhood/NeighborhoodSelector";
 import AuthModal from "@/components/auth/AuthModal";
 import InviteFriend from "@/components/InviteFriend";
@@ -31,9 +30,9 @@ const Hero = () => {
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <img 
-          src={heroDinner} 
-          alt="Neighbors sharing a warm dinner together"
-          className="w-full h-full object-cover opacity-20"
+          src="/lovable-uploads/9524b6bc-bb50-4307-ab6c-c4c2b6aa7999.png" 
+          alt="Community gathering illustration showing neighbors connecting together"
+          className="w-full h-full object-cover opacity-15"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-background/50 to-background/80" />
       </div>
