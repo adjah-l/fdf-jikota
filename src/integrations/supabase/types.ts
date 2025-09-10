@@ -1222,6 +1222,9 @@ export type Database = {
           neighborhood_name: string | null
           new_to_city: string | null
           phone_number: string | null
+          preferred_activity_type:
+            | Database["public"]["Enums"]["group_activity_type"]
+            | null
           season_interest: string | null
           sms_notifications: boolean | null
           sms_replies: boolean | null
@@ -1265,6 +1268,9 @@ export type Database = {
           neighborhood_name?: string | null
           new_to_city?: string | null
           phone_number?: string | null
+          preferred_activity_type?:
+            | Database["public"]["Enums"]["group_activity_type"]
+            | null
           season_interest?: string | null
           sms_notifications?: boolean | null
           sms_replies?: boolean | null
@@ -1308,6 +1314,9 @@ export type Database = {
           neighborhood_name?: string | null
           new_to_city?: string | null
           phone_number?: string | null
+          preferred_activity_type?:
+            | Database["public"]["Enums"]["group_activity_type"]
+            | null
           season_interest?: string | null
           sms_notifications?: boolean | null
           sms_replies?: boolean | null

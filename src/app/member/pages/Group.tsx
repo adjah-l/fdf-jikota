@@ -8,14 +8,18 @@ import { FiveCMeter } from "@/components/fivec/FiveCMeter";
 import { FiveCStatus } from "@/lib/fiveC";
 import { flags } from "@/config/flags";
 import { getActivityTypeLabel } from "@/lib/activityTypes";
+import { useMyGroup } from "@/hooks/useMyGroup";
 
 const MemberGroup = () => {
-  // TODO: Replace with real data from API
+  // Get user's current group (with fallback to dinner groups)
+  const { data: userGroup, isLoading: groupLoading } = useMyGroup();
+  
+  // TODO: Replace with real data from API - for now, use mock data but include activity type from user's group
   const groupData = {
-    name: "Downtown Group",
-    activity_type: "dinner" as const,
-    status: "Active",
-    description: "A friendly group of neighbors who love good food and great conversation. We meet monthly for potluck dinners and seasonal activities.",
+    name: userGroup?.name || "Downtown Group",
+    activity_type: userGroup?.activity_type || "dinner" as const,
+    status: userGroup?.status || "Active",
+    description: userGroup?.description || "A friendly group of neighbors who love good food and great conversation. We meet monthly for potluck dinners and seasonal activities.",
     nextMeeting: {
       date: "Thursday, December 12, 2024",
       time: "7:00 PM",
@@ -50,6 +54,19 @@ const MemberGroup = () => {
     crisis: { active: false },
     celebration: { active: true, lastActivity: new Date('2024-12-05') }
   };
+
+  if (groupLoading) {
+    return <div className="text-center py-8">Loading your group...</div>;
+  }
+
+  if (!userGroup) {
+    return (
+      <div className="text-center py-8">
+        <div className="text-muted-foreground">You're not placed in a group yet.</div>
+        <div className="text-sm text-muted-foreground mt-2">Check back soon or update your availability.</div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8">
@@ -123,7 +140,7 @@ const MemberGroup = () => {
               <Users className="w-5 h-5" />
               Group Members ({groupData.members.length})
             </CardTitle>
-            <CardDescription>Your dinner group community</CardDescription>
+            <CardDescription>Your group community</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
