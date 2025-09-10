@@ -20,6 +20,9 @@ export const flags = {
   
   // Trust verification via address, church, or workplace email
   enableVerification: true,
+  
+  // 5C Framework integration across the platform
+  enable5C: true,
 } as const;
 
 export type FeatureFlag = keyof typeof flags;
