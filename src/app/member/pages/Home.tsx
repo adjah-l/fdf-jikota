@@ -1,7 +1,10 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Users, Heart, MessageSquare, Calendar, MapPin, Clock } from "lucide-react";
+import { Users, Heart, MessageSquare, Calendar, MapPin, Clock, ArrowRight } from "lucide-react";
+import { FiveCMeter } from "@/components/fivec/FiveCMeter";
+import { FiveCStatus, getNextAction } from "@/lib/fiveC";
+import { flags } from "@/config/flags";
 
 const MemberHome = () => {
   // TODO: Replace with real data from API
@@ -23,6 +26,20 @@ const MemberHome = () => {
       { title: "Community Service Day", date: "Dec 15", time: "9:00 AM" }
     ]
   };
+
+  // Mock 5C status - replace with real data
+  const fiveCStatus: FiveCStatus = {
+    connection: { active: true, lastActivity: new Date('2024-12-09') },
+    care: { active: false },
+    contribution: { active: true, lastActivity: new Date('2024-12-01') },
+    celebration: { active: false },
+    consistency: { active: true, lastActivity: new Date('2024-12-05') }
+  };
+
+  // Find the first inactive C for next action
+  const inactiveCs = Object.entries(fiveCStatus).filter(([_, status]) => !status.active);
+  const nextActionKey = inactiveCs.length > 0 ? inactiveCs[0][0] as keyof FiveCStatus : 'connection';
+  const nextAction = getNextAction(nextActionKey);
 
   const quickActions = [
     { title: "Message My Group", icon: MessageSquare, description: "Chat with group members", action: "/app/messages" },
@@ -75,6 +92,31 @@ const MemberHome = () => {
           </CardContent>
         </Card>
       </div>
+
+      {/* 5C Framework Status (if enabled) */}
+      {flags.enable5C && (
+        <Card>
+          <CardHeader>
+            <CardTitle>This Week's Focus</CardTitle>
+            <CardDescription>Strengthen your group with the 5C framework</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <FiveCMeter status={fiveCStatus} size="small" />
+            <div className="bg-muted/30 p-4 rounded-lg">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h4 className="font-medium">{nextAction.title}</h4>
+                  <p className="text-sm text-muted-foreground">{nextAction.description}</p>
+                </div>
+                <Button size="sm">
+                  Act Now
+                  <ArrowRight className="ml-2 w-4 h-4" />
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       <div className="grid lg:grid-cols-2 gap-8">
         {/* My Group Section */}

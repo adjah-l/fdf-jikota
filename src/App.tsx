@@ -10,6 +10,7 @@ import { flags } from "@/config/flags";
 
 // Existing pages
 import Index from "./pages/Index";
+import HomeNew from "./pages/HomeNew";
 import ProfilePage from "./pages/Profile";
 import NeighborhoodsPage from "./pages/Neighborhoods";
 import AdminDashboard from "./pages/AdminDashboard";
@@ -99,7 +100,7 @@ const AppContent = () => (
 
             {/* Existing App Shell and Routes */}
             <Route path="/" element={<AppShell />}>
-              <Route index element={<DashboardPage />} />
+              <Route index element={flags.enableNewMarketing ? <HomeNew /> : <DashboardPage />} />
               <Route path="/groups" element={<GroupsPage />} />
               <Route path="/neighborhoods" element={<NeighborhoodsPage />} />
               <Route path="/care" element={<CommunityCarePage />} />
@@ -115,6 +116,7 @@ const AppContent = () => (
             </Route>
             
             {/* Public routes outside AppShell */}
+            <Route path="/legacy-home" element={<Index />} />
             <Route path="/welcome" element={<Index />} />
             <Route path="/sms-respond/:token" element={<SMSRespond />} />
           </Routes>

@@ -4,6 +4,9 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { Calendar, MapPin, Users, MessageSquare, Phone, Mail, Clock } from "lucide-react";
+import { FiveCMeter } from "@/components/fivec/FiveCMeter";
+import { FiveCStatus } from "@/lib/fiveC";
+import { flags } from "@/config/flags";
 
 const MemberGroup = () => {
   // TODO: Replace with real data from API
@@ -35,6 +38,15 @@ const MemberGroup = () => {
       { date: "Jan 15", time: "6:30 PM", type: "New Year Celebration", host: "Mike" },
       { date: "Feb 20", time: "7:00 PM", type: "Valentine's Potluck", host: "Emma" }
     ]
+  };
+
+  // Mock 5C status - replace with real data
+  const fiveCStatus: FiveCStatus = {
+    connection: { active: true, lastActivity: new Date('2024-12-09') },
+    care: { active: false },
+    contribution: { active: true, lastActivity: new Date('2024-12-01') },
+    celebration: { active: false },
+    consistency: { active: true, lastActivity: new Date('2024-12-05') }
   };
 
   return (
@@ -92,6 +104,11 @@ const MemberGroup = () => {
           </div>
         </CardContent>
       </Card>
+
+      {/* 5C Framework Meter (if enabled) */}
+      {flags.enable5C && (
+        <FiveCMeter status={fiveCStatus} className="mb-8" />
+      )}
 
       <div className="grid lg:grid-cols-2 gap-8">
         {/* Group Members */}

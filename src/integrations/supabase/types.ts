@@ -44,6 +44,7 @@ export type Database = {
           created_at: string
           created_by: string | null
           description: string | null
+          five_c_focus: string | null
           host_user_id: string | null
           id: string
           location_type: string | null
@@ -59,6 +60,7 @@ export type Database = {
           created_at?: string
           created_by?: string | null
           description?: string | null
+          five_c_focus?: string | null
           host_user_id?: string | null
           id?: string
           location_type?: string | null
@@ -74,6 +76,7 @@ export type Database = {
           created_at?: string
           created_by?: string | null
           description?: string | null
+          five_c_focus?: string | null
           host_user_id?: string | null
           id?: string
           location_type?: string | null
@@ -396,6 +399,54 @@ export type Database = {
             columns: ["source_id"]
             isOneToOne: false
             referencedRelation: "external_data_sources"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      five_c_events: {
+        Row: {
+          c_key: string
+          created_at: string
+          group_id: string | null
+          id: string
+          meta: Json | null
+          occurred_at: string
+          org_id: string | null
+          user_id: string | null
+        }
+        Insert: {
+          c_key: string
+          created_at?: string
+          group_id?: string | null
+          id?: string
+          meta?: Json | null
+          occurred_at?: string
+          org_id?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          c_key?: string
+          created_at?: string
+          group_id?: string | null
+          id?: string
+          meta?: Json | null
+          occurred_at?: string
+          org_id?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "five_c_events_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "dinner_groups"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "five_c_events_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: false
+            referencedRelation: "organizations"
             referencedColumns: ["id"]
           },
         ]
@@ -915,6 +966,35 @@ export type Database = {
             foreignKeyName: "neighborhoods_org_id_fkey"
             columns: ["org_id"]
             isOneToOne: false
+            referencedRelation: "organizations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      org_five_c_settings: {
+        Row: {
+          created_at: string
+          default_focus: string
+          org_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          default_focus?: string
+          org_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          default_focus?: string
+          org_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "org_five_c_settings_org_id_fkey"
+            columns: ["org_id"]
+            isOneToOne: true
             referencedRelation: "organizations"
             referencedColumns: ["id"]
           },

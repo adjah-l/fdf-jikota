@@ -2,7 +2,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { BarChart3, Users, UserCheck, Heart, MessageSquare, TrendingUp, AlertCircle } from "lucide-react";
+import { BarChart3, Users, UserCheck, Heart, MessageSquare, TrendingUp, AlertCircle, Target } from "lucide-react";
+import { flags } from "@/config/flags";
 
 const AdminOverview = () => {
   // TODO: Replace with real data from API
@@ -139,6 +140,43 @@ const AdminOverview = () => {
           </div>
         </CardContent>
       </Card>
+
+      {/* 5C KPIs (if enabled) */}
+      {flags.enable5C && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Target className="w-5 h-5" />
+              5C Framework Health
+            </CardTitle>
+            <CardDescription>Community practice indicators across all groups</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-5 gap-4">
+              <div className="text-center">
+                <div className="text-2xl font-bold text-blue-600">78%</div>
+                <div className="text-sm text-muted-foreground">Connection</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-red-600">65%</div>
+                <div className="text-sm text-muted-foreground">Care</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-green-600">82%</div>
+                <div className="text-sm text-muted-foreground">Contribution</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-yellow-600">45%</div>
+                <div className="text-sm text-muted-foreground">Celebration</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-purple-600">89%</div>
+                <div className="text-sm text-muted-foreground">Consistency</div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       <div className="grid lg:grid-cols-2 gap-8">
         {/* Quick Actions */}
