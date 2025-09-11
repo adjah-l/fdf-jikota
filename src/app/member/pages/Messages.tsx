@@ -24,7 +24,7 @@ const MemberMessages = () => {
       {
         id: 1,
         type: "group",
-        name: "Downtown Dinner Group",
+        name: "Downtown Group",
         lastMessage: "Looking forward to seeing everyone Thursday!",
         lastMessageTime: "2:30 PM",
         unreadCount: 2,

@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import { HeaderNew } from "@/components/layout/HeaderNew";
+import { ActivitiesShowcase } from "@/components/marketing/ActivitiesShowcase";
 import Hero from "@/components/Hero";
 import DinnerListings from "@/components/DinnerListings";
 import FiveCPrinciples from "@/components/FiveCPrinciples";
@@ -12,6 +13,7 @@ const Index = () => {
       {flags.enableNewMarketing ? <HeaderNew /> : <Header />}
       <main>
         <Hero />
+        <ActivitiesShowcase />
         <DinnerListings />
         <FiveCPrinciples />
       </main>

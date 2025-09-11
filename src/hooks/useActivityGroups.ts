@@ -35,7 +35,7 @@ export function useActivityGroups() {
     return data ?? [];
   }
 
-  // Fallback to dinner groups if activity groups are empty
+  // Fallback to legacy groups if activity groups are empty
   async function fetchDinnerGroupsFallback(orgId?: string) {
     let query = supabase
       .from('dinner_groups')
@@ -52,7 +52,7 @@ export function useActivityGroups() {
     return (data ?? []).map((dg: any) => ({
       id: dg.migrated_to ?? dg.id,
       org_id: dg.org_id ?? null,
-      name: dg.name ?? `Dinner Group ${String(dg.id).slice(0, 8)}`,
+      name: dg.name ?? `Legacy Group ${String(dg.id).slice(0, 8)}`,
       activity_type: 'dinner' as ActivityType,
       description: dg.description ?? null,
       five_c_focus: 'balance',
@@ -72,7 +72,7 @@ export function useActivityGroups() {
       queryFn: () => fetchActivityGroups(orgId),
     });
 
-  // Hook to list groups with fallback to dinner groups
+  // Hook to list groups with fallback to legacy groups
   const listGroupsWithFallback = (orgId?: string) =>
     useQuery({
       queryKey: ['groups_with_fallback', orgId ?? 'all'],
@@ -82,7 +82,7 @@ export function useActivityGroups() {
           return activityGroups;
         }
         
-        // If no activity groups, try dinner groups as fallback
+        // If no activity groups, try legacy groups as fallback
         const fallbackGroups = await fetchDinnerGroupsFallback(orgId);
         return fallbackGroups;
       },

@@ -78,7 +78,7 @@ export const useMatching = () => {
 
       toast({
         title: "Group approved",
-        description: "The dinner group has been approved and members will be notified.",
+        description: "The group has been approved and members will be notified.",
       });
     } catch (error: any) {
       console.error('Error approving group:', error);

@@ -45,7 +45,7 @@ export const AdminHeader = () => {
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                 <Avatar className="h-8 w-8">
-                  <AvatarImage src={user?.user_metadata?.avatar_url} alt="Avatar" />
+                  <AvatarImage src={user?.user_metadata?.avatar_url} alt={`${user?.user_metadata?.full_name || 'Admin'} profile picture`} />
                   <AvatarFallback>
                     {user?.email?.charAt(0).toUpperCase() || "A"}
                   </AvatarFallback>

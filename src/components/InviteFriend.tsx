@@ -201,7 +201,7 @@ const InviteFriend = () => {
                   <div key={index} className="flex gap-2">
                     <Input
                       type="email"
-                      placeholder="friend@example.com"
+                      placeholder="friend@yourdomain.com"
                       value={email}
                       onChange={(e) => updateEmail(index, e.target.value)}
                       className="flex-1"

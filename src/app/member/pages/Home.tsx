@@ -19,7 +19,7 @@ const MemberHome = () => {
     },
     careCredits: 12,
     recentActivity: [
-      { type: "group", message: "New message in Downtown Dinner Group", time: "2 hours ago" },
+      { type: "group", message: "New message in Downtown Group", time: "2 hours ago" },
       { type: "care", message: "John requested help with moving", time: "5 hours ago" },
       { type: "system", message: "Welcome to the community!", time: "2 days ago" }
     ],

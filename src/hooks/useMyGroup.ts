@@ -40,7 +40,7 @@ export function useMyGroup() {
         };
       }
 
-      // Fallback to dinner groups
+      // Fallback to legacy groups
       const { data: dinnerMembership } = await supabase
         .from('group_members')
         .select(`

@@ -137,7 +137,7 @@ export const DocumentVerification = ({ onVerificationComplete }: DocumentVerific
               <div className="space-y-4">
                 <img 
                   src={previewUrl} 
-                  alt="Document preview" 
+                  alt={`${documentType === 'drivers_license' ? "Driver's license" : 'Passport'} document preview`}
                   className="mx-auto max-w-xs max-h-48 object-contain rounded"
                 />
                 <p className="text-sm text-muted-foreground">

@@ -596,7 +596,7 @@ export const AdminMessagingPage = () => {
               <Input
                 id="test-email"
                 type="email"
-                placeholder="test@example.com"
+                placeholder="test@yourdomain.com"
               />
             </div>
             

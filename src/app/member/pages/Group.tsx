@@ -11,7 +11,7 @@ import { getActivityTypeLabel } from "@/lib/activityTypes";
 import { useMyGroup } from "@/hooks/useMyGroup";
 
 const MemberGroup = () => {
-  // Get user's current group (with fallback to dinner groups)
+  // Get user's current group (with fallback to legacy groups)
   const { data: userGroup, isLoading: groupLoading } = useMyGroup();
   
   // TODO: Replace with real data from API - for now, use mock data but include activity type from user's group

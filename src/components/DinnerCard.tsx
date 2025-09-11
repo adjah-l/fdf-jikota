@@ -45,7 +45,7 @@ const DinnerCard = ({
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3">
             <Avatar className="w-12 h-12">
-              <AvatarImage src={host.avatar} alt={host.name} />
+              <AvatarImage src={host.avatar} alt={`${host.name} profile picture`} />
               <AvatarFallback className="bg-primary/10 text-primary font-semibold">
                 {host.initials}
               </AvatarFallback>
