@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
@@ -51,9 +52,12 @@ export function HeaderNew() {
             />
           </div>
           <div>
-            <Link to="/" className="text-lg font-bold tracking-tight text-foreground hover:text-primary transition-colors">
-              mbio
-            </Link>
+            <div className="flex items-center gap-2">
+              <Link to="/" className="text-lg font-bold tracking-tight text-foreground hover:text-primary transition-colors">
+                mbio
+              </Link>
+              <Badge variant="secondary" className="text-xs px-2 py-0.5">Beta</Badge>
+            </div>
             <p className="text-xs text-muted-foreground">Powered by Family Dinner Foundation</p>
           </div>
         </div>

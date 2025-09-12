@@ -57,7 +57,10 @@ const Header = () => {
               />
             </div>
             <div>
-              <h1 className="font-bold text-lg text-foreground">mbio</h1>
+              <div className="flex items-center gap-2">
+                <h1 className="font-bold text-lg text-foreground">mbio</h1>
+                <Badge variant="secondary" className="text-xs px-2 py-0.5">Beta</Badge>
+              </div>
               <p className="text-xs text-muted-foreground">Powered by Family Dinner Foundation</p>
             </div>
           </div>
