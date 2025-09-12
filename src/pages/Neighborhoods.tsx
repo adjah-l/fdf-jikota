@@ -31,10 +31,11 @@ const NeighborhoodsPage = () => {
       capacity: 5, // adults only group
       attendees: 4,
       activityType: 'dinner' as const,
+      ageGroup: '25-34',
       lifeStage: 'married' as const,
       gatheringMode: 'adults' as const,
       distance: '0.3 miles',
-      details: ['Italian cuisine focus', 'Community connections'],
+      description: 'Join us for authentic Italian cooking and meaningful community connections.',
       joinDeadline: 'October 15, 2025',
       isSampleData: true,
       isFull: false
@@ -51,10 +52,11 @@ const NeighborhoodsPage = () => {
       capacity: 8, // family group
       attendees: 6,
       activityType: 'prayer_study' as const,
+      ageGroup: '35-44',
       lifeStage: 'married' as const,
       gatheringMode: 'families' as const,
       distance: '0.5 miles',
-      details: ['Bible study focus', 'All ages welcome'],
+      description: 'Weekly family-centered Bible study with fellowship and spiritual growth.',
       joinDeadline: 'March 15, 2024',
       isFull: false
     },
@@ -66,14 +68,15 @@ const NeighborhoodsPage = () => {
       dayOfWeek: 'Tuesday',
       time: '6:30 PM',
       location: 'Tempe, 85281',
-      venue: 'home' as const,
+      venue: 'public_venue' as const,
       capacity: 5, // mixed adults group
       attendees: 5,
       activityType: 'workout' as const,
+      ageGroup: '22-34',
       lifeStage: 'single' as const,
       gatheringMode: 'mixed' as const,
       distance: '0.7 miles',
-      details: ['Outdoor activities', 'All fitness levels'],
+      description: 'Active fitness community focused on health and wellness for all levels.',
       joinDeadline: 'October 15, 2025',
       isSampleData: true,
       isFull: true
@@ -90,10 +93,11 @@ const NeighborhoodsPage = () => {
       capacity: 5, // adults only
       attendees: 3,
       activityType: 'sports' as const,
+      ageGroup: '25-44',
       lifeStage: 'married' as const,
       gatheringMode: 'adults' as const,
       distance: '0.4 miles',
-      details: ['Local team games', 'Snacks provided'],
+      description: 'Sports viewing and community building for married couples.',
       joinDeadline: 'October 15, 2025',
       isSampleData: true,
       isFull: false
@@ -110,10 +114,11 @@ const NeighborhoodsPage = () => {
       capacity: 8, // family group
       attendees: 7,
       activityType: 'flexible' as const,
+      ageGroup: 'Mixed',
       lifeStage: 'mixed' as const,
       gatheringMode: 'families' as const,
       distance: '0.6 miles',
-      details: ['Rotating activities', 'Family-friendly'],
+      description: 'Creative community activities for families of all backgrounds.',
       joinDeadline: 'October 15, 2025',
       isSampleData: true,
       isFull: false
@@ -130,10 +135,11 @@ const NeighborhoodsPage = () => {
       capacity: 5, // adults group
       attendees: 4,
       activityType: 'dinner' as const,
+      ageGroup: '25-54',
       lifeStage: 'single' as const,
       gatheringMode: 'adults' as const,
       distance: '0.8 miles',
-      details: ['Healthy recipes', 'Wellness focus'],
+      description: 'Healthy living and nutrition-focused dinners for wellness-minded singles.',
       joinDeadline: 'October 15, 2025',
       isSampleData: true,
       isFull: false
@@ -317,10 +323,11 @@ const NeighborhoodsPage = () => {
               capacity={group.capacity}
               attendees={group.attendees}
               activityType={group.activityType}
+              ageGroup={group.ageGroup}
               lifeStage={group.lifeStage}
               gatheringMode={group.gatheringMode}
               distance={group.distance}
-              details={group.details}
+              description={group.description}
               joinDeadline={group.joinDeadline}
               isSampleData={group.isSampleData}
               isFull={group.isFull}

@@ -16,14 +16,15 @@ interface DinnerCardProps {
   dayOfWeek: string; // "Monday", "Tuesday", etc.
   time: string;
   location: string;
-  venue: "home" | "clubhouse";
+  venue: "home" | "clubhouse" | "public_venue";
   capacity: number;
   attendees: number;
   activityType: "dinner" | "prayer_study" | "workout" | "sports" | "flexible";
+  ageGroup?: string;
   lifeStage: "married" | "single" | "mixed";
   gatheringMode: "families" | "adults" | "mixed"; // families = max 8, others = max 5
   distance: string;
-  details?: string[];
+  description?: string;
   joinDeadline: string; // Season-based deadline
   isSampleData?: boolean;
   isFull: boolean;
@@ -40,10 +41,11 @@ const DinnerCard = ({
   capacity, 
   attendees, 
   activityType,
+  ageGroup,
   lifeStage,
   gatheringMode,
   distance,
-  details = [],
+  description,
   joinDeadline,
   isSampleData = false,
   isFull
@@ -88,16 +90,21 @@ const DinnerCard = ({
               </div>
             </div>
             <div className="flex flex-col gap-2">
-              <Badge variant={venue === "home" ? "secondary" : "outline"} className="shrink-0">
+              <Badge variant={venue === "home" ? "secondary" : venue === "clubhouse" ? "outline" : "default"} className="shrink-0">
                 {venue === "home" ? (
                   <>
                     <Home className="w-3 h-3 mr-1" />
                     Home
                   </>
-                ) : (
+                ) : venue === "clubhouse" ? (
                   <>
                     <Users className="w-3 h-3 mr-1" />
                     Clubhouse
+                  </>
+                ) : (
+                  <>
+                    <MapPin className="w-3 h-3 mr-1" />
+                    Public Venue
                   </>
                 )}
               </Badge>
@@ -129,7 +136,7 @@ const DinnerCard = ({
           <span>{location} • {distance}</span>
         </div>
         
-        {/* Life Stage & Gathering Mode */}
+        {/* Life Stage & Age Group */}
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2">
             {getLifeStageIcon(lifeStage)}
@@ -137,23 +144,18 @@ const DinnerCard = ({
               {getLifeStageLabel(lifeStage)}
             </Badge>
           </div>
-          <div className="flex items-center gap-2">
-            <Utensils className="w-4 h-4 text-muted-foreground" />
-            <Badge variant={gatheringMode === "families" ? "secondary" : "outline"}>
-              {gatheringMode === "families" ? "Family Groups" : gatheringMode === "adults" ? "Adults Only" : "Mixed Ages"}
+          {ageGroup && (
+            <Badge variant="secondary">
+              {ageGroup}
             </Badge>
-          </div>
+          )}
         </div>
-        
-        {/* Group Details */}
-        {details.length > 0 && (
-          <div className="flex flex-wrap gap-2">
-            {details.map((tag) => (
-              <Badge key={tag} variant="outline" className="text-xs">
-                {tag}
-              </Badge>
-            ))}
-          </div>
+
+        {/* Description */}
+        {description && (
+          <p className="text-sm text-muted-foreground">
+            {description}
+          </p>
         )}
         
         {/* Join Deadline */}
