@@ -61,7 +61,7 @@ const About = () => {
             Building community at scale
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-            We started mbio because we saw people longing for genuine community - and leaders struggling with how to turn a crowd into a place where everyone belongs and truly cares for one another.
+            We started mbio because people everywhere are longing for genuine community—and because too many leaders are struggling to turn a crowd into a place where everyone belongs and truly cares for one another.
           </p>
         </div>
 
@@ -69,15 +69,18 @@ const About = () => {
         <div className="max-w-4xl mx-auto mb-16">
           <Card className="p-8 md:p-12">
             <CardContent className="space-y-6">
-              <h2 className="text-3xl font-bold mb-6">Our story</h2>
+              <h2 className="text-3xl font-bold mb-6">Our Story</h2>
               <p className="text-lg leading-relaxed">
-                It started in a church of 800 people where only 200 were in small groups. The pastoral team knew that real community happened in smaller circles, but creating and maintaining those groups was overwhelming. Traditional methods didn't scale.
+                Community isn't just about being together, it's about being cared for. We live in a world where connection is easy to find online but hard to experience in real life. People need more than events—they need relationships that meet their everyday needs: someone to call in a crisis, someone to celebrate with, someone to share the highs and lows of life.
               </p>
               <p className="text-lg leading-relaxed">
-                We realized this wasn't just a church problem. Universities had thousands of students feeling isolated. HOAs struggled to turn neighbors into communities. Professional organizations and social clubs had members who barely knew each other. Alumni networks existed on paper but not in practice.
+                For more than a decade, the Family Dinner Foundation has been proving what's possible. Through nearly 50,000 people across 30 cities and 3 continents, we saw that when people gather with intention and commit to one another, strangers quickly become family. From that foundation we created mbio.
               </p>
               <p className="text-lg leading-relaxed">
-                So we built mbio - a platform where members can find their people and leaders can systematically create the conditions where authentic community flourishes. Because everyone deserves a place where people genuinely care for each other like family.
+                In Efik, mbio means "people." And people are what this is all about. Mbio exists so members can find their people and build reliable, life-giving relationships through our 5C Mutual Care Framework: Commitment, Connection, Communication, Crisis, and Celebration.
+              </p>
+              <p className="text-lg leading-relaxed">
+                Because we believe everyone deserves a community that shows up, shares life, and makes sure no one has to do life alone.
               </p>
             </CardContent>
           </Card>
@@ -93,16 +96,16 @@ const About = () => {
             </p>
             <div className="grid md:grid-cols-3 gap-8 text-center">
               <div>
-                <div className="text-3xl font-bold text-primary mb-2">10,000+</div>
-                <div className="text-sm text-muted-foreground">Members connected</div>
+                <div className="text-3xl font-bold text-primary mb-2">50,000+</div>
+                <div className="text-sm text-muted-foreground">People connected</div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-primary mb-2">500+</div>
-                <div className="text-sm text-muted-foreground">Groups formed</div>
+                <div className="text-3xl font-bold text-primary mb-2">30+</div>
+                <div className="text-sm text-muted-foreground">Cities worldwide</div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-primary mb-2">50+</div>
-                <div className="text-sm text-muted-foreground">Organizations served</div>
+                <div className="text-3xl font-bold text-primary mb-2">3</div>
+                <div className="text-sm text-muted-foreground">Continents served</div>
               </div>
             </div>
           </div>

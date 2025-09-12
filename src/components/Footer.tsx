@@ -20,7 +20,7 @@ const Footer = () => {
               </div>
             </div>
             <p className="text-muted-foreground mb-6 leading-relaxed">
-              Connecting the world as a family at and beyond the dinner table through the 5C mutual care practice to improve belonging and community health.
+              Helping people find their people and build reliable, life-giving relationships through our 5C Mutual Care Framework. Because everyone deserves a community that shows up.
             </p>
             <div className="flex space-x-4">
               <Button variant="ghost" size="icon">
