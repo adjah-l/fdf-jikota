@@ -17,11 +17,11 @@ const NeighborhoodsPage = () => {
   const [showSelector, setShowSelector] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Mock dinner data for demonstration
-  const mockDinners = [
+  // Mock group data for demonstration
+  const mockGroups = [
     {
       id: '1',
-      title: 'Italian Night Feast',
+      title: 'Italian Cooking & Connection',
       host: { name: 'Maria Rodriguez', initials: 'MR' },
       date: '2024-01-15',
       time: '7:00 PM',
@@ -29,14 +29,14 @@ const NeighborhoodsPage = () => {
       venue: 'home' as const,
       capacity: 8,
       attendees: 6,
-      mealType: 'potluck' as const,
+      activityType: 'Dinner',
       distance: '0.3 miles',
-      dietary: ['Vegetarian options available'],
+      details: ['Weekly gatherings', 'Practice 5C framework'],
       neighborhood: 'Sunset Hills'
     },
     {
       id: '2',
-      title: 'Sunday Brunch Social',
+      title: 'Sunday Prayer & Connection',
       host: { name: 'The Johnson Family', initials: 'JF' },
       date: '2024-01-16',
       time: '11:00 AM',
@@ -44,14 +44,14 @@ const NeighborhoodsPage = () => {
       venue: 'home' as const,
       capacity: 12,
       attendees: 8,
-      mealType: 'potluck' as const,
+      activityType: 'Prayer / Bible Study',
       distance: '0.5 miles',
-      dietary: ['Gluten-free options'],
+      details: ['Bible study focus', 'All levels welcome'],
       neighborhood: 'Sunset Hills'
     },
     {
       id: '3',
-      title: 'Taco Tuesday Fiesta',
+      title: 'Tuesday Fitness & Care',
       host: { name: 'Carlos & Sofia Mendez', initials: 'CM' },
       date: '2024-01-16',
       time: '6:30 PM',
@@ -59,14 +59,14 @@ const NeighborhoodsPage = () => {
       venue: 'home' as const,
       capacity: 10,
       attendees: 7,
-      mealType: 'potluck' as const,
+      activityType: 'Working Out',
       distance: '0.7 miles',
-      dietary: ['Vegan options', 'Spicy'],
+      details: ['Outdoor activities', 'All fitness levels'],
       neighborhood: 'Sunset Hills'
     },
     {
       id: '4',
-      title: 'Wine & Cheese Night',
+      title: 'Sports Watch Party',
       host: { name: 'David Chen', initials: 'DC' },
       date: '2024-01-17',
       time: '7:30 PM',
@@ -74,14 +74,14 @@ const NeighborhoodsPage = () => {
       venue: 'home' as const,
       capacity: 6,
       attendees: 4,
-      mealType: 'restaurant' as const,
+      activityType: 'Watch Sporting Events',
       distance: '0.4 miles',
-      dietary: ['Contains dairy', 'Wine pairing'],
+      details: ['Local team games', 'Snacks provided'],
       neighborhood: 'Sunset Hills'
     },
     {
       id: '5',
-      title: 'Family Game Night Dinner',
+      title: 'Creative Connections Group',
       host: { name: 'The Thompson Family', initials: 'TF' },
       date: '2024-01-18',
       time: '6:00 PM',
@@ -89,14 +89,14 @@ const NeighborhoodsPage = () => {
       venue: 'home' as const,
       capacity: 15,
       attendees: 12,
-      mealType: 'potluck' as const,
+      activityType: 'Flexible',
       distance: '0.6 miles',
-      dietary: ['Kid-friendly', 'Nut-free'],
+      details: ['Rotating activities', 'Family-friendly'],
       neighborhood: 'Sunset Hills'
     },
     {
       id: '6',
-      title: 'Healthy Cooking Workshop',
+      title: 'Healthy Living Together',
       host: { name: 'Dr. Sarah Williams', initials: 'SW' },
       date: '2024-01-19',
       time: '5:30 PM',
@@ -104,14 +104,14 @@ const NeighborhoodsPage = () => {
       venue: 'clubhouse' as const,
       capacity: 8,
       attendees: 5,
-      mealType: 'restaurant' as const,
+      activityType: 'Dinner',
       distance: '0.8 miles',
-      dietary: ['Organic', 'Low-sodium', 'Heart-healthy'],
+      details: ['Healthy recipes', 'Wellness focus'],
       neighborhood: 'Sunset Hills'
     },
     {
       id: '7',
-      title: 'International Potluck',
+      title: 'Community Connection Gathering',
       host: { name: 'Sunset Hills Community', initials: 'SC' },
       date: '2024-01-20',
       time: '6:00 PM',
@@ -119,14 +119,14 @@ const NeighborhoodsPage = () => {
       venue: 'clubhouse' as const,
       capacity: 30,
       attendees: 22,
-      mealType: 'potluck' as const,
+      activityType: 'Flexible',
       distance: '0.2 miles',
-      dietary: ['Various cuisines', 'Label your dishes'],
+      details: ['Monthly community event', 'All activities welcome'],
       neighborhood: 'Sunset Hills'
     },
     {
       id: '8',
-      title: 'BBQ & Blues Night',
+      title: 'Active Outdoors Group',
       host: { name: 'Mike & Lisa Brown', initials: 'MB' },
       date: '2024-01-21',
       time: '5:00 PM',
@@ -134,19 +134,19 @@ const NeighborhoodsPage = () => {
       venue: 'home' as const,
       capacity: 20,
       attendees: 15,
-      mealType: 'potluck' as const,
+      activityType: 'Working Out',
       distance: '0.9 miles',
-      dietary: ['Meat & veggie options', 'Outdoor seating'],
+      details: ['Outdoor activities', 'Weather permitting'],
       neighborhood: 'Sunset Hills'
     }
   ];
 
   const selectedNeighborhood = userNeighborhoods[0]?.neighborhood;
 
-  const filteredDinners = mockDinners.filter(dinner =>
-    dinner.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    dinner.host.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    dinner.mealType.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredGroups = mockGroups.filter(group =>
+    group.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    group.host.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    group.activityType.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   if (loading) {
@@ -170,7 +170,7 @@ const NeighborhoodsPage = () => {
             <div className="space-y-2">
               <h1 className="text-4xl font-bold">Discover Your Neighborhood</h1>
               <p className="text-muted-foreground text-lg">
-                Join a neighborhood to see upcoming dinners and connect with your local community.
+                Join a neighborhood to see upcoming groups and connect with your local community through the 5C framework.
               </p>
             </div>
             
@@ -179,7 +179,7 @@ const NeighborhoodsPage = () => {
                 <MapPin className="w-12 h-12 text-primary mx-auto" />
                 <h2 className="text-2xl font-semibold">Choose Your Neighborhood</h2>
                 <p className="text-muted-foreground">
-                  Select your neighborhood to discover local dinner opportunities and meet your neighbors.
+                  Select your neighborhood to discover local group opportunities and meet your neighbors through meaningful activities.
                 </p>
                 <Button onClick={() => setShowSelector(true)} size="lg">
                   <MapPin className="w-4 h-4 mr-2" />
@@ -243,8 +243,8 @@ const NeighborhoodsPage = () => {
                 <div className="flex items-center space-x-2">
                   <Calendar className="w-5 h-5 text-primary" />
                   <div>
-                    <p className="text-2xl font-bold">{mockDinners.length}</p>
-                    <p className="text-sm text-muted-foreground">Upcoming Dinners</p>
+                    <p className="text-2xl font-bold">{mockGroups.length}</p>
+                    <p className="text-sm text-muted-foreground">Upcoming Groups</p>
                   </div>
                 </div>
               </CardContent>
@@ -283,13 +283,13 @@ const NeighborhoodsPage = () => {
         {/* Search and Filters */}
         <Card className="mb-6">
           <CardHeader>
-            <CardTitle>Upcoming Dinners in Your Neighborhood</CardTitle>
+            <CardTitle>Upcoming Groups in Your Neighborhood</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
               <Input
-                placeholder="Search dinners by title, host, or meal type..."
+                placeholder="Search groups by title, host, or activity type..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="pl-10"
@@ -298,31 +298,31 @@ const NeighborhoodsPage = () => {
           </CardContent>
         </Card>
 
-        {/* Dinners Grid */}
+        {/* Groups Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {filteredDinners.map((dinner) => (
+          {filteredGroups.map((group) => (
             <DinnerCard
-              key={dinner.id}
-              id={dinner.id}
-              title={dinner.title}
-              host={dinner.host}
-              date={dinner.date}
-              time={dinner.time}
-              location={dinner.location}
-              venue={dinner.venue}
-              capacity={dinner.capacity}
-              attendees={dinner.attendees}
-              mealType={dinner.mealType}
-              distance={dinner.distance}
-              dietary={dinner.dietary}
+              key={group.id}
+              id={group.id}
+              title={group.title}
+              host={group.host}
+              date={group.date}
+              time={group.time}
+              location={group.location}
+              venue={group.venue}
+              capacity={group.capacity}
+              attendees={group.attendees}
+              mealType={group.activityType as any}
+              distance={group.distance}
+              dietary={group.details}
             />
           ))}
         </div>
 
-        {filteredDinners.length === 0 && searchTerm && (
+        {filteredGroups.length === 0 && searchTerm && (
           <div className="text-center py-12">
             <p className="text-muted-foreground">
-              No dinners found matching "{searchTerm}". Try a different search term.
+              No groups found matching "{searchTerm}". Try a different search term.
             </p>
           </div>
         )}

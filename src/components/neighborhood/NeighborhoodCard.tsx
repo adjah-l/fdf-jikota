@@ -49,7 +49,7 @@ const NeighborhoodCard = ({
           </div>
           <div className="flex items-center gap-1">
             <Calendar className="h-4 w-4" />
-            {neighborhood.active_dinners_count} active dinners
+            {neighborhood.active_dinners_count} active groups
           </div>
           <div className="flex items-center gap-1">
             <CalendarDays className="h-4 w-4" />

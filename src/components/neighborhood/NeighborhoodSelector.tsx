@@ -71,7 +71,7 @@ const NeighborhoodSelector = ({ open, onOpenChange }: NeighborhoodSelectorProps)
               Choose Your Neighborhood
             </DialogTitle>
             <DialogDescription>
-              Join a neighborhood to connect with neighbors and discover local dinner opportunities.
+              Join a neighborhood to connect with neighbors and discover local group opportunities that practice the 5C framework.
             </DialogDescription>
           </DialogHeader>
 
