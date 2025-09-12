@@ -20,6 +20,7 @@ interface DinnerCardProps {
   capacity: number;
   attendees: number;
   activityType: "dinner" | "prayer_study" | "workout" | "sports" | "flexible";
+  lifeStage: "married_no_children" | "single_no_children" | "married_with_children" | "single_with_children" | "mixed";
   gatheringMode: "families" | "adults" | "mixed"; // families = max 8, others = max 5
   distance: string;
   details?: string[];
@@ -38,6 +39,7 @@ const DinnerCard = ({
   capacity, 
   attendees, 
   activityType,
+  lifeStage,
   gatheringMode,
   distance,
   details = [],
@@ -47,25 +49,25 @@ const DinnerCard = ({
   const spotsLeft = capacity - attendees;
   const isAlmostFull = spotsLeft <= 2 && spotsLeft > 0;
   
-  const getActivityIcon = (type: string) => {
-    switch (type) {
-      case 'dinner': return <Utensils className="w-4 h-4" />;
-      case 'prayer_study': return <Users className="w-4 h-4" />;
-      case 'workout': return <Users className="w-4 h-4" />;
-      case 'sports': return <Users className="w-4 h-4" />;
-      case 'flexible': return <Users className="w-4 h-4" />;
+  const getLifeStageIcon = (stage: string) => {
+    switch (stage) {
+      case 'married_no_children': return <Users className="w-4 h-4" />;
+      case 'single_no_children': return <Users className="w-4 h-4" />;
+      case 'married_with_children': return <Home className="w-4 h-4" />;
+      case 'single_with_children': return <Home className="w-4 h-4" />;
+      case 'mixed': return <Users className="w-4 h-4" />;
       default: return <Users className="w-4 h-4" />;
     }
   };
   
-  const getActivityLabel = (type: string) => {
-    switch (type) {
-      case 'dinner': return 'Dinner';
-      case 'prayer_study': return 'Prayer & Study';
-      case 'workout': return 'Fitness';
-      case 'sports': return 'Sports';
-      case 'flexible': return 'Flexible';
-      default: return 'Group';
+  const getLifeStageLabel = (stage: string) => {
+    switch (stage) {
+      case 'married_no_children': return 'Married (No Children)';
+      case 'single_no_children': return 'Single (No Children)';
+      case 'married_with_children': return 'Married (with Children)';
+      case 'single_with_children': return 'Single (with Children)';
+      case 'mixed': return 'Mixed Life Stages';
+      default: return 'Mixed';
     }
   };
   
@@ -122,17 +124,20 @@ const DinnerCard = ({
           <span>{location} • {distance}</span>
         </div>
         
-        {/* Activity Type & Gathering Mode */}
+        {/* Life Stage & Gathering Mode */}
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2">
-            {getActivityIcon(activityType)}
+            {getLifeStageIcon(lifeStage)}
             <Badge variant="default">
-              {getActivityLabel(activityType)}
+              {getLifeStageLabel(lifeStage)}
             </Badge>
           </div>
-          <Badge variant={gatheringMode === "families" ? "secondary" : "outline"}>
-            {gatheringMode === "families" ? "Family Groups" : gatheringMode === "adults" ? "Adults Only" : "Mixed Ages"}
-          </Badge>
+          <div className="flex items-center gap-2">
+            <Utensils className="w-4 h-4 text-muted-foreground" />
+            <Badge variant={gatheringMode === "families" ? "secondary" : "outline"}>
+              {gatheringMode === "families" ? "Family Groups" : gatheringMode === "adults" ? "Adults Only" : "Mixed Ages"}
+            </Badge>
+          </div>
         </div>
         
         {/* Group Details */}

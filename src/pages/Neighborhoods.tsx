@@ -31,6 +31,7 @@ const NeighborhoodsPage = () => {
       capacity: 5, // adults only group
       attendees: 4,
       activityType: 'dinner' as const,
+      lifeStage: 'married_no_children' as const,
       gatheringMode: 'adults' as const,
       distance: '0.3 miles',
       details: ['Italian cuisine focus', 'Practice 5C framework'],
@@ -49,6 +50,7 @@ const NeighborhoodsPage = () => {
       capacity: 8, // family group
       attendees: 6,
       activityType: 'prayer_study' as const,
+      lifeStage: 'married_with_children' as const,
       gatheringMode: 'families' as const,
       distance: '0.5 miles',
       details: ['Bible study focus', 'All ages welcome'],
@@ -67,6 +69,7 @@ const NeighborhoodsPage = () => {
       capacity: 5, // mixed adults group
       attendees: 5,
       activityType: 'workout' as const,
+      lifeStage: 'single_no_children' as const,
       gatheringMode: 'mixed' as const,
       distance: '0.7 miles',
       details: ['Outdoor activities', 'All fitness levels'],
@@ -85,6 +88,7 @@ const NeighborhoodsPage = () => {
       capacity: 5, // adults only
       attendees: 3,
       activityType: 'sports' as const,
+      lifeStage: 'married_no_children' as const,
       gatheringMode: 'adults' as const,
       distance: '0.4 miles',
       details: ['Local team games', 'Snacks provided'],
@@ -103,6 +107,7 @@ const NeighborhoodsPage = () => {
       capacity: 8, // family group
       attendees: 7,
       activityType: 'flexible' as const,
+      lifeStage: 'mixed' as const,
       gatheringMode: 'families' as const,
       distance: '0.6 miles',
       details: ['Rotating activities', 'Family-friendly'],
@@ -121,6 +126,7 @@ const NeighborhoodsPage = () => {
       capacity: 5, // adults group
       attendees: 4,
       activityType: 'dinner' as const,
+      lifeStage: 'single_with_children' as const,
       gatheringMode: 'adults' as const,
       distance: '0.8 miles',
       details: ['Healthy recipes', 'Wellness focus'],
@@ -134,7 +140,7 @@ const NeighborhoodsPage = () => {
   const filteredGroups = mockGroups.filter(group =>
     group.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
     group.host.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    group.activityType.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    group.lifeStage.toLowerCase().includes(searchTerm.toLowerCase()) ||
     group.gatheringMode.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -281,7 +287,7 @@ const NeighborhoodsPage = () => {
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
               <Input
-                placeholder="Search groups by focus, host, activity type, or gathering mode..."
+                placeholder="Search groups by focus, host, life stage, or gathering mode..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="pl-10"
@@ -306,6 +312,7 @@ const NeighborhoodsPage = () => {
               capacity={group.capacity}
               attendees={group.attendees}
               activityType={group.activityType}
+              lifeStage={group.lifeStage}
               gatheringMode={group.gatheringMode}
               distance={group.distance}
               details={group.details}
