@@ -50,9 +50,12 @@ export function HeaderNew() {
               className="w-8 h-8 object-contain"
             />
           </div>
-          <Link to="/" className="text-lg font-bold tracking-tight text-foreground hover:text-primary transition-colors">
-            mbio
-          </Link>
+          <div>
+            <Link to="/" className="text-lg font-bold tracking-tight text-foreground hover:text-primary transition-colors">
+              mbio
+            </Link>
+            <p className="text-xs text-muted-foreground">Powered by Family Dinner Foundation</p>
+          </div>
         </div>
 
         {/* Desktop Navigation */}
