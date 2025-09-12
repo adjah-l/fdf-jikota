@@ -61,7 +61,7 @@ const About = () => {
             Building community at scale
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-            We started mbio because we saw leaders struggling with the same problem: how do you turn a crowd of people into a community where everyone belongs?
+            We started mbio because we saw people longing for genuine community - and leaders struggling with how to turn a crowd into a place where everyone belongs and truly cares for one another.
           </p>
         </div>
 
@@ -74,60 +74,22 @@ const About = () => {
                 It started in a church of 800 people where only 200 were in small groups. The pastoral team knew that real community happened in smaller circles, but creating and maintaining those groups was overwhelming. Traditional methods didn't scale.
               </p>
               <p className="text-lg leading-relaxed">
-                We realized this wasn't just a church problem. HOAs struggled to turn neighbors into communities. Professional organizations had members who barely knew each other. Alumni networks existed on paper but not in practice.
+                We realized this wasn't just a church problem. Universities had thousands of students feeling isolated. HOAs struggled to turn neighbors into communities. Professional organizations and social clubs had members who barely knew each other. Alumni networks existed on paper but not in practice.
               </p>
               <p className="text-lg leading-relaxed">
-                So we built mbio - a platform that helps leaders systematically form groups, facilitate mutual care, and create the conditions where authentic community can flourish. Because everyone deserves to belong somewhere.
+                So we built mbio - a platform where members can find their people and leaders can systematically create the conditions where authentic community flourishes. Because everyone deserves a place where people genuinely care for each other like family.
               </p>
             </CardContent>
           </Card>
         </div>
 
-        {/* Values Section */}
-        <div className="mb-16">
-          <h2 className="text-3xl font-bold text-center mb-12">Our values</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {values.map((value, index) => (
-              <Card key={index} className="text-center h-full">
-                <CardContent className="p-6">
-                  <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-4">
-                    <value.icon className="w-6 h-6 text-primary" />
-                  </div>
-                  <h3 className="font-semibold mb-3">{value.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    {value.description}
-                  </p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-
-        {/* Team Section */}
-        <div className="mb-16">
-          <h2 className="text-3xl font-bold text-center mb-12">Meet the team</h2>
-          <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            {team.map((member, index) => (
-              <Card key={index} className="text-center">
-                <CardContent className="p-6">
-                  <div className="w-24 h-24 bg-muted rounded-full mx-auto mb-4"></div>
-                  <h3 className="font-semibold text-lg">{member.name}</h3>
-                  <p className="text-primary text-sm mb-3">{member.role}</p>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    {member.bio}
-                  </p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
 
         {/* Mission Section */}
         <div className="bg-muted/50 rounded-2xl p-8 md:p-12 mb-16">
           <div className="text-center max-w-3xl mx-auto">
             <h2 className="text-3xl font-bold mb-6">Our mission</h2>
             <p className="text-lg leading-relaxed mb-8">
-              To help leaders transform crowds into communities where every person has meaningful connections and opportunities to give and receive care.
+              To connect people in communities where everyone has meaningful relationships and the support they need - whether you're a member looking for your people or a leader building stronger organizations.
             </p>
             <div className="grid md:grid-cols-3 gap-8 text-center">
               <div>
@@ -152,7 +114,7 @@ const About = () => {
             Join us in building better communities
           </h2>
           <p className="text-muted-foreground mb-8">
-            Whether you're leading a church, HOA, or professional organization, we'd love to help you create the community you envision.
+            Whether you're a member seeking genuine community or leading a church, university, HOA, professional organization, or social group - we'd love to help you create connections that feel like family.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" className="px-8">

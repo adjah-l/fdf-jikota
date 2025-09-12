@@ -30,15 +30,27 @@ const UseCases = () => {
     },
     {
       icon: Building2,
-      title: "Professional Organizations",
+      title: "Universities & Schools",
+      description: "Student communities and alumni networks with lasting connections",
+      features: [
+        "Student life groups by interests and activities",
+        "Alumni networking with meaningful relationships",
+        "Peer mentoring and study groups",
+        "Campus community building initiatives"
+      ],
+      cta: "Perfect for universities, colleges, and schools"
+    },
+    {
+      icon: Users,
+      title: "Professional & Social Organizations",
       description: "Cohorts with peer support and professional development",
       features: [
         "Industry peer mentoring circles",
         "Professional development cohorts", 
-        "Professional networking groups",
-        "Knowledge and resource sharing"
+        "Social clubs with authentic connections",
+        "Knowledge and resource sharing networks"
       ],
-      cta: "Built for professional associations and alumni networks"
+      cta: "Built for professional associations and social organizations"
     }
   ];
 
@@ -51,7 +63,7 @@ const UseCases = () => {
             One platform, many use cases
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-            From churches to HOAs to professional organizations, see how leaders are using our platform to turn large populations into thriving communities.
+            From churches to universities to HOAs to professional organizations, see how members are finding their people and leaders are creating thriving communities.
           </p>
         </div>
 
@@ -119,7 +131,7 @@ const UseCases = () => {
             Ready to transform your community?
           </h2>
           <p className="text-muted-foreground mb-8">
-            Join organizations already building stronger communities through structured connection.
+            Join thousands already experiencing community that genuinely cares for each other like family.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" className="px-8">

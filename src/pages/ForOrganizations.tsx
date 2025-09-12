@@ -22,8 +22,14 @@ const organizationTypes = [
     features: ["Dinner", "Prayer / Bible Study", "Working Out", "Watch Sporting Events", "Flexible"]
   },
   {
-    title: "Professional Organizations",
+    title: "Universities & Schools",
     icon: Building,
+    description: "Help students and alumni build lasting friendships through shared activities and mutual support.",
+    features: ["Dinner", "Prayer / Bible Study", "Working Out", "Watch Sporting Events", "Flexible"]
+  },
+  {
+    title: "Professional & Social Organizations",
+    icon: Users,
     description: "Foster meaningful connections beyond networking through structured relationship building.",
     features: ["Dinner", "Prayer / Bible Study", "Working Out", "Watch Sporting Events", "Flexible"]
   }
@@ -42,7 +48,7 @@ const ForOrganizations = () => {
             For Organizations
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-            Whether you lead a church, HOA, or professional organization, the 5C framework creates lasting community connections through diverse group activities.
+            Whether you lead a church, university, HOA, professional organization, or social group, create communities where members truly care for each other through the 5C framework and diverse group activities.
           </p>
           <Button size="lg" className="text-lg px-8" onClick={() => navigate('/organizations/new')}>
             Get Started
@@ -90,7 +96,7 @@ const ForOrganizations = () => {
             <CardContent className="p-8">
               <h2 className="text-2xl font-bold mb-4">Ready to Get Started?</h2>
               <p className="text-muted-foreground mb-6">
-                Join organizations using the 5C framework to build stronger communities.
+                Join thousands of members already experiencing community that feels like family, or help your organization create these connections.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button size="lg" onClick={() => navigate('/contact')}>Schedule Demo</Button>
