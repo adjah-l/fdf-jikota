@@ -24,10 +24,6 @@ const MemberHome = () => {
       { type: "group", message: "New connection activity scheduled", time: "2 hours ago" },
       { type: "care", message: "Someone offered help with your request", time: "5 hours ago" },
       { type: "celebration", message: "Group celebrated Maria's promotion!", time: "1 day ago" }
-    ],
-    upcomingEvents: [
-      { title: "Group Gathering", date: "Oct 24", time: "7:00 PM", type: "Connection" },
-      { title: "Community Service", date: "Oct 28", time: "9:00 AM", type: "Care" }
     ]
   };
 
@@ -178,7 +174,7 @@ const MemberHome = () => {
         </Card>
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-8">
+      <div className="grid lg:grid-cols-1 gap-8">
         {/* Recent Activity */}
         <Card>
           <CardHeader>
@@ -191,7 +187,8 @@ const MemberHome = () => {
                 <div key={index} className="flex items-start gap-3">
                   <div className={`w-2 h-2 rounded-full mt-2 ${
                     activity.type === 'group' ? 'bg-blue-500' :
-                    activity.type === 'care' ? 'bg-green-500' : 'bg-gray-500'
+                    activity.type === 'care' ? 'bg-green-500' : 
+                    activity.type === 'celebration' ? 'bg-purple-500' : 'bg-gray-500'
                   }`} />
                   <div className="flex-1">
                     <p className="text-sm">{activity.message}</p>
@@ -203,31 +200,6 @@ const MemberHome = () => {
                 </div>
               ))}
             </div>
-          </CardContent>
-        </Card>
-
-        {/* Upcoming Events */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Upcoming Events</CardTitle>
-            <CardDescription>Don't miss these community activities</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {memberData.upcomingEvents.map((event, index) => (
-                <div key={index} className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
-                  <div>
-                    <div className="font-medium">{event.title}</div>
-                    <div className="text-sm text-muted-foreground">{event.date} at {event.time}</div>
-                    <Badge variant="outline" className="text-xs mt-1">{event.type}</Badge>
-                  </div>
-                  <Badge variant="outline">Upcoming</Badge>
-                </div>
-              ))}
-            </div>
-            <Button variant="outline" className="w-full mt-4">
-              View All Events
-            </Button>
           </CardContent>
         </Card>
       </div>
