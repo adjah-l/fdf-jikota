@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { Users, Mail, Phone, MapPin, Facebook, Twitter, Instagram } from "lucide-react";
+import { Mail, Phone, MapPin, Facebook, Twitter, Instagram } from "lucide-react";
 
 const Footer = () => {
   return (
@@ -11,8 +11,12 @@ const Footer = () => {
           {/* Brand & Mission */}
           <div className="lg:col-span-1">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center">
-                <Users className="w-6 h-6 text-white" />
+              <div className="w-10 h-10 flex items-center justify-center">
+                <img 
+                  src="/lovable-uploads/5ed33293-854d-4706-bcba-782b8b7f340b.png" 
+                  alt="mbio logo"
+                  className="w-8 h-8 object-contain"
+                />
               </div>
               <div>
                 <h2 className="font-bold text-lg text-foreground">mbio</h2>
