@@ -64,8 +64,8 @@ const Header = () => {
 
           {/* Navigation - Desktop */}
           <nav className="hidden md:flex items-center space-x-6">
-            <a href="/groups" className="text-foreground hover:text-primary transition-colors font-medium">
-              Find Dinners
+            <a href="/neighborhoods" className="text-foreground hover:text-primary transition-colors font-medium">
+              Neighborhoods
             </a>
             <a href="/dashboard" className="text-foreground hover:text-primary transition-colors font-medium">
               Host

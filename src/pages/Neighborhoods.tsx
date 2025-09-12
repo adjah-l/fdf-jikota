@@ -6,7 +6,7 @@ import Footer from '@/components/Footer';
 import NeighborhoodSelector from '@/components/neighborhood/NeighborhoodSelector';
 import DinnerCard from '@/components/DinnerCard';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { MapPin, Users, Calendar, Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
@@ -244,7 +244,7 @@ const NeighborhoodsPage = () => {
                   <Calendar className="w-5 h-5 text-primary" />
                   <div>
                     <p className="text-2xl font-bold">{mockGroups.length}</p>
-                    <p className="text-sm text-muted-foreground">Upcoming Groups</p>
+                    <p className="text-sm text-muted-foreground">Active Groups</p>
                   </div>
                 </div>
               </CardContent>
@@ -283,13 +283,16 @@ const NeighborhoodsPage = () => {
         {/* Search and Filters */}
         <Card className="mb-6">
           <CardHeader>
-            <CardTitle>Upcoming Groups in Your Neighborhood</CardTitle>
+            <CardTitle>Active Groups in Your Neighborhood</CardTitle>
+            <CardDescription>
+              Join ongoing groups practicing the 5C framework and building lasting connections with your neighbors.
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
               <Input
-                placeholder="Search groups by title, host, or activity type..."
+                placeholder="Search groups by focus, host, or activity type..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="pl-10"
@@ -327,15 +330,15 @@ const NeighborhoodsPage = () => {
           </div>
         )}
 
-        {/* Host Your Own Section */}
+        {/* Start Your Own Group Section */}
         <Card className="mt-8">
           <CardContent className="p-6 text-center">
-            <h3 className="text-xl font-semibold mb-2">Want to Host?</h3>
+            <h3 className="text-xl font-semibold mb-2">Start Your Own Group</h3>
             <p className="text-muted-foreground mb-4">
-              Bring your neighbors together by hosting a group in {selectedNeighborhood?.name || 'your neighborhood'}.
+              Create a lasting community by starting a mutual care group in {selectedNeighborhood?.name || 'your neighborhood'}.
             </p>
             <Button size="lg">
-              Host a Group
+              Start a Group
             </Button>
           </CardContent>
         </Card>
