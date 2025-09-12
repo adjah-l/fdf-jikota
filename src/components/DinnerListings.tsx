@@ -125,52 +125,6 @@ const DinnerListings = () => {
   return (
     <section className="py-20 bg-secondary/20">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
-            Upcoming <span className="text-primary">Neighborhood Dinners</span>
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Join your neighbors for shared meals and meaningful connections right in your community.
-          </p>
-        </div>
-
-        {/* Search and Filters */}
-        <Card className="mb-8 border-border/50">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Search className="w-5 h-5" />
-              Find Your Perfect Dinner
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              <div className="md:col-span-2">
-                <Input
-                  placeholder="Search by host, location, or meal type..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="h-12"
-                />
-              </div>
-              <Select value={selectedFilter} onValueChange={setSelectedFilter}>
-                <SelectTrigger className="h-12">
-                  <SelectValue placeholder="Filter by date" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Dates</SelectItem>
-                  <SelectItem value="this-week">This Week</SelectItem>
-                  <SelectItem value="weekend">Weekend</SelectItem>
-                  <SelectItem value="next-week">Next Week</SelectItem>
-                </SelectContent>
-              </Select>
-              <Button variant="outline" size="lg" className="h-12" onClick={handleMoreFilters}>
-                <Filter className="w-4 h-4 mr-2" />
-                More Filters
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-
         {/* Host Your Own Section */}
         <Card className="mb-8 bg-gradient-subtle border-primary/30">
           <CardContent className="p-8 text-center">
@@ -185,21 +139,6 @@ const DinnerListings = () => {
             </Button>
           </CardContent>
         </Card>
-
-        {/* Dinner Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-          {mockDinners.map((dinner) => (
-            <DinnerCard key={dinner.id} {...dinner} />
-          ))}
-        </div>
-
-        {/* Load More */}
-        <div className="text-center">
-          <Button variant="outline" size="lg" onClick={handleLoadMore}>
-            <Calendar className="w-4 h-4 mr-2" />
-            Load More Dinners
-          </Button>
-        </div>
       </div>
       
       <AuthModal
