@@ -32,14 +32,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     // Listen for auth changes FIRST to avoid race conditions
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        console.log('Auth state change:', event, session?.user?.id);
+      (event, session) => {
         setSession(session);
         setUser(session?.user ?? null);
         setLoading(false);
 
         if (event === 'SIGNED_IN') {
-          console.log('User signed in successfully:', session?.user?.email);
           toast({
             title: "Welcome back!",
             description: "You have successfully signed in.",
@@ -93,16 +91,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const signIn = async (email: string, password: string) => {
-    console.log('Attempting sign in for:', email);
-    const { data, error } = await supabase.auth.signInWithPassword({
+    const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
 
-    console.log('Sign in response:', { data, error });
-
     if (error) {
-      console.error('Sign in error:', error);
       toast({
         variant: "destructive",
         title: "Sign in failed",
