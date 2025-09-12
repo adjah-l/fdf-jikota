@@ -12,32 +12,62 @@ interface DinnerCardProps {
     avatar?: string;
     initials: string;
   };
-  date: string;
+  frequency: string; // "Weekly", "Bi-weekly", "Monthly"
+  dayOfWeek: string; // "Monday", "Tuesday", etc.
   time: string;
   location: string;
   venue: "home" | "clubhouse";
   capacity: number;
   attendees: number;
-  mealType: "potluck" | "restaurant";
+  activityType: "dinner" | "prayer_study" | "workout" | "sports" | "flexible";
+  gatheringMode: "families" | "adults" | "mixed"; // families = max 8, others = max 5
   distance: string;
-  dietary?: string[];
+  details?: string[];
+  joinDeadline: string; // Season-based deadline
+  isFull: boolean;
 }
 
 const DinnerCard = ({ 
   title, 
   host, 
-  date, 
+  frequency,
+  dayOfWeek,
   time, 
   location, 
   venue,
   capacity, 
   attendees, 
-  mealType,
+  activityType,
+  gatheringMode,
   distance,
-  dietary = []
+  details = [],
+  joinDeadline,
+  isFull
 }: DinnerCardProps) => {
   const spotsLeft = capacity - attendees;
-  const isAlmostFull = spotsLeft <= 2;
+  const isAlmostFull = spotsLeft <= 2 && spotsLeft > 0;
+  
+  const getActivityIcon = (type: string) => {
+    switch (type) {
+      case 'dinner': return <Utensils className="w-4 h-4" />;
+      case 'prayer_study': return <Users className="w-4 h-4" />;
+      case 'workout': return <Users className="w-4 h-4" />;
+      case 'sports': return <Users className="w-4 h-4" />;
+      case 'flexible': return <Users className="w-4 h-4" />;
+      default: return <Users className="w-4 h-4" />;
+    }
+  };
+  
+  const getActivityLabel = (type: string) => {
+    switch (type) {
+      case 'dinner': return 'Dinner';
+      case 'prayer_study': return 'Prayer & Study';
+      case 'workout': return 'Fitness';
+      case 'sports': return 'Sports';
+      case 'flexible': return 'Flexible';
+      default: return 'Group';
+    }
+  };
   
   return (
     <Card className="group hover:shadow-warm transition-all duration-300 border-border/50 hover:border-primary/30 overflow-hidden">
@@ -74,11 +104,11 @@ const DinnerCard = ({
       </CardHeader>
       
       <CardContent className="space-y-4">
-        {/* Date & Time */}
+        {/* Frequency & Schedule */}
         <div className="flex items-center gap-4 text-sm">
           <div className="flex items-center gap-2 text-muted-foreground">
             <Calendar className="w-4 h-4" />
-            <span>{date}</span>
+            <span>{frequency} • {dayOfWeek}s</span>
           </div>
           <div className="flex items-center gap-2 text-muted-foreground">
             <Clock className="w-4 h-4" />
@@ -92,18 +122,23 @@ const DinnerCard = ({
           <span>{location} • {distance}</span>
         </div>
         
-        {/* Meal Type */}
-        <div className="flex items-center gap-2">
-          <Utensils className="w-4 h-4 text-muted-foreground" />
-          <Badge variant={mealType === "restaurant" ? "default" : "secondary"}>
-            {mealType === "restaurant" ? "Restaurant Bundle" : "Potluck Style"}
+        {/* Activity Type & Gathering Mode */}
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
+            {getActivityIcon(activityType)}
+            <Badge variant="default">
+              {getActivityLabel(activityType)}
+            </Badge>
+          </div>
+          <Badge variant={gatheringMode === "families" ? "secondary" : "outline"}>
+            {gatheringMode === "families" ? "Family Groups" : gatheringMode === "adults" ? "Adults Only" : "Mixed Ages"}
           </Badge>
         </div>
         
-        {/* Dietary Tags */}
-        {dietary.length > 0 && (
+        {/* Group Details */}
+        {details.length > 0 && (
           <div className="flex flex-wrap gap-2">
-            {dietary.map((tag) => (
+            {details.map((tag) => (
               <Badge key={tag} variant="outline" className="text-xs">
                 {tag}
               </Badge>
@@ -111,27 +146,37 @@ const DinnerCard = ({
           </div>
         )}
         
-        {/* Capacity & RSVP */}
+        {/* Join Deadline */}
+        <div className="text-xs text-muted-foreground">
+          Join by: {joinDeadline}
+        </div>
+        
+        {/* Capacity & Join Request */}
         <div className="flex items-center justify-between pt-2 border-t border-border/50">
           <div className="flex items-center gap-2 text-sm">
             <Users className="w-4 h-4 text-muted-foreground" />
             <span className="text-muted-foreground">
-              {attendees}/{capacity} attending
+              {attendees}/{capacity} members
             </span>
-            {isAlmostFull && (
+            {isAlmostFull && !isFull && (
               <Badge variant="destructive" className="text-xs">
                 Almost Full
+              </Badge>
+            )}
+            {isFull && (
+              <Badge variant="secondary" className="text-xs">
+                Full
               </Badge>
             )}
           </div>
           
           <Button 
-            variant={spotsLeft > 0 ? "default" : "secondary"} 
+            variant={!isFull ? "default" : "secondary"} 
             size="sm"
-            disabled={spotsLeft === 0}
-            className="min-w-[80px]"
+            disabled={isFull}
+            className="min-w-[120px]"
           >
-            {spotsLeft > 0 ? "RSVP" : "Full"}
+            {!isFull ? "Request to Join" : "Full"}
           </Button>
         </div>
       </CardContent>

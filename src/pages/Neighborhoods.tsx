@@ -17,127 +17,115 @@ const NeighborhoodsPage = () => {
   const [showSelector, setShowSelector] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Mock group data for demonstration
+  // Updated mock group data with proper business rules
   const mockGroups = [
     {
       id: '1',
       title: 'Italian Cooking & Connection',
       host: { name: 'Maria Rodriguez', initials: 'MR' },
-      date: '2024-01-15',
+      frequency: 'Weekly',
+      dayOfWeek: 'Thursday',
       time: '7:00 PM',
       location: '123 Oak Street',
       venue: 'home' as const,
-      capacity: 8,
-      attendees: 6,
-      activityType: 'Dinner',
+      capacity: 5, // adults only group
+      attendees: 4,
+      activityType: 'dinner' as const,
+      gatheringMode: 'adults' as const,
       distance: '0.3 miles',
-      details: ['Weekly gatherings', 'Practice 5C framework'],
-      neighborhood: 'Sunset Hills'
+      details: ['Italian cuisine focus', 'Practice 5C framework'],
+      joinDeadline: 'March 15, 2024',
+      isFull: false
     },
     {
       id: '2',
       title: 'Sunday Prayer & Connection',
       host: { name: 'The Johnson Family', initials: 'JF' },
-      date: '2024-01-16',
+      frequency: 'Weekly',
+      dayOfWeek: 'Sunday',
       time: '11:00 AM',
       location: '456 Maple Avenue',
       venue: 'home' as const,
-      capacity: 12,
-      attendees: 8,
-      activityType: 'Prayer / Bible Study',
+      capacity: 8, // family group
+      attendees: 6,
+      activityType: 'prayer_study' as const,
+      gatheringMode: 'families' as const,
       distance: '0.5 miles',
-      details: ['Bible study focus', 'All levels welcome'],
-      neighborhood: 'Sunset Hills'
+      details: ['Bible study focus', 'All ages welcome'],
+      joinDeadline: 'March 15, 2024',
+      isFull: false
     },
     {
       id: '3',
       title: 'Tuesday Fitness & Care',
       host: { name: 'Carlos & Sofia Mendez', initials: 'CM' },
-      date: '2024-01-16',
+      frequency: 'Bi-weekly',
+      dayOfWeek: 'Tuesday',
       time: '6:30 PM',
       location: '789 Pine Street',
       venue: 'home' as const,
-      capacity: 10,
-      attendees: 7,
-      activityType: 'Working Out',
+      capacity: 5, // mixed adults group
+      attendees: 5,
+      activityType: 'workout' as const,
+      gatheringMode: 'mixed' as const,
       distance: '0.7 miles',
       details: ['Outdoor activities', 'All fitness levels'],
-      neighborhood: 'Sunset Hills'
+      joinDeadline: 'March 15, 2024',
+      isFull: true
     },
     {
       id: '4',
-      title: 'Sports Watch Party',
+      title: 'Sports Watch & Connect',
       host: { name: 'David Chen', initials: 'DC' },
-      date: '2024-01-17',
+      frequency: 'Weekly',
+      dayOfWeek: 'Saturday',
       time: '7:30 PM',
       location: '321 Elm Drive',
       venue: 'home' as const,
-      capacity: 6,
-      attendees: 4,
-      activityType: 'Watch Sporting Events',
+      capacity: 5, // adults only
+      attendees: 3,
+      activityType: 'sports' as const,
+      gatheringMode: 'adults' as const,
       distance: '0.4 miles',
       details: ['Local team games', 'Snacks provided'],
-      neighborhood: 'Sunset Hills'
+      joinDeadline: 'March 15, 2024',
+      isFull: false
     },
     {
       id: '5',
       title: 'Creative Connections Group',
       host: { name: 'The Thompson Family', initials: 'TF' },
-      date: '2024-01-18',
+      frequency: 'Monthly',
+      dayOfWeek: 'Saturday',
       time: '6:00 PM',
       location: '654 Birch Lane',
-      venue: 'home' as const,
-      capacity: 15,
-      attendees: 12,
-      activityType: 'Flexible',
+      venue: 'clubhouse' as const,
+      capacity: 8, // family group
+      attendees: 7,
+      activityType: 'flexible' as const,
+      gatheringMode: 'families' as const,
       distance: '0.6 miles',
       details: ['Rotating activities', 'Family-friendly'],
-      neighborhood: 'Sunset Hills'
+      joinDeadline: 'March 15, 2024',
+      isFull: false
     },
     {
       id: '6',
       title: 'Healthy Living Together',
       host: { name: 'Dr. Sarah Williams', initials: 'SW' },
-      date: '2024-01-19',
+      frequency: 'Bi-weekly',
+      dayOfWeek: 'Wednesday',
       time: '5:30 PM',
       location: '987 Cedar Court',
-      venue: 'clubhouse' as const,
-      capacity: 8,
-      attendees: 5,
-      activityType: 'Dinner',
+      venue: 'home' as const,
+      capacity: 5, // adults group
+      attendees: 4,
+      activityType: 'dinner' as const,
+      gatheringMode: 'adults' as const,
       distance: '0.8 miles',
       details: ['Healthy recipes', 'Wellness focus'],
-      neighborhood: 'Sunset Hills'
-    },
-    {
-      id: '7',
-      title: 'Community Connection Gathering',
-      host: { name: 'Sunset Hills Community', initials: 'SC' },
-      date: '2024-01-20',
-      time: '6:00 PM',
-      location: '147 Community Center Way',
-      venue: 'clubhouse' as const,
-      capacity: 30,
-      attendees: 22,
-      activityType: 'Flexible',
-      distance: '0.2 miles',
-      details: ['Monthly community event', 'All activities welcome'],
-      neighborhood: 'Sunset Hills'
-    },
-    {
-      id: '8',
-      title: 'Active Outdoors Group',
-      host: { name: 'Mike & Lisa Brown', initials: 'MB' },
-      date: '2024-01-21',
-      time: '5:00 PM',
-      location: '258 Willow Street',
-      venue: 'home' as const,
-      capacity: 20,
-      attendees: 15,
-      activityType: 'Working Out',
-      distance: '0.9 miles',
-      details: ['Outdoor activities', 'Weather permitting'],
-      neighborhood: 'Sunset Hills'
+      joinDeadline: 'March 15, 2024',
+      isFull: false
     }
   ];
 
@@ -146,7 +134,8 @@ const NeighborhoodsPage = () => {
   const filteredGroups = mockGroups.filter(group =>
     group.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
     group.host.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    group.activityType.toLowerCase().includes(searchTerm.toLowerCase())
+    group.activityType.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    group.gatheringMode.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   if (loading) {
@@ -292,7 +281,7 @@ const NeighborhoodsPage = () => {
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
               <Input
-                placeholder="Search groups by focus, host, or activity type..."
+                placeholder="Search groups by focus, host, activity type, or gathering mode..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="pl-10"
@@ -309,15 +298,19 @@ const NeighborhoodsPage = () => {
               id={group.id}
               title={group.title}
               host={group.host}
-              date={group.date}
+              frequency={group.frequency}
+              dayOfWeek={group.dayOfWeek}
               time={group.time}
               location={group.location}
               venue={group.venue}
               capacity={group.capacity}
               attendees={group.attendees}
-              mealType={group.activityType as any}
+              activityType={group.activityType}
+              gatheringMode={group.gatheringMode}
               distance={group.distance}
-              dietary={group.details}
+              details={group.details}
+              joinDeadline={group.joinDeadline}
+              isFull={group.isFull}
             />
           ))}
         </div>
