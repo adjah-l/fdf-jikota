@@ -20,15 +20,16 @@ interface DinnerCardProps {
   capacity: number;
   attendees: number;
   activityType: "dinner" | "prayer_study" | "workout" | "sports" | "flexible";
-  lifeStage: "married_no_children" | "single_no_children" | "married_with_children" | "single_with_children" | "mixed";
+  lifeStage: "married" | "single" | "mixed";
   gatheringMode: "families" | "adults" | "mixed"; // families = max 8, others = max 5
   distance: string;
   details?: string[];
   joinDeadline: string; // Season-based deadline
+  isSampleData?: boolean;
   isFull: boolean;
 }
 
-const DinnerCard = ({ 
+const DinnerCard = ({
   title, 
   host, 
   frequency,
@@ -44,6 +45,7 @@ const DinnerCard = ({
   distance,
   details = [],
   joinDeadline,
+  isSampleData = false,
   isFull
 }: DinnerCardProps) => {
   const spotsLeft = capacity - attendees;
@@ -51,10 +53,8 @@ const DinnerCard = ({
   
   const getLifeStageIcon = (stage: string) => {
     switch (stage) {
-      case 'married_no_children': return <Users className="w-4 h-4" />;
-      case 'single_no_children': return <Users className="w-4 h-4" />;
-      case 'married_with_children': return <Home className="w-4 h-4" />;
-      case 'single_with_children': return <Home className="w-4 h-4" />;
+      case 'married': return <Users className="w-4 h-4" />;
+      case 'single': return <Users className="w-4 h-4" />;
       case 'mixed': return <Users className="w-4 h-4" />;
       default: return <Users className="w-4 h-4" />;
     }
@@ -62,11 +62,9 @@ const DinnerCard = ({
   
   const getLifeStageLabel = (stage: string) => {
     switch (stage) {
-      case 'married_no_children': return 'Married (No Children)';
-      case 'single_no_children': return 'Single (No Children)';
-      case 'married_with_children': return 'Married (with Children)';
-      case 'single_with_children': return 'Single (with Children)';
-      case 'mixed': return 'Mixed Life Stages';
+      case 'married': return 'Married';
+      case 'single': return 'Single';
+      case 'mixed': return 'Mixed';
       default: return 'Mixed';
     }
   };
@@ -74,35 +72,42 @@ const DinnerCard = ({
   return (
     <Card className="group hover:shadow-warm transition-all duration-300 border-border/50 hover:border-primary/30 overflow-hidden">
       <CardHeader className="pb-4">
-        <div className="flex items-start justify-between">
-          <div className="flex items-center gap-3">
-            <Avatar className="w-12 h-12">
-              <AvatarImage src={host.avatar} alt={`${host.name} profile picture`} />
-              <AvatarFallback className="bg-primary/10 text-primary font-semibold">
-                {host.initials}
-              </AvatarFallback>
-            </Avatar>
-            <div>
-              <h3 className="font-semibold text-lg text-foreground group-hover:text-primary transition-colors">
-                {title}
-              </h3>
-              <p className="text-sm text-muted-foreground">Hosted by {host.name}</p>
+          <div className="flex items-start justify-between">
+            <div className="flex items-center gap-3">
+              <Avatar className="w-12 h-12">
+                <AvatarImage src={host.avatar} alt={`${host.name} profile picture`} />
+                <AvatarFallback className="bg-primary/10 text-primary font-semibold">
+                  {host.initials}
+                </AvatarFallback>
+              </Avatar>
+              <div>
+                <h3 className="font-semibold text-lg text-foreground group-hover:text-primary transition-colors">
+                  {title}
+                </h3>
+                <p className="text-sm text-muted-foreground">Hosted by {host.name}</p>
+              </div>
+            </div>
+            <div className="flex flex-col gap-2">
+              <Badge variant={venue === "home" ? "secondary" : "outline"} className="shrink-0">
+                {venue === "home" ? (
+                  <>
+                    <Home className="w-3 h-3 mr-1" />
+                    Home
+                  </>
+                ) : (
+                  <>
+                    <Users className="w-3 h-3 mr-1" />
+                    Clubhouse
+                  </>
+                )}
+              </Badge>
+              {isSampleData && (
+                <Badge variant="outline" className="shrink-0 text-xs">
+                  Sample Data
+                </Badge>
+              )}
             </div>
           </div>
-          <Badge variant={venue === "home" ? "secondary" : "outline"} className="shrink-0">
-            {venue === "home" ? (
-              <>
-                <Home className="w-3 h-3 mr-1" />
-                Home
-              </>
-            ) : (
-              <>
-                <Users className="w-3 h-3 mr-1" />
-                Clubhouse
-              </>
-            )}
-          </Badge>
-        </div>
       </CardHeader>
       
       <CardContent className="space-y-4">

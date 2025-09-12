@@ -22,20 +22,21 @@ const NeighborhoodsPage = () => {
     {
       id: '1',
       title: 'Italian Cooking & Connection',
-      host: { name: 'Maria Rodriguez', initials: 'MR' },
+      host: { name: 'Community Leader A', initials: 'CL' },
       frequency: 'Weekly',
       dayOfWeek: 'Thursday',
       time: '7:00 PM',
-      location: '123 Oak Street',
+      location: 'Sunset Hills, 85210',
       venue: 'home' as const,
       capacity: 5, // adults only group
       attendees: 4,
       activityType: 'dinner' as const,
-      lifeStage: 'married_no_children' as const,
+      lifeStage: 'married' as const,
       gatheringMode: 'adults' as const,
       distance: '0.3 miles',
-      details: ['Italian cuisine focus', 'Practice 5C framework'],
-      joinDeadline: 'March 15, 2024',
+      details: ['Italian cuisine focus', 'Community connections'],
+      joinDeadline: 'October 15, 2025',
+      isSampleData: true,
       isFull: false
     },
     {
@@ -50,7 +51,7 @@ const NeighborhoodsPage = () => {
       capacity: 8, // family group
       attendees: 6,
       activityType: 'prayer_study' as const,
-      lifeStage: 'married_with_children' as const,
+      lifeStage: 'married' as const,
       gatheringMode: 'families' as const,
       distance: '0.5 miles',
       details: ['Bible study focus', 'All ages welcome'],
@@ -60,49 +61,51 @@ const NeighborhoodsPage = () => {
     {
       id: '3',
       title: 'Tuesday Fitness & Care',
-      host: { name: 'Carlos & Sofia Mendez', initials: 'CM' },
+      host: { name: 'Fitness Leader C', initials: 'FC' },
       frequency: 'Bi-weekly',
       dayOfWeek: 'Tuesday',
       time: '6:30 PM',
-      location: '789 Pine Street',
+      location: 'Tempe, 85281',
       venue: 'home' as const,
       capacity: 5, // mixed adults group
       attendees: 5,
       activityType: 'workout' as const,
-      lifeStage: 'single_no_children' as const,
+      lifeStage: 'single' as const,
       gatheringMode: 'mixed' as const,
       distance: '0.7 miles',
       details: ['Outdoor activities', 'All fitness levels'],
-      joinDeadline: 'March 15, 2024',
+      joinDeadline: 'October 15, 2025',
+      isSampleData: true,
       isFull: true
     },
     {
       id: '4',
       title: 'Sports Watch & Connect',
-      host: { name: 'David Chen', initials: 'DC' },
+      host: { name: 'Sports Leader D', initials: 'SD' },
       frequency: 'Weekly',
       dayOfWeek: 'Saturday',
       time: '7:30 PM',
-      location: '321 Elm Drive',
+      location: 'Phoenix, 85028',
       venue: 'home' as const,
       capacity: 5, // adults only
       attendees: 3,
       activityType: 'sports' as const,
-      lifeStage: 'married_no_children' as const,
+      lifeStage: 'married' as const,
       gatheringMode: 'adults' as const,
       distance: '0.4 miles',
       details: ['Local team games', 'Snacks provided'],
-      joinDeadline: 'March 15, 2024',
+      joinDeadline: 'October 15, 2025',
+      isSampleData: true,
       isFull: false
     },
     {
       id: '5',
       title: 'Creative Connections Group',
-      host: { name: 'The Thompson Family', initials: 'TF' },
+      host: { name: 'Family Leader E', initials: 'FE' },
       frequency: 'Monthly',
       dayOfWeek: 'Saturday',
       time: '6:00 PM',
-      location: '654 Birch Lane',
+      location: 'Community Center, 85251',
       venue: 'clubhouse' as const,
       capacity: 8, // family group
       attendees: 7,
@@ -111,26 +114,28 @@ const NeighborhoodsPage = () => {
       gatheringMode: 'families' as const,
       distance: '0.6 miles',
       details: ['Rotating activities', 'Family-friendly'],
-      joinDeadline: 'March 15, 2024',
+      joinDeadline: 'October 15, 2025',
+      isSampleData: true,
       isFull: false
     },
     {
       id: '6',
       title: 'Healthy Living Together',
-      host: { name: 'Dr. Sarah Williams', initials: 'SW' },
+      host: { name: 'Wellness Leader F', initials: 'WF' },
       frequency: 'Bi-weekly',
       dayOfWeek: 'Wednesday',
       time: '5:30 PM',
-      location: '987 Cedar Court',
+      location: 'Scottsdale, 85257',
       venue: 'home' as const,
       capacity: 5, // adults group
       attendees: 4,
       activityType: 'dinner' as const,
-      lifeStage: 'single_with_children' as const,
+      lifeStage: 'single' as const,
       gatheringMode: 'adults' as const,
       distance: '0.8 miles',
       details: ['Healthy recipes', 'Wellness focus'],
-      joinDeadline: 'March 15, 2024',
+      joinDeadline: 'October 15, 2025',
+      isSampleData: true,
       isFull: false
     }
   ];
@@ -165,7 +170,7 @@ const NeighborhoodsPage = () => {
             <div className="space-y-2">
               <h1 className="text-4xl font-bold">Discover Your Neighborhood</h1>
               <p className="text-muted-foreground text-lg">
-                Join a neighborhood to see upcoming groups and connect with your local community through the 5C framework.
+                Join a neighborhood to see active groups and connect with your local community through meaningful relationships.
               </p>
             </div>
             
@@ -317,6 +322,7 @@ const NeighborhoodsPage = () => {
               distance={group.distance}
               details={group.details}
               joinDeadline={group.joinDeadline}
+              isSampleData={group.isSampleData}
               isFull={group.isFull}
             />
           ))}

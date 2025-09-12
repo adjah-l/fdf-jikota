@@ -24,11 +24,12 @@ const mockDinners = [
     capacity: 5,
     attendees: 4,
     activityType: "dinner" as const,
-    lifeStage: "married_no_children" as const,
+    lifeStage: "married" as const,
     gatheringMode: "adults" as const,
     distance: "0.2 mi",
     details: ["Vegetarian options", "Gluten-free friendly"],
-    joinDeadline: "March 15, 2024",
+    joinDeadline: "October 15, 2025",
+    isSampleData: true,
     isFull: false
   },
   {
@@ -43,11 +44,12 @@ const mockDinners = [
     capacity: 8,
     attendees: 6,
     activityType: "flexible" as const,
-    lifeStage: "married_with_children" as const,
+    lifeStage: "married" as const,
     gatheringMode: "families" as const,
     distance: "0.4 mi",
     details: ["Family activities", "All ages welcome"],
-    joinDeadline: "March 15, 2024",
+    joinDeadline: "October 15, 2025",
+    isSampleData: true,
     isFull: false
   },
   {
@@ -62,11 +64,12 @@ const mockDinners = [
     capacity: 5,
     attendees: 4,
     activityType: "dinner" as const,
-    lifeStage: "single_no_children" as const,
+    lifeStage: "single" as const,
     gatheringMode: "adults" as const,
     distance: "0.1 mi",
     details: ["Italian cuisine", "Vegetarian options"],
-    joinDeadline: "March 15, 2024",
+    joinDeadline: "October 15, 2025",
+    isSampleData: true,
     isFull: false
   },
   {
@@ -85,7 +88,8 @@ const mockDinners = [
     gatheringMode: "families" as const,
     distance: "0.3 mi",
     details: ["Family activities", "All ages welcome"],
-    joinDeadline: "March 15, 2024",
+    joinDeadline: "October 15, 2025",
+    isSampleData: true,
     isFull: false
   }
 ];
