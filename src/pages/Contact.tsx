@@ -165,14 +165,14 @@ const Contact = () => {
                   <Mail className="w-5 h-5 text-primary" />
                   <div>
                     <div className="font-medium">Email</div>
-                    <div className="text-sm text-muted-foreground">hello@mbio.community</div>
+                    <div className="text-sm text-muted-foreground">welcome@ourfamilydinner.org</div>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
                   <Phone className="w-5 h-5 text-primary" />
                   <div>
                     <div className="font-medium">Phone</div>
-                    <div className="text-sm text-muted-foreground">(555) 123-4567</div>
+                    <div className="text-sm text-muted-foreground">212.518.3324</div>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
@@ -180,38 +180,11 @@ const Contact = () => {
                   <div>
                     <div className="font-medium">Address</div>
                     <div className="text-sm text-muted-foreground">
-                      123 Community Lane<br />
-                      Austin, TX 78701
+                      3839 McKinney Ave, St 155-5170<br />
+                      Dallas, TX 75204
                     </div>
                   </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <Clock className="w-5 h-5 text-primary" />
-                  <div>
-                    <div className="font-medium">Hours</div>
-                    <div className="text-sm text-muted-foreground">
-                      Mon - Fri: 9am - 6pm CST<br />
-                      Response within 24 hours
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Schedule a Demo</CardTitle>
-                <CardDescription>
-                  Prefer to see the platform in action?
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Button className="w-full" variant="outline">
-                  Book Demo Call
-                </Button>
-                <p className="text-sm text-muted-foreground mt-3">
-                  30-minute personalized demo tailored to your organization's needs.
-                </p>
               </CardContent>
             </Card>
 
