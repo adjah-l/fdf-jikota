@@ -40,7 +40,7 @@ import { AdminAppShell } from "./app/admin/AdminAppShell";
 // Member pages
 import MemberHome from "./app/member/pages/Home";
 import MemberGroup from "./app/member/pages/Group";
-import MemberCare from "./app/member/pages/Care";
+import CareEnhanced from "./app/member/pages/CareEnhanced";
 import MemberMessages from "./app/member/pages/Messages";
 import MemberProfile from "./app/member/pages/Profile";
 
@@ -77,7 +77,7 @@ const AppContent = () => (
               <Route path="/app/*" element={<MemberAppShell />}>
                 <Route index element={<MemberHome />} />
                 <Route path="group" element={<MemberGroup />} />
-                <Route path="care" element={<MemberCare />} />
+                <Route path="care" element={<CareEnhanced />} />
                 <Route path="messages" element={<MemberMessages />} />
                 <Route path="profile" element={<MemberProfile />} />
               </Route>

@@ -11,21 +11,23 @@ const MemberHome = () => {
   // TODO: Replace with real data from API
   const memberData = {
     currentGroup: {
-      name: "Downtown Group",
-      activity_type: "dinner" as const,
-      nextMeeting: "Thursday, Dec 12 at 7:00 PM",
-      location: "Sarah's House - 123 Main St",
-      members: 6
+      name: "Oak Street Community Group",
+      activity_type: "flexible" as const,
+      nextMeeting: "Thursday, Oct 24 at 7:00 PM",
+      location: "Community Center - Downtown",
+      members: 6,
+      focus: "Connection & Care"
     },
-    careCredits: 12,
+    careCredits: 15,
+    pendingRequests: 2,
     recentActivity: [
-      { type: "group", message: "New message in Downtown Group", time: "2 hours ago" },
-      { type: "care", message: "John requested help with moving", time: "5 hours ago" },
-      { type: "system", message: "Welcome to the community!", time: "2 days ago" }
+      { type: "group", message: "New connection activity scheduled", time: "2 hours ago" },
+      { type: "care", message: "Someone offered help with your request", time: "5 hours ago" },
+      { type: "celebration", message: "Group celebrated Maria's promotion!", time: "1 day ago" }
     ],
     upcomingEvents: [
-      { title: "Group Dinner", date: "Dec 12", time: "7:00 PM" },
-      { title: "Community Service Day", date: "Dec 15", time: "9:00 AM" }
+      { title: "Group Gathering", date: "Oct 24", time: "7:00 PM", type: "Connection" },
+      { title: "Community Service", date: "Oct 28", time: "9:00 AM", type: "Care" }
     ]
   };
 
@@ -44,9 +46,9 @@ const MemberHome = () => {
   const nextAction = getNextAction(nextActionKey);
 
   const quickActions = [
-    { title: "Message My Group", icon: MessageSquare, description: "Chat with group members", action: "/app/messages" },
-    { title: "Request Care", icon: Heart, description: "Ask for help from community", action: "/app/care" },
-    { title: "View Profile", icon: Users, description: "Update your information", action: "/app/profile" }
+    { title: "Message My Group", icon: MessageSquare, description: "Connect with group members", action: "/app/messages" },
+    { title: "View Care Network", icon: Heart, description: "Help others & get support", action: "/app/care" },
+    { title: "Update Profile", icon: Users, description: "Manage your information", action: "/app/profile" }
   ];
 
   return (
@@ -86,11 +88,11 @@ const MemberHome = () => {
 
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Next Meeting</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">Next Gathering</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-lg font-semibold">Thursday</div>
-            <div className="text-sm text-muted-foreground">Dec 12 at 7:00 PM</div>
+            <div className="text-sm text-muted-foreground">Oct 24 at 7:00 PM</div>
           </CardContent>
         </Card>
       </div>
@@ -134,7 +136,7 @@ const MemberHome = () => {
             <div>
               <h3 className="font-semibold mb-2">{memberData.currentGroup.name}</h3>
               <p className="text-xs text-muted-foreground mb-2">
-                {getActivityTypeLabel(memberData.currentGroup.activity_type)} Group • {memberData.currentGroup.members} members
+                {getActivityTypeLabel(memberData.currentGroup.activity_type)} Group • {memberData.currentGroup.members} members • Focus: {memberData.currentGroup.focus}
               </p>
               <div className="space-y-2 text-sm">
                 <div className="flex items-center gap-2">
@@ -149,7 +151,7 @@ const MemberHome = () => {
             </div>
             <div className="flex gap-2">
               <Button size="sm">Message Group</Button>
-              <Button size="sm" variant="outline">View Details</Button>
+              <Button size="sm" variant="outline">View Activities</Button>
             </div>
           </CardContent>
         </Card>
@@ -217,6 +219,7 @@ const MemberHome = () => {
                   <div>
                     <div className="font-medium">{event.title}</div>
                     <div className="text-sm text-muted-foreground">{event.date} at {event.time}</div>
+                    <Badge variant="outline" className="text-xs mt-1">{event.type}</Badge>
                   </div>
                   <Badge variant="outline">Upcoming</Badge>
                 </div>
