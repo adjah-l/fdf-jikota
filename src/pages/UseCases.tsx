@@ -1,6 +1,10 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Church, Home, Building2, Users, Heart, MessageSquare } from "lucide-react";
+import Header from "@/components/Header";
+import { HeaderNew } from "@/components/layout/HeaderNew";
+import Footer from "@/components/Footer";
+import { flags } from "@/config/flags";
 
 const UseCases = () => {
   const useCases = [
@@ -56,6 +60,7 @@ const UseCases = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      {flags.enableNewMarketing ? <HeaderNew /> : <Header />}
       <div className="container mx-auto px-4 py-16">
         {/* Hero Section */}
         <div className="text-center mb-16">
@@ -143,6 +148,7 @@ const UseCases = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
