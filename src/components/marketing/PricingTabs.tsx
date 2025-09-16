@@ -11,6 +11,7 @@ const PricingTabs = () => {
       price: "$199",
       period: "per month",
       note: "paid annually",
+      description: "Perfect for smaller communities getting started",
       members: "Up to 200 members",
       features: [
         "Automated group matching",
@@ -25,7 +26,8 @@ const PricingTabs = () => {
       price: "$599", 
       period: "per month",
       note: "paid annually",
-      members: "200–1,000 members",
+      description: "For growing communities that need more features",
+      members: "Up to 1,000 members",
       features: [
         "All Starter features",
         "Advanced reporting",
@@ -39,7 +41,8 @@ const PricingTabs = () => {
       price: "$15,000+",
       period: "annually",
       note: "",
-      members: "1,000+ members",
+      description: "For large organizations with custom needs",
+      members: "",
       features: [
         "Enterprise support",
         "White-label options",
@@ -123,7 +126,8 @@ const PricingTabs = () => {
                   <span className="text-muted-foreground">/{tier.period}</span>
                 </div>
                 {tier.note && <p className="text-sm text-muted-foreground mt-1">{tier.note}</p>}
-                <CardDescription className="mt-2">{tier.members}</CardDescription>
+                <CardDescription className="mt-2">{tier.description}</CardDescription>
+                {tier.members && <p className="text-sm text-muted-foreground mt-1">{tier.members}</p>}
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-3">
