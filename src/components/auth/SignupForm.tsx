@@ -10,7 +10,8 @@ import SocialAuthButtons from "./SocialAuthButtons";
 import { Eye, EyeOff } from "lucide-react";
 
 const signupSchema = z.object({
-  fullName: z.string().min(2, "Full name must be at least 2 characters"),
+  firstName: z.string().min(2, "First name must be at least 2 characters"),
+  lastName: z.string().min(2, "Last name must be at least 2 characters"),
   email: z.string().email("Please enter a valid email address"),
   password: z.string()
     .min(8, "Password must be at least 8 characters")
@@ -37,7 +38,8 @@ const SignupForm = ({ onSuccess, onSwitchToLogin }: SignupFormProps) => {
   const form = useForm<SignupFormValues>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
-      fullName: "",
+      firstName: "",
+      lastName: "",
       email: "",
       password: "",
       confirmPassword: "",
@@ -47,7 +49,7 @@ const SignupForm = ({ onSuccess, onSwitchToLogin }: SignupFormProps) => {
   const onSubmit = async (values: SignupFormValues) => {
     try {
       setLoading(true);
-      await signUp(values.email, values.password, values.fullName);
+      await signUp(values.email, values.password, values.firstName, values.lastName);
       onSuccess?.();
     } catch (error) {
       console.error('Signup error:', error);
@@ -69,13 +71,30 @@ const SignupForm = ({ onSuccess, onSwitchToLogin }: SignupFormProps) => {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <FormField
             control={form.control}
-            name="fullName"
+            name="firstName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Full Name</FormLabel>
+                <FormLabel>First Name</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Enter your full name"
+                    placeholder="Enter your first name"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="lastName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Last Name</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Enter your last name"
                     {...field}
                   />
                 </FormControl>
