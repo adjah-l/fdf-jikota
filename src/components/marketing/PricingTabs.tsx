@@ -73,7 +73,7 @@ const PricingTabs = () => {
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
                   <span>Initiation / Annual Pledge</span>
-                  <span className="font-bold text-xl">$99 initiation & annual fee</span>
+                  <span className="font-bold text-xl">$99 per year</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span>Seasonal Commitment</span>
