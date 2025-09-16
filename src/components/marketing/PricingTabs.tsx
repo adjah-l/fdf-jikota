@@ -63,10 +63,7 @@ const PricingTabs = () => {
       <TabsContent value="members" className="space-y-8">
         <div className="max-w-md mx-auto">
           <Card className="relative">
-            <Badge className="absolute -top-2 left-1/2 transform -translate-x-1/2 bg-primary">
-              Serve once a month, and your membership is covered
-            </Badge>
-            <CardHeader className="text-center pt-8">
+            <CardHeader className="text-center">
               <CardTitle className="text-2xl">Individual Membership</CardTitle>
               <CardDescription>
                 Your pledge creates commitment. Your care creates community.
@@ -75,16 +72,13 @@ const PricingTabs = () => {
             <CardContent className="space-y-6">
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <span>Initiation Pledge</span>
-                  <span className="font-bold text-xl">$99 one-time</span>
+                  <span>Initiation / Annual Pledge</span>
+                  <span className="font-bold text-xl">$99 initiation & annual fee</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span>Recurring Contribution</span>
-                  <span className="font-bold text-xl">$9/month*</span>
+                  <span>Seasonal Commitment</span>
+                  <span className="font-bold text-xl">$75 per season</span>
                 </div>
-                <p className="text-sm text-muted-foreground">
-                  *Unless you complete at least one act of mutual care
-                </p>
               </div>
               <Button className="w-full" size="lg">
                 Join a Group
