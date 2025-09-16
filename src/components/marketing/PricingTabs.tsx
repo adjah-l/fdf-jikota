@@ -7,9 +7,10 @@ import { Check } from "lucide-react";
 const PricingTabs = () => {
   const organizationTiers = [
     {
-      name: "Small Community",
-      price: "$2,500",
-      period: "per year",
+      name: "Starter",
+      price: "$208",
+      period: "per month",
+      annual: "$2,500 annually",
       members: "Up to 200 members",
       features: [
         "Automated group matching",
@@ -20,12 +21,13 @@ const PricingTabs = () => {
       popular: false
     },
     {
-      name: "Medium Community",
-      price: "$7,500", 
-      period: "per year",
+      name: "Professional",
+      price: "$625", 
+      period: "per month",
+      annual: "$7,500 annually",
       members: "200–1,000 members",
       features: [
-        "All Small features",
+        "All Starter features",
         "Advanced reporting",
         "Messaging automations"
       ],
@@ -33,9 +35,10 @@ const PricingTabs = () => {
       popular: true
     },
     {
-      name: "Large Community",
-      price: "Starting at $15,000",
-      period: "per year", 
+      name: "Enterprise",
+      price: "Starting at $1,250",
+      period: "per month",
+      annual: "$15,000+ annually", 
       members: "1,000+ members",
       features: [
         "Enterprise support",
@@ -119,6 +122,7 @@ const PricingTabs = () => {
                   <span className="text-3xl font-bold">{tier.price}</span>
                   <span className="text-muted-foreground">/{tier.period}</span>
                 </div>
+                <p className="text-sm text-muted-foreground mt-1">{tier.annual}</p>
                 <CardDescription className="mt-2">{tier.members}</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
