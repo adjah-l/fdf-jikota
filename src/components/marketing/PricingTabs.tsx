@@ -95,12 +95,6 @@ const PricingTabs = () => {
               It ensures commitment to your group.
             </p>
           </div>
-          <div>
-            <h3 className="font-semibold mb-2">How does mutual care offset work?</h3>
-            <p className="text-muted-foreground">
-              Complete one act of mutual care each month and your $9 is waived.
-            </p>
-          </div>
         </div>
       </TabsContent>
 
