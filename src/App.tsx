@@ -11,6 +11,7 @@ import { flags } from "@/config/flags";
 // Existing pages
 import Index from "./pages/Index";
 import HomeNew from "./pages/HomeNew";
+import HomePremium from "./pages/HomePremium";
 import ProfilePage from "./pages/Profile";
 import NeighborhoodsPage from "./pages/Neighborhoods";
 import AdminDashboard from "./pages/AdminDashboard";
@@ -122,6 +123,7 @@ const AppContent = () => (
             </Route>
             
             {/* Public routes outside AppShell */}
+            <Route path="/premium" element={<HomePremium />} />
             <Route path="/legacy-home" element={<Index />} />
             <Route path="/welcome" element={flags.enableNewMarketing ? <HomeNew /> : <Index />} />
             <Route path="/signin" element={<SignIn />} />
