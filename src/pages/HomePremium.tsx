@@ -43,8 +43,13 @@ const HomePremium = () => {
       <StickyHeader />
       <main>
         <PremiumHero />
+        <ValueProposition />
+        <OurStory />
+        <HowItWorks />
+        <FiveCsSection />
+        <Testimonials />
         
-        {/* Community Categories Section - Moved to top */}
+        {/* Community Categories Section */}
         <section className="py-12 bg-gradient-to-br from-primary/5 to-secondary/5">
           <div className="container mx-auto px-6">
             <div className="max-w-3xl mx-auto">
@@ -102,11 +107,6 @@ const HomePremium = () => {
           </div>
         </section>
 
-        <ValueProposition />
-        <OurStory />
-        <HowItWorks />
-        <FiveCsSection />
-        <Testimonials />
         <CTABanner />
       </main>
       <PremiumFooter />
