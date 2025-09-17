@@ -35,7 +35,7 @@ export function StickyHeader() {
 
   const handleSignOut = async () => {
     await signOut();
-    navigate('/');
+    navigate('/home-premium');
   };
 
   return (
@@ -51,7 +51,7 @@ export function StickyHeader() {
           <div className="flex items-center justify-between h-16">
             
             {/* Logo */}
-            <Link to="/" className="flex items-center">
+            <Link to="/home-premium" className="flex items-center">
               <div className="font-space text-2xl font-bold text-foreground">
                 mbio
               </div>

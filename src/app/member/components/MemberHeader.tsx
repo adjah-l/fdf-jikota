@@ -18,7 +18,7 @@ export const MemberHeader = () => {
 
   const handleSignOut = async () => {
     await signOut();
-    navigate("/");
+    navigate("/home-premium");
   };
 
   const handleJoinGroup = () => {

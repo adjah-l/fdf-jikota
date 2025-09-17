@@ -42,7 +42,7 @@ export function PremiumNavigation() {
 
   const handleSignOut = async () => {
     await signOut();
-    navigate('/');
+    navigate('/home-premium');
   };
 
   const isActive = (path: string) => location.pathname === path;

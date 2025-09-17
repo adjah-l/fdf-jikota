@@ -53,7 +53,7 @@ export function HeaderNew() {
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <Link to="/" className="text-lg font-bold tracking-tight text-foreground hover:text-primary transition-colors">
+              <Link to="/home-premium" className="text-lg font-bold tracking-tight text-foreground hover:text-primary transition-colors">
                 mbio
               </Link>
               <Badge variant="secondary" className="text-xs px-2 py-0.5">Beta</Badge>
@@ -64,7 +64,7 @@ export function HeaderNew() {
 
         {/* Desktop Navigation */}
         <div className="hidden items-center gap-1 md:flex">
-          <NavLink to="/" label="Home" />
+          <NavLink to="/home-premium" label="Home" />
           {flags.enableNewMarketing && <NavLink to="/for-organizations" label="For Organizations" />}
           {flags.enableNewMarketing && <NavLink to="/use-cases" label="Use Cases" />}
           {flags.enableNewMarketing && <NavLink to="/pricing" label="Pricing" />}
@@ -118,7 +118,7 @@ export function HeaderNew() {
                 <SheetTitle className="text-left">Navigation</SheetTitle>
               </SheetHeader>
               <div className="mt-6 flex flex-col gap-2">
-                <NavLink to="/" label="Home" onClick={closeMobileMenu} />
+                <NavLink to="/home-premium" label="Home" onClick={closeMobileMenu} />
                 {flags.enableNewMarketing && (
                   <NavLink to="/for-organizations" label="For Organizations" onClick={closeMobileMenu} />
                 )}

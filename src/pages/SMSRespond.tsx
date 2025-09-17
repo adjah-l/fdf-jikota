@@ -47,7 +47,7 @@ const SMSRespond = () => {
 
       if (threadError || !threadData) {
         toast.error("Invalid or expired link");
-        navigate('/');
+        navigate('/home-premium');
         return;
       }
 
@@ -142,7 +142,7 @@ const SMSRespond = () => {
             <p className="text-muted-foreground mb-4">
               This conversation link is invalid or has expired.
             </p>
-            <Button onClick={() => navigate('/')}>
+            <Button onClick={() => navigate('/home-premium')}>
               Go to Home
             </Button>
           </CardContent>
