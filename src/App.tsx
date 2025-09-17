@@ -110,7 +110,7 @@ const AppContent = () => (
 
             {/* Existing App Shell and Routes */}
             <Route path="/" element={<AppShell />}>
-              <Route index element={<HomePremium />} />
+              <Route index element={<Index />} />
               <Route path="/groups" element={<GroupsPage />} />
               <Route path="/neighborhoods" element={<NeighborhoodsPage />} />
               <Route path="/care" element={<CommunityCarePage />} />
@@ -127,6 +127,7 @@ const AppContent = () => (
             
             {/* Public routes outside AppShell */}
             <Route path="/premium" element={<HomePremium />} />
+            <Route path="/home-premium" element={<HomePremium />} />
             <Route path="/legacy-home" element={<Index />} />
             <Route path="/welcome" element={flags.enableNewMarketing ? <HomeNew /> : <Index />} />
             <Route path="/signin" element={<SignIn />} />
