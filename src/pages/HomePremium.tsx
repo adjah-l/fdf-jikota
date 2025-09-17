@@ -3,6 +3,7 @@ import { PremiumHero } from "@/components/marketing/PremiumHero";
 import { ValueProposition } from "@/components/marketing/ValueProposition";
 import { OurStory } from "@/components/marketing/OurStory";
 import { HowItWorks } from "@/components/marketing/HowItWorks";
+import { FiveCsSection } from "@/components/marketing/FiveCsSection";
 import { Testimonials } from "@/components/marketing/Testimonials";
 import { CTABanner } from "@/components/marketing/CTABanner";
 import { PremiumFooter } from "@/components/marketing/PremiumFooter";
@@ -16,6 +17,7 @@ const HomePremium = () => {
         <ValueProposition />
         <OurStory />
         <HowItWorks />
+        <FiveCsSection />
         <Testimonials />
         <CTABanner />
       </main>
