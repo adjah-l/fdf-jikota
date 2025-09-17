@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useNeighborhoods } from '@/hooks/useNeighborhoods';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import { HeaderNew } from '@/components/layout/HeaderNew';
+import { PremiumFooter } from '@/components/marketing/PremiumFooter';
 import NeighborhoodSelector from '@/components/neighborhood/NeighborhoodSelector';
 import DinnerCard from '@/components/DinnerCard';
 import { Button } from '@/components/ui/button';
@@ -157,20 +157,20 @@ const NeighborhoodsPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background">
-        <Header />
+      <div className="min-h-screen bg-gradient-subtle">
+        <HeaderNew />
         <div className="flex items-center justify-center min-h-[400px]">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
         </div>
-        <Footer />
+        <PremiumFooter />
       </div>
     );
   }
 
   if (!user || userNeighborhoods.length === 0) {
     return (
-      <div className="min-h-screen bg-background">
-        <Header />
+      <div className="min-h-screen bg-gradient-subtle">
+        <HeaderNew />
         <main className="container mx-auto py-12 px-4">
           <div className="text-center space-y-6 max-w-2xl mx-auto">
             <div className="space-y-2">
@@ -195,7 +195,7 @@ const NeighborhoodsPage = () => {
             </Card>
           </div>
         </main>
-        <Footer />
+        <PremiumFooter />
         
         <NeighborhoodSelector
           open={showSelector}
@@ -206,8 +206,8 @@ const NeighborhoodsPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
+    <div className="min-h-screen bg-gradient-subtle">
+      <HeaderNew />
       <main className="container mx-auto py-8 px-4">
         {/* Neighborhood Header */}
         <div className="space-y-6 mb-8">
@@ -356,7 +356,7 @@ const NeighborhoodsPage = () => {
           </CardContent>
         </Card>
       </main>
-      <Footer />
+      <PremiumFooter />
       
       <NeighborhoodSelector
         open={showSelector}
