@@ -43,18 +43,16 @@ const HomePremium = () => {
       <StickyHeader />
       <main>
         <PremiumHero />
-        <ValueProposition />
-        <OurStory />
         
-        {/* Community Categories Section */}
-        <section className="py-16 bg-gradient-to-br from-primary/5 to-secondary/5">
+        {/* Community Categories Section - Moved to top */}
+        <section className="py-12 bg-gradient-to-br from-primary/5 to-secondary/5">
           <div className="container mx-auto px-6">
-            <div className="max-w-4xl mx-auto">
-              {/* Tab Navigation */}
-              <div className="flex items-center justify-center mb-8">
-                <div className="flex items-center bg-white rounded-2xl p-2 shadow-soft border">
-                  <div className="flex items-center justify-center w-12 h-12 bg-primary/10 rounded-xl mr-4">
-                    <Home className="w-6 h-6 text-primary" />
+            <div className="max-w-3xl mx-auto">
+              {/* Tab Navigation - Smaller and more compact */}
+              <div className="flex items-center justify-center mb-6">
+                <div className="flex items-center bg-white rounded-xl p-1.5 shadow-soft border">
+                  <div className="flex items-center justify-center w-8 h-8 bg-primary/10 rounded-lg mr-3">
+                    <Home className="w-4 h-4 text-primary" />
                   </div>
                   <div className="flex space-x-1">
                     {tabs.map((tab) => {
@@ -63,13 +61,13 @@ const HomePremium = () => {
                         <button
                           key={tab.id}
                           onClick={() => setActiveTab(tab.id)}
-                          className={`flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-all duration-200 ${
+                          className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                             activeTab === tab.id
                               ? "bg-primary text-white shadow-sm"
                               : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
                           }`}
                         >
-                          <IconComponent className="w-4 h-4" />
+                          <IconComponent className="w-3.5 h-3.5" />
                           {tab.label}
                         </button>
                       );
@@ -78,7 +76,7 @@ const HomePremium = () => {
                 </div>
               </div>
 
-              {/* Tab Content */}
+              {/* Tab Content - More compact */}
               <div className="text-center">
                 {tabs.map((tab) => (
                   <div
@@ -87,14 +85,14 @@ const HomePremium = () => {
                       activeTab === tab.id ? "block" : "hidden"
                     }`}
                   >
-                    <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+                    <p className="text-lg text-muted-foreground mb-6 max-w-xl mx-auto">
                       {tab.description}
                     </p>
                     <Link
                       to={tab.link}
-                      className="inline-flex items-center gap-2 bg-primary text-white px-8 py-4 rounded-xl font-semibold hover:bg-primary/90 transition-colors shadow-primary"
+                      className="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors shadow-primary text-sm"
                     >
-                      <tab.icon className="w-5 h-5" />
+                      <tab.icon className="w-4 h-4" />
                       Learn More About {tab.label}
                     </Link>
                   </div>
@@ -104,6 +102,8 @@ const HomePremium = () => {
           </div>
         </section>
 
+        <ValueProposition />
+        <OurStory />
         <HowItWorks />
         <FiveCsSection />
         <Testimonials />
