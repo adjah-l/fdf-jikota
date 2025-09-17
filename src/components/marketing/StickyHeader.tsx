@@ -51,9 +51,12 @@ export function StickyHeader() {
           <div className="flex items-center justify-between h-16">
             
             {/* Logo */}
-            <Link to="/home-premium" className="flex items-center">
+            <Link to="/home-premium" className="flex flex-col items-start">
               <div className="font-space text-2xl font-bold text-foreground">
                 mbio
+              </div>
+              <div className="text-xs text-muted-foreground font-medium">
+                Powered by Family Dinner Foundation
               </div>
             </Link>
 
