@@ -65,6 +65,25 @@ export const AppSidebar = () => {
       className={collapsed ? 'w-14' : 'w-64'}
       collapsible="icon"
     >
+      {/* Brand Header */}
+      <div className="h-16 flex items-center px-4 border-b border-sidebar-border bg-sidebar">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 flex items-center justify-center">
+            <img 
+              src="/lovable-uploads/5ed33293-854d-4706-bcba-782b8b7f340b.png" 
+              alt="mbio logo"
+              className="w-8 h-8 object-contain"
+            />
+          </div>
+          {!collapsed && (
+            <div>
+              <div className="font-space text-lg font-bold text-sidebar-foreground">mbio</div>
+              <p className="text-[10px] text-sidebar-foreground/70">Powered by Family Dinner Foundation</p>
+            </div>
+          )}
+        </div>
+      </div>
+      
       <SidebarContent className="bg-sidebar border-sidebar-border shadow-soft">
         {/* Main Navigation */}
         <SidebarGroup className="px-3 py-3">

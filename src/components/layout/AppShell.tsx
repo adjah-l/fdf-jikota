@@ -56,14 +56,10 @@ export const AppShell = () => {
     <SidebarProvider>
       <div className="min-h-screen flex w-full bg-gradient-subtle">
         {/* Header */}
-        <header className="fixed top-0 left-0 right-0 z-50 h-16 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
+        <header className="fixed top-0 left-0 right-0 z-40 h-16 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
           <div className="flex items-center justify-between h-full px-4">
             <div className="flex items-center gap-4">
               <SidebarTrigger />
-              <Link to="/" className="flex flex-col leading-tight">
-                <span className="font-space text-xl font-bold text-foreground hover:text-primary transition-colors">mbio</span>
-                <span className="text-[10px] text-muted-foreground">Powered by Family Dinner Foundation</span>
-              </Link>
               {/* Organization Selector */}
               {currentOrg && (
                 <DropdownMenu>
