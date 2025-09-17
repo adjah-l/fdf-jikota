@@ -49,8 +49,8 @@ export function PremiumFooter() {
                 </h3>
                 <p className="text-muted-foreground leading-relaxed mb-6">
                   <span className="font-semibold text-foreground">mbio</span> means 'a people.' 
-                  We exist to make belonging possible, built on the 5Cs—Care, Consistency, 
-                  Commitment, Confidants, and Celebration.
+                  We exist to make belonging possible, built on the 5Cs—Commitment, Communication, 
+                  Connection, Crisis support, and Celebration.
                 </p>
                 <Button 
                   variant="premium" 

@@ -67,7 +67,7 @@ const pricingPlans = [
 const faq = [
   {
     question: "What makes mbio different from other community platforms?",
-    answer: "mbio is built on the proven 5C framework (Care, Consistency, Commitment, Confidants, and Celebration) that creates lasting community bonds, not just digital connections."
+    answer: "mbio is built on the proven 5C framework (Commitment, Communication, Connection, Crisis support, and Celebration) that creates lasting community bonds, not just digital connections."
   },
   {
     question: "How does the matching algorithm work?",

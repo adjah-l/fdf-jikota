@@ -26,7 +26,7 @@ const steps = [
     icon: Heart,
     title: "Live the 5Cs",
     description: "Meet regularly, care for one another, and grow in belonging.",
-    detail: "Practice Care, Consistency, Commitment, Confidants, and Celebration together."
+    detail: "Practice Commitment, Communication, Connection, Crisis support, and Celebration together."
   }
 ];
 

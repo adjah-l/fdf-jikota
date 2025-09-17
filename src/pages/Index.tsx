@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import { HeaderNew } from "@/components/layout/HeaderNew";
 import { ActivitiesShowcase } from "@/components/marketing/ActivitiesShowcase";
+import { FiveCsSection } from "@/components/marketing/FiveCsSection";
 import Hero from "@/components/Hero";
 import DinnerListings from "@/components/DinnerListings";
 import FiveCPrinciples from "@/components/FiveCPrinciples";
@@ -14,6 +15,7 @@ const Index = () => {
       <main>
         <Hero />
         <ActivitiesShowcase />
+        <FiveCsSection />
         <DinnerListings />
         <FiveCPrinciples />
       </main>
