@@ -63,7 +63,7 @@ export function CTABanner() {
 
             {/* Supporting Text */}
             <p className="text-white/70 text-sm mt-8">
-              No commitment required • Get matched in 24 hours • Start belonging today
+              Start belonging today
             </p>
           </div>
         </div>
