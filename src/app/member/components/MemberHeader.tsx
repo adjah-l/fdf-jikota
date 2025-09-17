@@ -28,8 +28,11 @@ export const MemberHeader = () => {
       <div className="flex h-16 items-center justify-between px-6">
         <div className="flex items-center gap-4">
           <SidebarTrigger />
-          <div>
+          <div className="flex flex-col">
             <h1 className="font-semibold text-lg">My Community</h1>
+            <span className="text-xs text-muted-foreground font-medium">
+              Powered by Family Dinner Foundation
+            </span>
           </div>
         </div>
 

@@ -60,9 +60,12 @@ export function PremiumNavigation() {
           <div className="flex items-center justify-between h-16">
             
             {/* Logo */}
-            <Link to="/" className="flex items-center">
+            <Link to="/" className="flex flex-col items-start">
               <div className="font-space text-2xl font-bold text-foreground">
                 mbio
+              </div>
+              <div className="text-xs text-muted-foreground font-medium">
+                Powered by Family Dinner Foundation
               </div>
             </Link>
 
