@@ -138,7 +138,7 @@ export function PremiumFooter() {
               
               {/* Copyright */}
               <div className="text-muted-foreground text-sm">
-                © 2024 mbio. Powered by Family Dinner Foundation. All rights reserved.
+                © 2025 mbio. Powered by Family Dinner Foundation. All rights reserved.
               </div>
 
               {/* Social Links */}
