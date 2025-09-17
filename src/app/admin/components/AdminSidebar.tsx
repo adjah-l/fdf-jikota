@@ -11,7 +11,7 @@ import {
   CheckSquare,
   Shuffle
 } from "lucide-react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import {
   Sidebar,
   SidebarContent,
@@ -49,39 +49,34 @@ const settingsNavItems = [
 
 export const AdminSidebar = () => {
   const { state } = useSidebar();
-  const location = useLocation();
-  const currentPath = location.pathname;
   const collapsed = state === "collapsed";
 
-  const isActive = (path: string, end: boolean) => {
-    if (end) {
-      return currentPath === path;
-    }
-    return currentPath.startsWith(path);
-  };
-
-  const getNavCls = (path: string, end: boolean) => {
-    const active = isActive(path, end);
-    return active ? "bg-muted text-primary font-medium" : "hover:bg-muted/50";
-  };
-
   const renderNavSection = (items: typeof adminNavItems, label: string) => (
-    <SidebarGroup>
-      <SidebarGroupLabel className="text-muted-foreground font-medium">
+    <SidebarGroup className="px-3 py-2">
+      <SidebarGroupLabel className="text-sidebar-foreground/70 font-semibold text-xs uppercase tracking-wider mb-2">
         {!collapsed && label}
       </SidebarGroupLabel>
       <SidebarGroupContent>
-        <SidebarMenu>
+        <SidebarMenu className="space-y-1">
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton asChild>
+              <SidebarMenuButton 
+                asChild 
+                className="group w-full hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-all duration-200"
+              >
                 <NavLink 
                   to={item.url} 
                   end={item.end}
-                  className={getNavCls(item.url, item.end)}
+                  className={({ isActive }) => 
+                    `flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                      isActive 
+                        ? 'bg-gradient-to-r from-primary/10 to-secondary/5 text-sidebar-primary border border-primary/20 shadow-sm' 
+                        : 'text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent'
+                    }`
+                  }
                 >
-                  <item.icon className="mr-2 h-4 w-4" />
-                  {!collapsed && <span>{item.title}</span>}
+                  <item.icon className="h-4 w-4 flex-shrink-0" />
+                  {!collapsed && <span className="truncate">{item.title}</span>}
                 </NavLink>
               </SidebarMenuButton>
             </SidebarMenuItem>
@@ -93,11 +88,16 @@ export const AdminSidebar = () => {
 
   return (
     <Sidebar className={collapsed ? "w-14" : "w-60"} collapsible="icon">
-      <SidebarContent className="bg-background/95 backdrop-blur-md border-r shadow-soft">
-        <div className="p-4 border-b">
+      <SidebarContent className="bg-sidebar border-sidebar-border shadow-soft">
+        <div className="p-4 border-b border-sidebar-border bg-gradient-to-r from-primary/5 to-secondary/5">
           <div className="flex items-center gap-2">
-            <div className="font-space text-lg font-bold text-primary">mbio</div>
-            {!collapsed && <span className="text-xs text-muted-foreground">Admin Panel</span>}
+            <div className="font-space text-lg font-bold text-sidebar-primary">mbio</div>
+            {!collapsed && (
+              <div className="flex flex-col">
+                <span className="text-xs text-sidebar-foreground/70 font-medium">Powered by</span>
+                <span className="text-xs text-sidebar-foreground/70">Family Dinner Foundation</span>
+              </div>
+            )}
           </div>
         </div>
         {renderNavSection(adminNavItems, "Management")}
