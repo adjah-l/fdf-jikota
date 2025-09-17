@@ -65,18 +65,29 @@ export const AppSidebar = () => {
       className={collapsed ? 'w-14' : 'w-64'}
       collapsible="icon"
     >
-      <SidebarContent className="pt-4">
+      <SidebarContent className="bg-sidebar border-sidebar-border shadow-soft">
         {/* Main Navigation */}
-        <SidebarGroup>
-          <SidebarGroupLabel>Main</SidebarGroupLabel>
+        <SidebarGroup className="px-3 py-3">
+          <SidebarGroupLabel className="text-sidebar-foreground/70 font-semibold text-xs uppercase tracking-wider">
+            {!collapsed && 'Main'}
+          </SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu>
+            <SidebarMenu className="space-y-1">
               {mainNavItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <NavLink to={item.url} end className={getNavCls}>
-                      <item.icon className="h-4 w-4" />
-                      {!collapsed && <span>{item.title}</span>}
+                  <SidebarMenuButton 
+                    asChild 
+                    className="group w-full hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-all duration-200"
+                  >
+                    <NavLink to={item.url} end className={({ isActive }) => 
+                      `flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                        isActive 
+                          ? 'bg-gradient-to-r from-primary/10 to-secondary/5 text-sidebar-primary border border-primary/20 shadow-sm' 
+                          : 'text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent'
+                      }`
+                    }>
+                      <item.icon className="h-4 w-4 flex-shrink-0" />
+                      {!collapsed && <span className="truncate">{item.title}</span>}
                     </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -87,16 +98,27 @@ export const AppSidebar = () => {
 
         {/* Admin Navigation */}
         {showAdminSection && (
-          <SidebarGroup>
-            <SidebarGroupLabel>Administration</SidebarGroupLabel>
+          <SidebarGroup className="px-3 py-2">
+            <SidebarGroupLabel className="text-sidebar-foreground/70 font-semibold text-xs uppercase tracking-wider">
+              {!collapsed && 'Administration'}
+            </SidebarGroupLabel>
             <SidebarGroupContent>
-              <SidebarMenu>
+              <SidebarMenu className="space-y-1">
                 {adminNavItems.map((item) => (
                   <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild>
-                      <NavLink to={item.url} className={getNavCls}>
-                        <item.icon className="h-4 w-4" />
-                        {!collapsed && <span>{item.title}</span>}
+                    <SidebarMenuButton 
+                      asChild 
+                      className="group w-full hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-all duration-200"
+                    >
+                      <NavLink to={item.url} className={({ isActive }) => 
+                        `flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                          isActive 
+                            ? 'bg-gradient-to-r from-primary/10 to-secondary/5 text-sidebar-primary border border-primary/20 shadow-sm' 
+                            : 'text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent'
+                        }`
+                      }>
+                        <item.icon className="h-4 w-4 flex-shrink-0" />
+                        {!collapsed && <span className="truncate">{item.title}</span>}
                       </NavLink>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
@@ -107,16 +129,27 @@ export const AppSidebar = () => {
         )}
 
         {/* Settings Navigation */}
-        <SidebarGroup>
-          <SidebarGroupLabel>Settings</SidebarGroupLabel>
+        <SidebarGroup className="px-3 py-2">
+          <SidebarGroupLabel className="text-sidebar-foreground/70 font-semibold text-xs uppercase tracking-wider">
+            {!collapsed && 'Settings'}
+          </SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu>
+            <SidebarMenu className="space-y-1">
               {settingsNavItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <NavLink to={item.url} className={getNavCls}>
-                      <item.icon className="h-4 w-4" />
-                      {!collapsed && <span>{item.title}</span>}
+                  <SidebarMenuButton 
+                    asChild 
+                    className="group w-full hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-all duration-200"
+                  >
+                    <NavLink to={item.url} className={({ isActive }) => 
+                      `flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                        isActive 
+                          ? 'bg-gradient-to-r from-primary/10 to-secondary/5 text-sidebar-primary border border-primary/20 shadow-sm' 
+                          : 'text-sidebar-foreground hover:text-sidebar-accent-foreground hover:bg-sidebar-accent'
+                      }`
+                    }>
+                      <item.icon className="h-4 w-4 flex-shrink-0" />
+                      {!collapsed && <span className="truncate">{item.title}</span>}
                     </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>

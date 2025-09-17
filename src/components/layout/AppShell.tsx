@@ -60,7 +60,10 @@ export const AppShell = () => {
           <div className="flex items-center justify-between h-full px-4">
             <div className="flex items-center gap-4">
               <SidebarTrigger />
-              
+              <Link to="/" className="flex flex-col leading-tight">
+                <span className="font-space text-xl font-bold text-foreground hover:text-primary transition-colors">mbio</span>
+                <span className="text-[10px] text-muted-foreground">Powered by Family Dinner Foundation</span>
+              </Link>
               {/* Organization Selector */}
               {currentOrg && (
                 <DropdownMenu>
