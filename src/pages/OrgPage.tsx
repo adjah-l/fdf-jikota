@@ -52,8 +52,8 @@ const OrgPage = () => {
           status: "open",
           nextMeeting: "2025-01-20",
           leaders: ["Sarah Kim", "Marcus Johnson"],
-          members: 6,
-          maxMembers: 8
+          members: 4,
+          maxMembers: 5
         },
         {
           name: "GCF Bible Study South",
@@ -61,8 +61,8 @@ const OrgPage = () => {
           status: "waitlist",
           nextMeeting: "2025-01-22",
           leaders: ["Rebecca Chen"],
-          members: 8,
-          maxMembers: 8
+          members: 5,
+          maxMembers: 5
         },
         {
           name: "Saturday Stadium Crew",
@@ -70,8 +70,8 @@ const OrgPage = () => {
           status: "open",
           nextMeeting: "2025-01-25",
           leaders: ["David Martinez", "Emma Wilson"],
-          members: 5,
-          maxMembers: 8
+          members: 3,
+          maxMembers: 5
         }
       ],
       memberCount: 57,
@@ -108,8 +108,8 @@ const OrgPage = () => {
           status: "full",
           nextMeeting: "2025-01-21",
           leaders: ["Maria Santos"],
-          members: 8,
-          maxMembers: 8
+          members: 5,
+          maxMembers: 5
         }
       ],
       memberCount: 34,
@@ -137,8 +137,8 @@ const OrgPage = () => {
           status: "open",
           nextMeeting: "2025-01-18",
           leaders: ["Alex Thompson", "Priya Patel"],
-          members: 5,
-          maxMembers: 8
+          members: 3,
+          maxMembers: 5
         },
         {
           name: "Thursday Dinner Downtown", 
@@ -146,8 +146,8 @@ const OrgPage = () => {
           status: "waitlist",
           nextMeeting: "2025-01-23",
           leaders: ["Michael Chang"],
-          members: 8,
-          maxMembers: 8
+          members: 5,
+          maxMembers: 5
         },
         {
           name: "Flexible Friday Mixers",
@@ -155,8 +155,8 @@ const OrgPage = () => {
           status: "open", 
           nextMeeting: "2025-01-24",
           leaders: ["Sarah Blake", "Jordan Lee"],
-          members: 6,
-          maxMembers: 8
+          members: 4,
+          maxMembers: 5
         }
       ],
       memberCount: 41,

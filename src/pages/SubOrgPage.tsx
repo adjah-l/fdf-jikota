@@ -51,8 +51,8 @@ const SubOrgPage = () => {
             status: "open",
             nextMeeting: "2025-01-20",
             leaders: ["Kendra Williams", "Jerome Davis"],
-            members: 6,
-            maxMembers: 10
+            members: 3,
+            maxMembers: 5
           },
           {
             name: "Cultural Dinner Collective",
@@ -60,8 +60,8 @@ const SubOrgPage = () => {
             status: "waitlist",
             nextMeeting: "2025-01-22",
             leaders: ["Asha Johnson"],
-            members: 8,
-            maxMembers: 8
+            members: 5,
+            maxMembers: 5
           }
         ],
         memberCount: 23,
@@ -86,8 +86,8 @@ const SubOrgPage = () => {
             status: "open", 
             nextMeeting: "2025-01-22",
             leaders: ["David Kim", "Sarah Martinez"],
-            members: 7,
-            maxMembers: 12
+            members: 4,
+            maxMembers: 5
           }
         ],
         memberCount: 18,
@@ -115,7 +115,7 @@ const SubOrgPage = () => {
             nextMeeting: "2025-01-19",
             leaders: ["Jennifer Walsh", "Tom Rodriguez"],
             members: 4,
-            maxMembers: 6
+            maxMembers: 5
           }
         ],
         memberCount: 12,
