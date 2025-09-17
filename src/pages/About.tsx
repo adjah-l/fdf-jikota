@@ -1,11 +1,20 @@
-import { StickyHeader } from "@/components/marketing/StickyHeader";
+import { PremiumNavigation } from "@/components/layout/PremiumNavigation";
 import { PremiumFooter } from "@/components/marketing/PremiumFooter";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Users, Heart, Lightbulb, Target } from "lucide-react";
-import { flags } from "@/config/flags";
+import { Users, Heart, Lightbulb, Target, ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const About = () => {
+  const navigate = useNavigate();
+
+  const handleGetStarted = () => {
+    navigate('/for-organizations');
+  };
+
+  const handleContact = () => {
+    navigate('/contact');
+  };
   const values = [
     {
       icon: Users,
@@ -51,83 +60,170 @@ const About = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
-      <StickyHeader />
-      <div className="container mx-auto px-4 py-16">
-        {/* Hero Section */}
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6">
-            Building community at scale
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-            We started mbio because people everywhere are longing for genuine community—and because too many leaders are struggling to turn a crowd into a place where everyone belongs and truly cares for one another.
-          </p>
-        </div>
-
-        {/* Story Section */}
-        <div className="max-w-4xl mx-auto mb-16">
-          <Card className="p-8 md:p-12">
-            <CardContent className="space-y-6">
-              <h2 className="text-3xl font-bold mb-6">Our Story</h2>
-              <p className="text-lg leading-relaxed">
-                Community isn't just about being together, it's about being cared for. We live in a world where connection is easy to find online but hard to experience in real life. People need more than events—they need relationships that meet their everyday needs: someone to call in a crisis, someone to celebrate with, someone to share the highs and lows of life.
-              </p>
-              <p className="text-lg leading-relaxed">
-                For more than a decade, the Family Dinner Foundation has been proving what's possible. Through nearly 50,000 people across 30 cities and 3 continents, we saw that when people gather with intention and commit to one another, strangers quickly become family. From that foundation we created mbio.
-              </p>
-              <p className="text-lg leading-relaxed">
-                In Efik, mbio means "people." And people are what this is all about. Mbio exists so members can find their people and build reliable, life-giving relationships through our 5C Mutual Care Framework: Commitment, Connection, Communication, Crisis, and Celebration.
-              </p>
-              <p className="text-lg leading-relaxed">
-                Because we believe everyone deserves a community that shows up, shares life, and makes sure no one has to do life alone.
-              </p>
-            </CardContent>
-          </Card>
-        </div>
-
-
-        {/* Mission Section */}
-        <div className="bg-muted/50 rounded-2xl p-8 md:p-12 mb-16">
-          <div className="text-center max-w-3xl mx-auto">
-            <h2 className="text-3xl font-bold mb-6">Our mission</h2>
-            <p className="text-lg leading-relaxed mb-8">
-              To connect people in communities where everyone has meaningful relationships and the support they need - whether you're a member looking for your people or a leader building stronger organizations.
+    <div className="min-h-screen bg-background font-inter">
+      <PremiumNavigation />
+      
+      {/* Hero Section */}
+      <section className="pt-24 pb-16 bg-gradient-hero">
+        <div className="container mx-auto px-6 text-center">
+          <div className="max-w-4xl mx-auto">
+            <h1 className="font-space text-premium-hero md:text-premium-hero-mobile mb-8 text-foreground">
+              Building <span className="text-primary">Community at Scale</span>
+            </h1>
+            <p className="text-premium-body md:text-premium-body-lg text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed">
+              We started mbio because people everywhere are longing for genuine community—and because too many leaders are struggling to turn a crowd into a place where everyone belongs and truly cares for one another.
             </p>
-            <div className="grid md:grid-cols-3 gap-8 text-center">
-              <div>
-                <div className="text-3xl font-bold text-primary mb-2">50,000+</div>
-                <div className="text-sm text-muted-foreground">People connected</div>
-              </div>
-              <div>
-                <div className="text-3xl font-bold text-primary mb-2">30+</div>
-                <div className="text-sm text-muted-foreground">Cities worldwide</div>
-              </div>
-              <div>
-                <div className="text-3xl font-bold text-primary mb-2">3</div>
-                <div className="text-sm text-muted-foreground">Continents served</div>
-              </div>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <Button 
+                variant="premium" 
+                size="xl"
+                onClick={handleGetStarted}
+                className="shadow-primary"
+              >
+                Get Started
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </Button>
+              <Button 
+                variant="premium-outline" 
+                size="xl"
+                onClick={handleContact}
+              >
+                Contact Us
+              </Button>
             </div>
           </div>
         </div>
+      </section>
 
-        {/* CTA Section */}
-        <div className="text-center">
-          <h2 className="text-3xl font-bold mb-4">
-            Join us in building better communities
-          </h2>
-          <p className="text-muted-foreground mb-8">
-            Whether you're a member seeking genuine community or leading a church, university, HOA, professional organization, or social group - we'd love to help you create connections that feel like family.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="px-8">
-              Schedule a Demo
-            </Button>
-            <Button size="lg" variant="outline" className="px-8">
-              Contact Us
-            </Button>
+      {/* Our Story Section */}
+      <section className="py-24 bg-background">
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl mx-auto">
+            <Card className="hover-lift border-0 shadow-soft hover:shadow-lift">
+              <CardContent className="p-8 md:p-12 space-y-6">
+                <h2 className="font-space text-4xl md:text-5xl font-bold mb-8 text-foreground">Our Story</h2>
+                <p className="text-premium-body leading-relaxed text-muted-foreground">
+                  Community isn't just about being together, it's about being cared for. We live in a world where connection is easy to find online but hard to experience in real life. People need more than events—they need relationships that meet their everyday needs: someone to call in a crisis, someone to celebrate with, someone to share the highs and lows of life.
+                </p>
+                <p className="text-premium-body leading-relaxed text-muted-foreground">
+                  For more than a decade, the Family Dinner Foundation has been proving what's possible. Through nearly 50,000 people across 30 cities and 3 continents, we saw that when people gather with intention and commit to one another, strangers quickly become family. From that foundation we created mbio.
+                </p>
+                <p className="text-premium-body leading-relaxed text-muted-foreground">
+                  In Efik, <strong className="text-foreground">mbio means "a people."</strong> And people are what this is all about. Mbio exists so members can find their people and build reliable, life-giving relationships through our <strong className="text-primary">5C Mutual Care Framework</strong>: Commitment, Connection, Communication, Crisis, and Celebration.
+                </p>
+                <p className="text-premium-body leading-relaxed text-muted-foreground">
+                  Because we believe everyone deserves a community that shows up, shares life, and makes sure no one has to do life alone.
+                </p>
+              </CardContent>
+            </Card>
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* Our Values Section */}
+      <section className="py-24 bg-muted/30">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="font-space text-4xl md:text-5xl font-bold mb-6 text-foreground">
+              Our Values
+            </h2>
+            <p className="text-premium-body text-muted-foreground max-w-2xl mx-auto">
+              The principles that guide everything we do in building authentic communities.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+            {values.map((value, index) => {
+              const IconComponent = value.icon;
+              return (
+                <Card key={index} className="hover-lift border-0 shadow-soft hover:shadow-lift">
+                  <CardHeader>
+                    <div className="flex items-start gap-4">
+                      <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
+                        <IconComponent className="w-8 h-8 text-primary" />
+                      </div>
+                      <div>
+                        <CardTitle className="text-xl font-semibold text-foreground mb-2">
+                          {value.title}
+                        </CardTitle>
+                        <p className="text-muted-foreground leading-relaxed">
+                          {value.description}
+                        </p>
+                      </div>
+                    </div>
+                  </CardHeader>
+                </Card>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Mission & Impact Section */}
+      <section className="py-24 bg-background">
+        <div className="container mx-auto px-6">
+          <div className="text-center max-w-4xl mx-auto mb-16">
+            <h2 className="font-space text-4xl md:text-5xl font-bold mb-8 text-foreground">Our Mission & Impact</h2>
+            <p className="text-premium-body md:text-premium-body-lg leading-relaxed text-muted-foreground mb-12">
+              To connect people in communities where everyone has meaningful relationships and the support they need - whether you're a member looking for your people or a leader building stronger organizations.
+            </p>
+            <div className="grid md:grid-cols-3 gap-8 text-center">
+              <Card className="hover-lift border-0 shadow-soft hover:shadow-lift">
+                <CardContent className="p-8">
+                  <div className="text-4xl font-bold text-primary mb-2">50,000+</div>
+                  <div className="text-sm text-muted-foreground">People connected</div>
+                </CardContent>
+              </Card>
+              <Card className="hover-lift border-0 shadow-soft hover:shadow-lift">
+                <CardContent className="p-8">
+                  <div className="text-4xl font-bold text-primary mb-2">30+</div>
+                  <div className="text-sm text-muted-foreground">Cities worldwide</div>
+                </CardContent>
+              </Card>
+              <Card className="hover-lift border-0 shadow-soft hover:shadow-lift">
+                <CardContent className="p-8">
+                  <div className="text-4xl font-bold text-primary mb-2">3</div>
+                  <div className="text-sm text-muted-foreground">Continents served</div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-24 bg-gradient-primary">
+        <div className="container mx-auto px-6 text-center">
+          <div className="max-w-4xl mx-auto text-white">
+            <h2 className="font-space text-4xl md:text-5xl font-bold mb-6">
+              Join Us in Building Better Communities
+            </h2>
+            <p className="text-xl mb-12 max-w-2xl mx-auto leading-relaxed opacity-90">
+              Whether you're a member seeking genuine community or leading a church, university, HOA, professional organization, or social group - we'd love to help you create connections that feel like family.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <Button 
+                variant="secondary" 
+                size="xl"
+                onClick={handleGetStarted}
+                className="bg-white text-primary hover:bg-white/90 shadow-lg"
+              >
+                Get Started Today
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </Button>
+              <Button 
+                variant="outline" 
+                size="xl"
+                onClick={handleContact}
+                className="border-white text-white hover:bg-white/10"
+              >
+                Contact Us
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <PremiumFooter />
     </div>
   );
