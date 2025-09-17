@@ -12,6 +12,7 @@ import { flags } from "@/config/flags";
 import Index from "./pages/Index";
 import HomeNew from "./pages/HomeNew";
 import HomePremium from "./pages/HomePremium";
+import PremiumPricing from "./pages/PremiumPricing";
 import ProfilePage from "./pages/Profile";
 import NeighborhoodsPage from "./pages/Neighborhoods";
 import AdminDashboard from "./pages/AdminDashboard";
@@ -31,6 +32,7 @@ import Pricing from "./pages/Pricing";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import ForOrganizations from "./pages/ForOrganizations";
+import Partners from "./pages/Partners";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 
@@ -98,16 +100,17 @@ const AppContent = () => (
             {flags.enableNewMarketing && (
               <>
                 <Route path="/use-cases" element={<UseCases />} />
-                <Route path="/pricing" element={<Pricing />} />
+                <Route path="/pricing" element={<PremiumPricing />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/for-organizations" element={<ForOrganizations />} />
+                <Route path="/partners" element={<Partners />} />
               </>
             )}
 
             {/* Existing App Shell and Routes */}
             <Route path="/" element={<AppShell />}>
-              <Route index element={flags.enableNewMarketing ? <HomeNew /> : <DashboardPage />} />
+              <Route index element={<HomePremium />} />
               <Route path="/groups" element={<GroupsPage />} />
               <Route path="/neighborhoods" element={<NeighborhoodsPage />} />
               <Route path="/care" element={<CommunityCarePage />} />

@@ -1,154 +1,323 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { PremiumNavigation } from "@/components/layout/PremiumNavigation";
+import { PremiumFooter } from "@/components/marketing/PremiumFooter";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Church, Home, Building2, Users, Heart, MessageSquare } from "lucide-react";
-import Header from "@/components/Header";
-import { HeaderNew } from "@/components/layout/HeaderNew";
-import Footer from "@/components/Footer";
-import { flags } from "@/config/flags";
+import { Badge } from "@/components/ui/badge";
+import { 
+  Building2, 
+  Users, 
+  Heart, 
+  GraduationCap, 
+  Home, 
+  Briefcase,
+  ArrowRight,
+  CheckCircle
+} from "lucide-react";
+import { useNavigate } from "react-router-dom";
+
+const useCases = [
+  {
+    id: "corporate",
+    icon: Briefcase,
+    title: "Corporate Wellness",
+    description: "Employee wellbeing through neighborhood community building",
+    gradient: "from-primary/10 to-primary/5",
+    benefits: [
+      "Reduced employee isolation",
+      "Improved work-life balance", 
+      "Stronger team relationships",
+      "Higher retention rates"
+    ],
+    examples: [
+      "Tech companies with remote workers",
+      "Healthcare systems supporting staff",
+      "Financial services firms"
+    ]
+  },
+  {
+    id: "healthcare",
+    icon: Heart,
+    title: "Healthcare & Wellness",
+    description: "Address social determinants of health through community care",
+    gradient: "from-secondary/10 to-secondary/5",
+    benefits: [
+      "Better patient outcomes",
+      "Reduced readmission rates",
+      "Community support networks",
+      "Mental health improvement"
+    ],
+    examples: [
+      "Hospitals and health systems",
+      "Mental health organizations",
+      "Senior care facilities"
+    ]
+  },
+  {
+    id: "faith",
+    icon: Heart,
+    title: "Faith Communities",
+    description: "Deepen congregational care beyond Sunday services",
+    gradient: "from-accent/10 to-accent/5",
+    benefits: [
+      "Stronger member connections",
+      "Pastoral care support",
+      "Community outreach",
+      "Spiritual growth together"
+    ],
+    examples: [
+      "Churches and congregations",
+      "Faith-based nonprofits",
+      "Religious organizations"
+    ]
+  },
+  {
+    id: "education",
+    icon: GraduationCap,
+    title: "Educational Institutions",
+    description: "Build belonging among students, parents, and faculty",
+    gradient: "from-primary/15 to-primary/8",
+    benefits: [
+      "Student engagement",
+      "Parent involvement",
+      "Faculty wellness",
+      "Community partnerships"
+    ],
+    examples: [
+      "Universities and colleges",
+      "K-12 school districts",
+      "Educational nonprofits"
+    ]
+  },
+  {
+    id: "housing",
+    icon: Home,
+    title: "Housing & Real Estate",
+    description: "Create thriving communities in residential developments",
+    gradient: "from-secondary/15 to-secondary/8",
+    benefits: [
+      "Higher property values",
+      "Resident satisfaction",
+      "Community safety",
+      "Long-term tenancy"
+    ],
+    examples: [
+      "Apartment communities",
+      "Planned developments",
+      "Senior living facilities"
+    ]
+  },
+  {
+    id: "community",
+    icon: Users,
+    title: "Community Organizations",
+    description: "Scale impact through structured mutual care practices",
+    gradient: "from-accent/15 to-accent/8",
+    benefits: [
+      "Increased engagement",
+      "Volunteer retention",
+      "Program effectiveness",
+      "Community resilience"
+    ],
+    examples: [
+      "Neighborhood associations",
+      "Community centers",
+      "Local nonprofits"
+    ]
+  }
+];
 
 const UseCases = () => {
-  const useCases = [
-    {
-      icon: Church,
-      title: "Churches",
-      description: "Seasonal small groups and mutual care communities",
-      features: [
-        "Seasonal group formation with life stage matching",
-        "Care networks for pastoral support at scale", 
-        "Groups that build lasting relationships",
-        "Member-to-member service exchange"
-      ],
-      cta: "Perfect for churches of 200+ members"
-    },
-    {
-      icon: Home,
-      title: "HOAs & Neighborhoods", 
-      description: "Turn neighbors into community through structured connection",
-      features: [
-        "Activity-based groups by neighborhood zones",
-        "Neighbor-to-neighbor care requests",
-        "New resident integration programs",
-        "Community event coordination"
-      ],
-      cta: "Ideal for HOAs and neighborhood associations"
-    },
-    {
-      icon: Building2,
-      title: "Universities & Schools",
-      description: "Student communities and alumni networks with lasting connections",
-      features: [
-        "Student life groups by interests and activities",
-        "Alumni networking with meaningful relationships",
-        "Peer mentoring and study groups",
-        "Campus community building initiatives"
-      ],
-      cta: "Perfect for universities, colleges, and schools"
-    },
-    {
-      icon: Users,
-      title: "Professional & Social Organizations",
-      description: "Cohorts with peer support and professional development",
-      features: [
-        "Industry peer mentoring circles",
-        "Professional development cohorts", 
-        "Social clubs with authentic connections",
-        "Knowledge and resource sharing networks"
-      ],
-      cta: "Built for professional associations and social organizations"
-    }
-  ];
+  const navigate = useNavigate();
+
+  const handleGetStarted = () => {
+    navigate('/for-organizations');
+  };
+
+  const handleContactUs = () => {
+    navigate('/contact');
+  };
 
   return (
-    <div className="min-h-screen bg-background">
-      {flags.enableNewMarketing ? <HeaderNew /> : <Header />}
-      <div className="container mx-auto px-4 py-16">
-        {/* Hero Section */}
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6">
-            One platform, many use cases
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-            From churches to universities to HOAs to professional organizations, see how members are finding their people and leaders are creating thriving communities.
-          </p>
+    <div className="min-h-screen bg-background font-inter">
+      <PremiumNavigation />
+      
+      {/* Hero Section */}
+      <section className="pt-24 pb-16 bg-gradient-hero">
+        <div className="container mx-auto px-6 text-center">
+          <div className="max-w-4xl mx-auto">
+            <h1 className="font-space text-premium-hero md:text-premium-hero-mobile mb-8 text-foreground">
+              Use Cases for <span className="text-primary">Every Organization</span>
+            </h1>
+            <p className="text-premium-body md:text-premium-body-lg text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed">
+              The 5C framework adapts to any organization's unique needs. 
+              Discover how different sectors are building belonging at scale.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <Button 
+                variant="premium" 
+                size="xl"
+                onClick={handleGetStarted}
+                className="shadow-primary"
+              >
+                Get Started
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </Button>
+              <Button 
+                variant="premium-outline" 
+                size="xl"
+                onClick={handleContactUs}
+              >
+                Contact Us
+              </Button>
+            </div>
+          </div>
         </div>
+      </section>
 
-        {/* Use Cases Grid */}
-        <div className="grid md:grid-cols-3 gap-8 mb-16">
-          {useCases.map((useCase, index) => (
-            <Card key={index} className="h-full">
-              <CardHeader>
-                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
-                  <useCase.icon className="w-6 h-6 text-primary" />
-                </div>
-                <CardTitle className="text-xl">{useCase.title}</CardTitle>
-                <CardDescription>{useCase.description}</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <ul className="space-y-2">
-                  {useCase.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-start gap-2 text-sm">
-                      <div className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0" />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-                <p className="text-sm font-medium text-primary pt-2">
-                  {useCase.cta}
+      {/* Use Cases Grid */}
+      <section className="py-24 bg-background">
+        <div className="container mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-12 max-w-7xl mx-auto">
+            {useCases.map((useCase) => {
+              const IconComponent = useCase.icon;
+              return (
+                <Card key={useCase.id} className="hover-lift border-0 shadow-soft hover:shadow-lift">
+                  <CardHeader>
+                    <div className="flex items-start gap-4">
+                      <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${useCase.gradient} flex items-center justify-center`}>
+                        <IconComponent className="w-8 h-8 text-foreground" />
+                      </div>
+                      <div>
+                        <CardTitle className="text-xl font-semibold text-foreground mb-2">
+                          {useCase.title}
+                        </CardTitle>
+                        <p className="text-muted-foreground leading-relaxed">
+                          {useCase.description}
+                        </p>
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="pt-0">
+                    <div className="space-y-6">
+                      {/* Benefits */}
+                      <div>
+                        <h4 className="font-semibold text-foreground mb-3">Key Benefits</h4>
+                        <div className="grid grid-cols-2 gap-2">
+                          {useCase.benefits.map((benefit, idx) => (
+                            <div key={idx} className="flex items-center gap-2 text-sm">
+                              <CheckCircle className="w-4 h-4 text-secondary" />
+                              <span className="text-muted-foreground">{benefit}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Examples */}
+                      <div>
+                        <h4 className="font-semibold text-foreground mb-3">Examples</h4>
+                        <div className="flex flex-wrap gap-2">
+                          {useCase.examples.map((example, idx) => (
+                            <Badge key={idx} variant="secondary" className="text-xs">
+                              {example}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Success Stories */}
+      <section className="py-24 bg-muted/30">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="font-space text-4xl md:text-5xl font-bold mb-6 text-foreground">
+              Success Stories
+            </h2>
+            <p className="text-premium-body text-muted-foreground max-w-2xl mx-auto">
+              Real organizations seeing measurable impact with the 5C framework.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <Card className="hover-lift border-0 shadow-soft hover:shadow-lift">
+              <CardContent className="p-8 text-center">
+                <div className="text-4xl mb-4">🏥</div>
+                <h3 className="font-semibold text-foreground mb-2">Metro Health</h3>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Reduced patient readmissions by 40% through community care groups.
                 </p>
+                <div className="text-2xl font-bold text-primary">40%</div>
+                <div className="text-xs text-muted-foreground">Reduction in readmissions</div>
               </CardContent>
             </Card>
-          ))}
-        </div>
 
-        {/* Common Features */}
-        <div className="bg-muted/50 rounded-2xl p-8 md:p-12 mb-16">
-          <h2 className="text-3xl font-bold text-center mb-8">
-            Shared platform features
-          </h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <Users className="w-8 h-8 text-primary mx-auto mb-4" />
-              <h3 className="font-semibold mb-2">Smart Matching</h3>
-              <p className="text-sm text-muted-foreground">
-                AI-powered algorithms consider location, life stage, interests, and availability
-              </p>
-            </div>
-            <div className="text-center">
-              <Heart className="w-8 h-8 text-primary mx-auto mb-4" />
-              <h3 className="font-semibold mb-2">Care Networks</h3>
-              <p className="text-sm text-muted-foreground">
-                Member-to-member service exchange with credits and reputation systems
-              </p>
-            </div>
-            <div className="text-center">
-              <MessageSquare className="w-8 h-8 text-primary mx-auto mb-4" />
-              <h3 className="font-semibold mb-2">Communication</h3>
-              <p className="text-sm text-muted-foreground">
-                Built-in messaging, email campaigns, and group coordination tools
-              </p>
+            <Card className="hover-lift border-0 shadow-soft hover:shadow-lift">
+              <CardContent className="p-8 text-center">
+                <div className="text-4xl mb-4">🏢</div>
+                <h3 className="font-semibold text-foreground mb-2">TechCorp Global</h3>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Improved employee satisfaction and reduced turnover significantly.
+                </p>
+                <div className="text-2xl font-bold text-primary">85%</div>
+                <div className="text-xs text-muted-foreground">Employee satisfaction</div>
+              </CardContent>
+            </Card>
+
+            <Card className="hover-lift border-0 shadow-soft hover:shadow-lift">
+              <CardContent className="p-8 text-center">
+                <div className="text-4xl mb-4">⛪</div>
+                <h3 className="font-semibold text-foreground mb-2">Faith Fellowship</h3>
+                <p className="text-sm text-muted-foreground mb-4">
+                  Increased member engagement and community outreach participation.
+                </p>
+                <div className="text-2xl font-bold text-primary">300+</div>
+                <div className="text-xs text-muted-foreground">Active participants</div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-24 bg-gradient-primary">
+        <div className="container mx-auto px-6 text-center">
+          <div className="max-w-4xl mx-auto text-white">
+            <h2 className="font-space text-4xl md:text-5xl font-bold mb-6">
+              Ready to Transform Your Organization?
+            </h2>
+            <p className="text-xl mb-12 max-w-2xl mx-auto leading-relaxed opacity-90">
+              Join hundreds of organizations using the 5C framework to build belonging and strengthen communities.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <Button 
+                variant="secondary" 
+                size="xl"
+                onClick={handleGetStarted}
+                className="bg-white text-primary hover:bg-white/90 shadow-lg"
+              >
+                Get Started Today
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </Button>
+              <Button 
+                variant="outline" 
+                size="xl"
+                onClick={handleContactUs}
+                className="border-white text-white hover:bg-white/10"
+              >
+                Schedule a Demo
+              </Button>
             </div>
           </div>
         </div>
+      </section>
 
-        {/* CTA Section */}
-        <div className="text-center">
-          <h2 className="text-3xl font-bold mb-4">
-            Ready to transform your community?
-          </h2>
-          <p className="text-muted-foreground mb-8">
-            Join thousands already experiencing community that genuinely cares for each other like family.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="px-8">
-              Schedule a Demo
-            </Button>
-            <Button size="lg" variant="outline" className="px-8">
-              See Pricing
-            </Button>
-          </div>
-        </div>
-      </div>
-      <Footer />
+      <PremiumFooter />
     </div>
   );
 };
