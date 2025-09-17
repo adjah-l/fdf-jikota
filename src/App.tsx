@@ -41,6 +41,7 @@ import OrgsDirectory from "./pages/OrgsDirectory";
 import OrgPage from "./pages/OrgPage";
 import SubOrgPage from "./pages/SubOrgPage";
 import JoinWizard from "./pages/JoinWizard";
+import GroupDetail from "./pages/GroupDetail";
 
 // New app shells (gated by flags)
 import { MemberAppShell } from "./app/member/MemberAppShell";
@@ -117,6 +118,7 @@ const AppContent = () => (
             {/* Org Directory and Pages */}
             <Route path="/orgs" element={<OrgsDirectory />} />
             <Route path="/orgs/:slug" element={<OrgPage />} />
+            <Route path="/orgs/:slug/groups/:groupId" element={<GroupDetail />} />
             <Route path="/orgs/:slug/:subslug" element={<SubOrgPage />} />
             <Route path="/join" element={<JoinWizard />} />
 
