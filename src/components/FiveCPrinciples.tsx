@@ -83,7 +83,7 @@ const FiveCPrinciples = () => {
         </div>
         
         <div className="text-center">
-          <Button variant="community" size="lg" onClick={handleJoinCareGroup}>
+          <Button variant="secondary" size="lg" onClick={handleJoinCareGroup}>
             Join a 5C Care Group
           </Button>
         </div>

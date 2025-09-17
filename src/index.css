@@ -8,55 +8,61 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 24 9.8% 10%;
+    /* Premium mbio design system - Off-white background */
+    --background: 210 20% 98%;
+    --foreground: 0 0% 4%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 24 9.8% 10%;
+    --card: 210 20% 98%;
+    --card-foreground: 0 0% 4%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 24 9.8% 10%;
+    --popover: 210 20% 98%;
+    --popover-foreground: 0 0% 4%;
 
-    /* Warm coral primary for community warmth */
-    --primary: 16 84% 58%;
-    --primary-foreground: 0 0% 98%;
+    /* Electric Blue primary for premium CTAs */
+    --primary: 220 100% 50%;
+    --primary-foreground: 0 0% 100%;
 
-    /* Sage secondary for growth and calm */
-    --secondary: 95 20% 92%;
-    --secondary-foreground: 24 9.8% 10%;
+    /* Emerald Green secondary for accents */
+    --secondary: 169 100% 39%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 60 4.8% 95.9%;
-    --muted-foreground: 25 5.3% 44.7%;
+    --muted: 210 14% 92%;
+    --muted-foreground: 210 14% 35%;
 
-    /* Warm blue accent for trust */
-    --accent: 207 90% 95%;
-    --accent-foreground: 207 90% 15%;
+    /* Emerald accent for secondary actions */
+    --accent: 169 100% 39%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* Bright red for errors */
+    --destructive: 359 100% 65%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 16 84% 58%;
+    --border: 210 20% 90%;
+    --input: 210 20% 90%;
+    --ring: 220 100% 50%;
 
-    /* Community-focused design tokens */
-    --primary-glow: 16 84% 70%;
-    --success: 142 76% 36%;
-    --success-foreground: 355 100% 97%;
-    --info: 207 90% 54%;
-    --info-foreground: 355 100% 97%;
+    /* Premium design tokens */
+    --primary-glow: 220 100% 60%;
+    --success: 169 100% 39%;
+    --success-foreground: 0 0% 100%;
+    --info: 220 100% 50%;
+    --info-foreground: 0 0% 100%;
     
-    /* Beautiful gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(16 84% 58%), hsl(16 84% 70%));
-    --gradient-community: linear-gradient(135deg, hsl(16 84% 58%), hsl(207 90% 54%));
-    --gradient-subtle: linear-gradient(180deg, hsl(0 0% 100%), hsl(60 4.8% 98%));
+    /* Premium gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(220 100% 50%), hsl(169 100% 39%));
+    --gradient-secondary: linear-gradient(135deg, hsl(169 100% 39%), hsl(169 100% 50%));
+    --gradient-subtle: linear-gradient(180deg, hsl(210 20% 98%), hsl(210 20% 95%));
+    --gradient-hero: linear-gradient(135deg, hsl(220 100% 50% / 0.05), hsl(169 100% 39% / 0.05));
     
-    /* Warm shadows */
-    --shadow-warm: 0 4px 20px hsl(16 84% 58% / 0.15);
-    --shadow-soft: 0 2px 8px hsl(220 13% 91% / 0.4);
+    /* Premium shadows */
+    --shadow-primary: 0 4px 24px hsl(220 100% 50% / 0.15);
+    --shadow-secondary: 0 4px 24px hsl(169 100% 39% / 0.15);
+    --shadow-lift: 0 8px 32px hsl(0 0% 0% / 0.08);
+    --shadow-soft: 0 2px 8px hsl(0 0% 0% / 0.04);
     
-    /* Smooth transitions */
+    /* Smooth premium transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
     --radius: 0.5rem;
 
@@ -78,41 +84,47 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 24 9.8% 10%;
+    /* Premium dark mode - Charcoal background */
+    --background: 225 39% 12%;
     --foreground: 0 0% 98%;
 
-    --card: 24 9.8% 10%;
+    --card: 225 39% 12%;
     --card-foreground: 0 0% 98%;
 
-    --popover: 24 9.8% 10%;
+    --popover: 225 39% 12%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 16 84% 58%;
-    --primary-foreground: 0 0% 98%;
+    /* Electric Blue primary remains vibrant in dark */
+    --primary: 220 100% 50%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 12 6.5% 15.1%;
-    --secondary-foreground: 0 0% 98%;
+    /* Emerald secondary maintains vibrancy */
+    --secondary: 169 100% 39%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 12 6.5% 15.1%;
-    --muted-foreground: 24 5.4% 63.9%;
+    --muted: 225 39% 18%;
+    --muted-foreground: 210 14% 65%;
 
-    --accent: 12 6.5% 15.1%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 169 100% 39%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 359 100% 65%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 12 6.5% 15.1%;
-    --input: 12 6.5% 15.1%;
-    --ring: 16 84% 58%;
+    --border: 225 39% 20%;
+    --input: 225 39% 20%;
+    --ring: 220 100% 50%;
     
-    /* Dark mode gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(16 84% 58%), hsl(16 84% 70%));
-    --gradient-community: linear-gradient(135deg, hsl(16 84% 58%), hsl(207 90% 54%));
-    --gradient-subtle: linear-gradient(180deg, hsl(24 9.8% 10%), hsl(12 6.5% 15.1%));
+    /* Dark mode premium gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(220 100% 50%), hsl(169 100% 39%));
+    --gradient-secondary: linear-gradient(135deg, hsl(169 100% 39%), hsl(169 100% 50%));
+    --gradient-subtle: linear-gradient(180deg, hsl(225 39% 12%), hsl(225 39% 15%));
+    --gradient-hero: linear-gradient(135deg, hsl(220 100% 50% / 0.08), hsl(169 100% 39% / 0.08));
     
-    --shadow-warm: 0 4px 20px hsl(16 84% 58% / 0.25);
-    --shadow-soft: 0 2px 8px hsl(0 0% 0% / 0.4);
+    --shadow-primary: 0 4px 24px hsl(220 100% 50% / 0.25);
+    --shadow-secondary: 0 4px 24px hsl(169 100% 39% / 0.25);
+    --shadow-lift: 0 8px 32px hsl(0 0% 0% / 0.3);
+    --shadow-soft: 0 2px 8px hsl(0 0% 0% / 0.2);
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -143,7 +155,24 @@ All colors MUST be HSL.
     background: var(--gradient-primary);
   }
   
-  .bg-gradient-community {
-    background: var(--gradient-community);
+  .bg-gradient-secondary {
+    background: var(--gradient-secondary);
+  }
+  
+  .bg-gradient-hero {
+    background: var(--gradient-hero);
+  }
+  
+  /* Premium interactions */
+  .hover-lift {
+    @apply transition-all duration-300 hover:translate-y-[-4px] hover:shadow-lift;
+  }
+  
+  .hover-scale {
+    @apply transition-transform duration-300 hover:scale-105;
+  }
+  
+  .cta-text {
+    @apply uppercase font-bold tracking-wider;
   }
 }

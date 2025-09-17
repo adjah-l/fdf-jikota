@@ -133,7 +133,7 @@ const DinnerListings = () => {
               Hosting a group is a wonderful way to strengthen your community connections. 
               We'll help you every step of the way!
             </p>
-            <Button variant="hero" size="lg" onClick={handleHostDinner}>
+            <Button variant="premium" size="lg" onClick={handleHostDinner}>
               <Plus className="w-4 h-4 mr-2" />
               Host a Group
             </Button>

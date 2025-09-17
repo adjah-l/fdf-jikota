@@ -79,11 +79,14 @@ export default {
 			},
 			backgroundImage: {
 				'gradient-primary': 'var(--gradient-primary)',
-				'gradient-community': 'var(--gradient-community)',
-				'gradient-subtle': 'var(--gradient-subtle)'
+				'gradient-secondary': 'var(--gradient-secondary)',
+				'gradient-subtle': 'var(--gradient-subtle)',
+				'gradient-hero': 'var(--gradient-hero)'
 			},
 			boxShadow: {
-				'warm': 'var(--shadow-warm)',
+				'primary': 'var(--shadow-primary)',
+				'secondary': 'var(--shadow-secondary)',
+				'lift': 'var(--shadow-lift)',
 				'soft': 'var(--shadow-soft)'
 			},
 			transitionTimingFunction: {
@@ -99,7 +102,17 @@ export default {
 				'3xl': ['1.875rem', { lineHeight: '2.25rem' }],
 				'4xl': ['2.25rem', { lineHeight: '2.5rem' }],
 				'5xl': ['3rem', { lineHeight: '1' }],
-				'6xl': ['3.75rem', { lineHeight: '1' }]
+				'6xl': ['3.75rem', { lineHeight: '1' }],
+				'7xl': ['4rem', { lineHeight: '1' }],
+				'premium-hero': ['4rem', { lineHeight: '1.1', fontWeight: '800' }],
+				'premium-hero-mobile': ['2.625rem', { lineHeight: '1.1', fontWeight: '800' }],
+				'premium-body': ['1.125rem', { lineHeight: '1.6' }],
+				'premium-body-lg': ['1.25rem', { lineHeight: '1.6' }]
+			},
+			fontFamily: {
+				'inter': ['Inter', 'sans-serif'],
+				'space': ['Space Grotesk', 'sans-serif'],
+				'work': ['Work Sans', 'sans-serif']
 			},
 			keyframes: {
 				'accordion-down': {

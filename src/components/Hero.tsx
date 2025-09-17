@@ -51,7 +51,7 @@ const Hero = () => {
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
             <Button 
-              variant="hero" 
+              variant="premium" 
               size="lg" 
               className="min-w-[200px]"
               onClick={handleJoinNeighborhood}
