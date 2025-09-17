@@ -46,7 +46,7 @@ const Hero = () => {
           </h1>
           
           <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
-            Build belonging and community health through gatherings that bring neighbors together—dinner is one way to start.
+            <span className="font-semibold text-foreground">mbio</span> means "a people" in Efik, a Nigerian language. We help you belong through shared activities and the 5C framework for lasting care.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">

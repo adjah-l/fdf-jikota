@@ -44,7 +44,7 @@ export function PremiumHero() {
             
             {/* Subcopy */}
             <p className="text-premium-body md:text-premium-body-lg text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed">
-              <span className="font-semibold text-foreground">mbio</span> means 'a people' in Efik. 
+              <span className="font-semibold text-foreground">mbio</span> means "a people" in Efik, a Nigerian language. 
               We help you belong through shared activities and the 5C framework for lasting care.
             </p>
             
