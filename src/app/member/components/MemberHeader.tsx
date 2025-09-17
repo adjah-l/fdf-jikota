@@ -8,28 +8,38 @@ import {
   DropdownMenuSeparator, 
   DropdownMenuTrigger 
 } from "@/components/ui/dropdown-menu";
-import { Bell, Settings, LogOut, ToggleLeft } from "lucide-react";
+import { Bell, Settings, LogOut, ToggleLeft, Users } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 export const MemberHeader = () => {
   const { user, signOut } = useAuth();
+  const navigate = useNavigate();
 
   const handleSignOut = async () => {
     await signOut();
+    navigate("/");
+  };
+
+  const handleJoinGroup = () => {
+    navigate("/groups");
   };
 
   const switchToAdminView = () => {
     // TODO: Check if user has admin role and redirect to /admin2
-    console.log("Switch to admin view");
+    navigate("/admin2");
   };
 
   return (
-    <header className="h-16 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="h-16 border-b bg-background/95 backdrop-blur-md shadow-soft supports-[backdrop-filter]:bg-background/60">
       <div className="flex h-16 items-center justify-between px-6">
         <div className="flex items-center gap-4">
           <SidebarTrigger />
           <div className="flex flex-col">
-            <h1 className="font-semibold text-lg">My Community</h1>
+            <div className="flex items-center gap-2">
+              <div className="font-space text-xl font-bold text-foreground">mbio</div>
+              <span className="text-sm text-muted-foreground">Community</span>
+            </div>
             <span className="text-xs text-muted-foreground font-medium">
               Powered by Family Dinner Foundation
             </span>
@@ -37,6 +47,16 @@ export const MemberHeader = () => {
         </div>
 
         <div className="flex items-center gap-4">
+          {/* Join Group CTA */}
+          <Button 
+            variant="premium" 
+            onClick={handleJoinGroup}
+            className="shadow-primary"
+          >
+            <Users className="mr-2 h-4 w-4" />
+            Join a Group
+          </Button>
+
           {/* Notifications */}
           <Button variant="ghost" size="sm" className="relative">
             <Bell className="h-4 w-4" />
@@ -49,33 +69,33 @@ export const MemberHeader = () => {
               <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                 <Avatar className="h-8 w-8">
                   <AvatarImage src={user?.user_metadata?.avatar_url} alt={`${user?.user_metadata?.full_name || 'Member'} profile picture`} />
-                  <AvatarFallback>
+                  <AvatarFallback className="bg-primary/10 text-primary font-medium">
                     {user?.email?.charAt(0).toUpperCase() || "U"}
                   </AvatarFallback>
                 </Avatar>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56" align="end" forceMount>
+            <DropdownMenuContent className="w-56 bg-background/95 backdrop-blur-md border shadow-lift" align="end" forceMount>
               <div className="flex items-center justify-start gap-2 p-2">
                 <div className="flex flex-col space-y-1 leading-none">
-                  <p className="font-medium">{user?.user_metadata?.full_name || "Member"}</p>
+                  <p className="font-medium text-foreground">{user?.user_metadata?.full_name || "Member"}</p>
                   <p className="w-[200px] truncate text-sm text-muted-foreground">
                     {user?.email}
                   </p>
                 </div>
               </div>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>
+              <DropdownMenuItem className="hover:bg-muted/50">
                 <Settings className="mr-2 h-4 w-4" />
                 <span>Settings</span>
               </DropdownMenuItem>
               {/* TODO: Show only if user has admin role */}
-              <DropdownMenuItem onClick={switchToAdminView}>
+              <DropdownMenuItem onClick={switchToAdminView} className="hover:bg-muted/50">
                 <ToggleLeft className="mr-2 h-4 w-4" />
                 <span>Switch to Admin</span>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={handleSignOut}>
+              <DropdownMenuItem onClick={handleSignOut} className="hover:bg-muted/50 text-destructive">
                 <LogOut className="mr-2 h-4 w-4" />
                 <span>Sign out</span>
               </DropdownMenuItem>

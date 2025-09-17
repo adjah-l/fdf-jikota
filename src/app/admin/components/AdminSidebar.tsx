@@ -67,7 +67,7 @@ export const AdminSidebar = () => {
 
   const renderNavSection = (items: typeof adminNavItems, label: string) => (
     <SidebarGroup>
-      <SidebarGroupLabel>
+      <SidebarGroupLabel className="text-muted-foreground font-medium">
         {!collapsed && label}
       </SidebarGroupLabel>
       <SidebarGroupContent>
@@ -93,7 +93,13 @@ export const AdminSidebar = () => {
 
   return (
     <Sidebar className={collapsed ? "w-14" : "w-60"} collapsible="icon">
-      <SidebarContent>
+      <SidebarContent className="bg-background/95 backdrop-blur-md border-r shadow-soft">
+        <div className="p-4 border-b">
+          <div className="flex items-center gap-2">
+            <div className="font-space text-lg font-bold text-primary">mbio</div>
+            {!collapsed && <span className="text-xs text-muted-foreground">Admin Panel</span>}
+          </div>
+        </div>
         {renderNavSection(adminNavItems, "Management")}
         {renderNavSection(matchingNavItems, "Matching")}
         {renderNavSection(engagementNavItems, "Engagement")}
