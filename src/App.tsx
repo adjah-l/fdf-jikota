@@ -59,6 +59,7 @@ import MemberProfile from "./app/member/pages/Profile";
 import AdminOverview from "./app/admin/pages/Overview";
 import AdminGroups from "./app/admin/pages/Groups";
 import AdminGroupForm from "./app/admin/pages/GroupForm";
+import { MatchingAlgorithms } from "./app/admin/pages/MatchingAlgorithms";
 
 // SMS pages
 import SMSRespond from "./pages/SMSRespond";
@@ -101,6 +102,7 @@ const AppContent = () => (
                 <Route path="groups" element={<AdminGroups />} />
                 <Route path="groups/new" element={<AdminGroupForm />} />
                 <Route path="groups/:id/edit" element={<AdminGroupForm />} />
+                <Route path="matching-algorithms" element={<MatchingAlgorithms />} />
               </Route>
             )}
 

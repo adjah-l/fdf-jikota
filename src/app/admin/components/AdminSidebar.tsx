@@ -32,6 +32,7 @@ const adminNavItems = [
 ];
 
 const matchingNavItems = [
+  { title: "Algorithms", url: "/admin2/matching-algorithms", icon: Settings, end: false },
   { title: "Policies", url: "/admin2/matching-policies", icon: Target, end: false },
   { title: "Preview", url: "/admin2/matching-preview", icon: Shuffle, end: false },
   { title: "Approvals", url: "/admin2/matching-approvals", icon: CheckSquare, end: false },
