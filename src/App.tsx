@@ -108,24 +108,49 @@ const AppContent = () => (
               </>
             )}
 
-            {/* Existing App Shell and Routes */}
-            <Route path="/" element={<AppShell />}>
+            {/* Root route - Premium Homepage */}
+            <Route path="/" element={<HomePremium />} />
+            
+            {/* Legacy app routes */}
+            <Route path="/groups" element={<AppShell />}>
+              <Route index element={<GroupsPage />} />
+            </Route>
+            <Route path="/neighborhoods" element={<AppShell />}>
+              <Route index element={<NeighborhoodsPage />} />
+            </Route>
+            <Route path="/care" element={<AppShell />}>
+              <Route index element={<CommunityCarePage />} />
+            </Route>
+            <Route path="/profile" element={<AppShell />}>
+              <Route index element={<ProfilePage />} />
+            </Route>
+            <Route path="/admin" element={<AppShell />}>
+              <Route index element={<AdminDashboard />} />
+            </Route>
+            <Route path="/admin/matching" element={<AppShell />}>
+              <Route index element={<AdminMatchingPage />} />
+            </Route>
+            <Route path="/admin/data" element={<AppShell />}>
+              <Route index element={<AdminDataPage />} />
+            </Route>
+            <Route path="/admin/messaging" element={<AppShell />}>
+              <Route index element={<AdminMessagingPage />} />
+            </Route>
+            <Route path="/organizations" element={<AppShell />}>
+              <Route index element={<OrganizationsPage />} />
+            </Route>
+            <Route path="/organizations/new" element={<AppShell />}>
+              <Route index element={<CreateOrganizationPage />} />
+            </Route>
+            
+            {/* Legacy app shell for old index page */}
+            <Route path="/app-legacy" element={<AppShell />}>
               <Route index element={<Index />} />
-              <Route path="/groups" element={<GroupsPage />} />
-              <Route path="/neighborhoods" element={<NeighborhoodsPage />} />
-              <Route path="/care" element={<CommunityCarePage />} />
-              <Route path="/profile" element={<ProfilePage />} />
-              <Route path="/admin" element={<AdminDashboard />} />
-              <Route path="/admin/matching" element={<AdminMatchingPage />} />
-              <Route path="/admin/data" element={<AdminDataPage />} />
-              <Route path="/admin/messaging" element={<AdminMessagingPage />} />
-              <Route path="/organizations" element={<OrganizationsPage />} />
-              <Route path="/organizations/new" element={<CreateOrganizationPage />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Route>
             
-            {/* Public routes outside AppShell */}
+            {/* Legacy routes for backward compatibility */}
             <Route path="/premium" element={<HomePremium />} />
             <Route path="/home-premium" element={<HomePremium />} />
             <Route path="/legacy-home" element={<Index />} />
@@ -133,6 +158,9 @@ const AppContent = () => (
             <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/sms-respond/:token" element={<SMSRespond />} />
+            
+            {/* Catch-all route - redirect to homepage */}
+            <Route path="*" element={<HomePremium />} />
           </Routes>
         </BrowserRouter>
       </TooltipProvider>
