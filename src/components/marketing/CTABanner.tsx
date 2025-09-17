@@ -57,7 +57,7 @@ export function CTABanner() {
               onClick={handleJoinGroup}
               className="bg-white text-primary hover:bg-white/90 hover:shadow-lift shadow-lg min-w-[200px]"
             >
-              Join a Group
+              Join the Waitlist
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
 

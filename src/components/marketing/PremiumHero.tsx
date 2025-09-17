@@ -56,7 +56,7 @@ export function PremiumHero() {
                 onClick={handleJoinGroup}
                 className="min-w-[200px] shadow-primary"
               >
-                Join a Group
+                Join the Waitlist
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
               
