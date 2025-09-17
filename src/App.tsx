@@ -42,6 +42,7 @@ import OrgPage from "./pages/OrgPage";
 import SubOrgPage from "./pages/SubOrgPage";
 import JoinWizard from "./pages/JoinWizard";
 import GroupDetail from "./pages/GroupDetail";
+import Confirmation from "./pages/Confirmation";
 
 // New app shells (gated by flags)
 import { MemberAppShell } from "./app/member/MemberAppShell";
@@ -120,7 +121,8 @@ const AppContent = () => (
             <Route path="/orgs/:slug" element={<OrgPage />} />
             <Route path="/orgs/:slug/groups/:groupId" element={<GroupDetail />} />
             <Route path="/orgs/:slug/:subslug" element={<SubOrgPage />} />
-            <Route path="/join" element={<JoinWizard />} />
+                <Route path="/join" element={<JoinWizard />} />
+                <Route path="/confirmation" element={<Confirmation />} />
 
             {/* Root route - Premium Homepage */}
             <Route path="/" element={<HomePremium />} />

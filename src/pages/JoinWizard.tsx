@@ -14,6 +14,7 @@ import {
   User, MapPin, Clock, Heart, CreditCard 
 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/integrations/supabase/client";
 import AuthModal from "@/components/auth/AuthModal";
 
 const JoinWizard = () => {
@@ -109,10 +110,30 @@ const JoinWizard = () => {
     }
   };
 
-  const handleSubmit = () => {
-    // Handle final submission
-    console.log("Joining group with data:", formData);
-    navigate(`/confirmation?org=${formData.organization}`);
+  const handleSubmit = async () => {
+    if (!user) return;
+    
+    try {
+      // Create user profile
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .upsert({
+          user_id: user.id,
+          full_name: formData.fullName,
+          phone_number: formData.phone,
+          age_group: formData.stageOfLife,
+          neighborhood_name: formData.neighborhood,
+          activities: formData.interests,
+          bio: formData.intro
+        });
+
+      if (profileError) throw profileError;
+
+      console.log("Profile saved successfully:", formData);
+      navigate(`/member/home`);
+    } catch (error) {
+      console.error("Error saving profile:", error);
+    }
   };
 
   const updateFormData = (field: string, value: any) => {
@@ -132,6 +153,25 @@ const JoinWizard = () => {
       updateFormData("interests", [...formData.interests, interest]);
     } else {
       updateFormData("interests", formData.interests.filter(i => i !== interest));
+    }
+  };
+
+  const canProceed = () => {
+    switch (currentStep) {
+      case 1:
+        return formData.organization !== "";
+      case 2:
+        return formData.email !== "";
+      case 3:
+        return formData.fullName !== "" && formData.stageOfLife !== "";
+      case 4:
+        return formData.availability.length > 0;
+      case 5:
+        return formData.agreeToTerms && formData.agreeToPledge;
+      case 6:
+        return true;
+      default:
+        return false;
     }
   };
 
@@ -196,6 +236,9 @@ const JoinWizard = () => {
                         {org.logo} {org.name}
                       </SelectItem>
                     ))}
+                    <SelectItem value="general">
+                      🌍 General Community (No Organization)
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </div>
