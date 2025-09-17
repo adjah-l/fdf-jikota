@@ -25,7 +25,7 @@ export function StickyHeader() {
     if (!user) {
       setShowAuthModal(true);
     } else {
-      navigate('/groups');
+      navigate('/join');
     }
   };
 
@@ -51,7 +51,7 @@ export function StickyHeader() {
           <div className="flex items-center justify-between h-16">
             
             {/* Logo */}
-            <Link to="/home-premium" className="flex flex-col items-start">
+            <Link to="/" className="flex flex-col items-start">
               <div className="font-space text-2xl font-bold text-foreground">
                 mbio
               </div>
@@ -62,6 +62,12 @@ export function StickyHeader() {
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center gap-8">
+              <Link 
+                to="/orgs" 
+                className="text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Organizations
+              </Link>
               <button 
                 onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
                 className="text-muted-foreground hover:text-foreground transition-colors"
@@ -143,10 +149,17 @@ export function StickyHeader() {
             </button>
           </div>
 
-          {/* Mobile Menu */}
+            {/* Mobile Menu */}
           {isMenuOpen && (
             <div className="md:hidden bg-background border-t border-border">
               <nav className="py-4 space-y-2">
+                <Link 
+                  to="/orgs" 
+                  className="block px-4 py-2 text-muted-foreground hover:text-foreground transition-colors"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Organizations
+                </Link>
                 <button 
                   onClick={() => {
                     document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' });

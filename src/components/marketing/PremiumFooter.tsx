@@ -17,7 +17,7 @@ export function PremiumFooter() {
     if (!user) {
       setShowAuthModal(true);
     } else {
-      navigate('/groups');
+      navigate('/join');
     }
   };
 
@@ -70,10 +70,18 @@ export function PremiumFooter() {
               <ul className="space-y-4">
                 <li>
                   <Link 
-                    to="/home-premium" 
+                    to="/" 
                     className="text-muted-foreground hover:text-primary transition-colors"
                   >
                     Home
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    to="/orgs" 
+                    className="text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    Organizations
                   </Link>
                 </li>
                 <li>

@@ -36,6 +36,12 @@ import Partners from "./pages/Partners";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 
+// New org pages
+import OrgsDirectory from "./pages/OrgsDirectory";
+import OrgPage from "./pages/OrgPage";
+import SubOrgPage from "./pages/SubOrgPage";
+import JoinWizard from "./pages/JoinWizard";
+
 // New app shells (gated by flags)
 import { MemberAppShell } from "./app/member/MemberAppShell";
 import { AdminAppShell } from "./app/admin/AdminAppShell";
@@ -107,6 +113,12 @@ const AppContent = () => (
                 <Route path="/partners" element={<Partners />} />
               </>
             )}
+
+            {/* Org Directory and Pages */}
+            <Route path="/orgs" element={<OrgsDirectory />} />
+            <Route path="/orgs/:slug" element={<OrgPage />} />
+            <Route path="/orgs/:slug/:subslug" element={<SubOrgPage />} />
+            <Route path="/join" element={<JoinWizard />} />
 
             {/* Root route - Premium Homepage */}
             <Route path="/" element={<HomePremium />} />
