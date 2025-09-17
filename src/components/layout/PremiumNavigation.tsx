@@ -60,7 +60,7 @@ export function PremiumNavigation() {
           <div className="flex items-center justify-between h-16">
             
             {/* Logo */}
-            <Link to="/" className="flex flex-col items-start">
+            <Link to="/home-premium" className="flex flex-col items-start">
               <div className="font-space text-2xl font-bold text-foreground">
                 mbio
               </div>

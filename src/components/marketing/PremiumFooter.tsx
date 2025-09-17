@@ -48,9 +48,8 @@ export function PremiumFooter() {
                   mbio
                 </h3>
                 <p className="text-muted-foreground leading-relaxed mb-6">
-                  <span className="font-semibold text-foreground">mbio</span> means 'a people.' 
-                  We exist to make belonging possible, built on the 5Cs—Commitment, Communication, 
-                  Connection, Crisis support, and Celebration.
+                  <span className="font-semibold text-foreground">mbio</span> means "a people" in Efik, a Nigerian language. 
+                  We help you belong through shared activities and the 5C mutual care framework for lasting care.
                 </p>
                 <Button 
                   variant="premium" 
@@ -71,7 +70,7 @@ export function PremiumFooter() {
               <ul className="space-y-4">
                 <li>
                   <Link 
-                    to="/" 
+                    to="/home-premium" 
                     className="text-muted-foreground hover:text-primary transition-colors"
                   >
                     Home
@@ -110,7 +109,7 @@ export function PremiumFooter() {
                 Stay Connected
               </h4>
               <p className="text-muted-foreground mb-4 text-sm">
-                Get updates on new communities and the 5C framework.
+                Get updates on new communities and the 5C mutual care framework.
               </p>
               <form onSubmit={handleSubscribe} className="space-y-3">
                 <Input
