@@ -6,12 +6,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Progress } from "@/components/ui/progress";
 import { Checkbox } from "@/components/ui/checkbox";
 import { StickyHeader } from "@/components/marketing/StickyHeader";
 import { PremiumFooter } from "@/components/marketing/PremiumFooter";
+import { useToast } from "@/hooks/use-toast";
 import { 
   CheckCircle, ArrowRight, ArrowLeft, Building, Mail, 
-  User, MapPin, Clock, Heart, CreditCard 
+  User, MapPin, Clock, Heart, CreditCard, Loader2
 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
@@ -21,12 +23,15 @@ const JoinWizard = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { toast } = useToast();
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [organizations, setOrganizations] = useState<any[]>([]);
   const [formData, setFormData] = useState({
     organization: searchParams.get("org") || "",
     subOrganization: searchParams.get("sub") || "",
-    email: "",
+    email: user?.email || "",
     inviteCode: "",
     verificationMethod: "email",
     fullName: "",
@@ -44,13 +49,25 @@ const JoinWizard = () => {
   useEffect(() => {
     if (!user) {
       setShowAuthModal(true);
+    } else {
+      setFormData(prev => ({ ...prev, email: user.email || "" }));
+      fetchOrganizations();
     }
   }, [user]);
 
-  const organizations = {
-    "stanford-university": { name: "Stanford University", logo: "🎓" },
-    "lakeside-hoa-dallas": { name: "Lakeside HOA", logo: "🏘️" },
-    "urban-professionals-network": { name: "Urban Professionals Network", logo: "🏢" }
+  const fetchOrganizations = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('organizations')
+        .select('id, name, slug, description')
+        .eq('is_active', true)
+        .order('name');
+
+      if (error) throw error;
+      setOrganizations(data || []);
+    } catch (error) {
+      console.error('Error fetching organizations:', error);
+    }
   };
 
   const stageOfLifeOptions = [
@@ -113,8 +130,9 @@ const JoinWizard = () => {
   const handleSubmit = async () => {
     if (!user) return;
     
+    setLoading(true);
     try {
-      // Create user profile
+      // Update user profile with form data
       const { error: profileError } = await supabase
         .from('profiles')
         .upsert({
@@ -124,15 +142,45 @@ const JoinWizard = () => {
           age_group: formData.stageOfLife,
           neighborhood_name: formData.neighborhood,
           activities: formData.interests,
-          bio: formData.intro
+          bio: formData.intro,
+          email: formData.email
         });
 
       if (profileError) throw profileError;
 
-      console.log("Profile saved successfully:", formData);
-      navigate(`/member/home`);
+      // If organization is selected, try to join it
+      if (formData.organization && formData.organization !== "general") {
+        const selectedOrg = organizations.find(org => org.slug === formData.organization);
+        if (selectedOrg) {
+          const { error: orgError } = await supabase
+            .from('organization_members')
+            .insert({
+              org_id: selectedOrg.id,
+              user_id: user.id,
+              role: 'member'
+            });
+
+          if (orgError && orgError.code !== '23505') { // Ignore duplicate key error
+            throw orgError;
+          }
+        }
+      }
+
+      toast({
+        title: "Registration Complete!",
+        description: "Welcome to the community. You'll be matched with a group soon.",
+      });
+
+      navigate(`/confirmation?org=${formData.organization}`);
     } catch (error) {
-      console.error("Error saving profile:", error);
+      console.error("Error completing registration:", error);
+      toast({
+        title: "Registration Error",
+        description: "There was an issue completing your registration. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -161,11 +209,11 @@ const JoinWizard = () => {
       case 1:
         return formData.organization !== "";
       case 2:
-        return formData.email !== "";
+        return formData.email !== "" && isValidEmail(formData.email);
       case 3:
-        return formData.fullName !== "" && formData.stageOfLife !== "";
+        return formData.fullName !== "" && formData.stageOfLife !== "" && formData.neighborhood !== "";
       case 4:
-        return formData.availability.length > 0;
+        return formData.availability.length > 0 && formData.interests.length > 0;
       case 5:
         return formData.agreeToTerms && formData.agreeToPledge;
       case 6:
@@ -173,6 +221,32 @@ const JoinWizard = () => {
       default:
         return false;
     }
+  };
+
+  const isValidEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const getStepErrors = () => {
+    const errors: string[] = [];
+    switch (currentStep) {
+      case 2:
+        if (!isValidEmail(formData.email)) {
+          errors.push("Please enter a valid email address");
+        }
+        break;
+      case 3:
+        if (!formData.fullName) errors.push("Full name is required");
+        if (!formData.stageOfLife) errors.push("Stage of life is required");
+        if (!formData.neighborhood) errors.push("Neighborhood/area is required");
+        break;
+      case 4:
+        if (formData.availability.length === 0) errors.push("Please select at least one availability option");
+        if (formData.interests.length === 0) errors.push("Please select at least one interest");
+        break;
+    }
+    return errors;
   };
 
   if (!user) {
@@ -248,11 +322,11 @@ const JoinWizard = () => {
                   <p className="text-sm text-muted-foreground mb-2">
                     Don't see your organization? 
                   </p>
-                  <Button variant="outline" size="sm">
+                  <Button variant="outline" size="sm" onClick={() => navigate('/create-organization')}>
                     Request Your Organization
                   </Button>
                   <p className="text-xs text-muted-foreground mt-2">
-                    Or join a citywide community while we set up your organization.
+                    Or join the general community while we set up your organization.
                   </p>
                 </div>
               )}
@@ -280,10 +354,16 @@ const JoinWizard = () => {
                   value={formData.email}
                   onChange={(e) => updateFormData("email", e.target.value)}
                   placeholder="your.email@organization.edu"
+                  className={!isValidEmail(formData.email) && formData.email ? "border-destructive" : ""}
                 />
                 <p className="text-xs text-muted-foreground mt-1">
-                  We'll check if your email domain matches your organization.
+                  We'll use this to contact you about your group assignment.
                 </p>
+                {!isValidEmail(formData.email) && formData.email && (
+                  <p className="text-xs text-destructive mt-1">
+                    Please enter a valid email address
+                  </p>
+                )}
               </div>
 
               <div>
@@ -293,6 +373,9 @@ const JoinWizard = () => {
                   onChange={(e) => updateFormData("inviteCode", e.target.value)}
                   placeholder="Enter invite code if you have one"
                 />
+                <p className="text-xs text-muted-foreground mt-1">
+                  Have an invite code from a friend? Enter it here for priority matching.
+                </p>
               </div>
             </CardContent>
           </Card>
@@ -350,12 +433,16 @@ const JoinWizard = () => {
               </div>
 
               <div>
-                <Label>Neighborhood/Area</Label>
+                <Label>Neighborhood/Area *</Label>
                 <Input
                   value={formData.neighborhood}
                   onChange={(e) => updateFormData("neighborhood", e.target.value)}
                   placeholder="Where are you located?"
+                  className={!formData.neighborhood && currentStep > 3 ? "border-destructive" : ""}
                 />
+                <p className="text-xs text-muted-foreground mt-1">
+                  This helps us match you with nearby group members.
+                </p>
               </div>
 
               <div>
@@ -394,8 +481,11 @@ const JoinWizard = () => {
             </CardHeader>
             <CardContent className="space-y-6">
               <div>
-                <Label className="text-base font-medium">When are you available?</Label>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mt-3">
+                <Label className="text-base font-medium">When are you available? *</Label>
+                <p className="text-sm text-muted-foreground mb-3">
+                  Select all times that work for you (minimum 1 required)
+                </p>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                   {availabilityOptions.map((time) => (
                     <div key={time} className="flex items-center space-x-2">
                       <Checkbox
@@ -409,11 +499,19 @@ const JoinWizard = () => {
                     </div>
                   ))}
                 </div>
+                {formData.availability.length === 0 && currentStep > 4 && (
+                  <p className="text-xs text-destructive mt-2">
+                    Please select at least one availability option
+                  </p>
+                )}
               </div>
 
               <div>
-                <Label className="text-base font-medium">What are your interests?</Label>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mt-3">
+                <Label className="text-base font-medium">What are your interests? *</Label>
+                <p className="text-sm text-muted-foreground mb-3">
+                  Select topics you'd like to connect with others about (minimum 1 required)
+                </p>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                   {interestOptions.map((interest) => (
                     <div key={interest} className="flex items-center space-x-2">
                       <Checkbox
@@ -427,6 +525,11 @@ const JoinWizard = () => {
                     </div>
                   ))}
                 </div>
+                {formData.interests.length === 0 && currentStep > 4 && (
+                  <p className="text-xs text-destructive mt-2">
+                    Please select at least one interest
+                  </p>
+                )}
               </div>
 
               <div>
