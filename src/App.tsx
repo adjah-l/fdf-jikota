@@ -127,7 +127,7 @@ const AppContent = () => (
                 <Route path="/confirmation" element={<Confirmation />} />
 
             {/* Root route - Premium Homepage */}
-            <Route path="/" element={flags.enableNewMarketing ? <Index /> : <HomePremium />} />
+            <Route path="/" element={flags.enableNewMarketing ? <HomePremium /> : <Index />} />
             
             {/* Legacy app routes */}
             <Route path="/groups" element={<AppShell />}>
@@ -178,7 +178,7 @@ const AppContent = () => (
             <Route path="/sms-respond/:token" element={<SMSRespond />} />
             
             {/* Catch-all route - redirect to homepage */}
-            <Route path="*" element={flags.enableNewMarketing ? <Index /> : <HomePremium />} />
+            <Route path="*" element={flags.enableNewMarketing ? <HomePremium /> : <HomePremium />} />
           </Routes>
         </BrowserRouter>
       </TooltipProvider>
