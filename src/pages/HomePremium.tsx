@@ -38,6 +38,7 @@ const HomePremium = () => {
     }
   ];
 
+  console.log("[HomePremium] rendering homepage with PremiumHero");
   return (
     <div className="min-h-screen bg-background font-inter">
       <StickyHeader />

@@ -15,6 +15,7 @@ import { CTABanner } from "@/components/marketing/CTABanner";
 import { flags } from "@/config/flags";
 
 const Index = () => {
+  console.log("[Index] rendering - flags.enableNewMarketing:", flags.enableNewMarketing);
   return (
     <div className="min-h-screen bg-background">
       {flags.enableNewMarketing ? <StickyHeader /> : <Header />}
