@@ -3,6 +3,7 @@ import { HeaderNew } from "@/components/layout/HeaderNew";
 import { ActivitiesShowcase } from "@/components/marketing/ActivitiesShowcase";
 import { FiveCsSection } from "@/components/marketing/FiveCsSection";
 import Hero from "@/components/Hero";
+import { NewHero } from "@/components/marketing/NewHero";
 import DinnerListings from "@/components/DinnerListings";
 import FiveCPrinciples from "@/components/FiveCPrinciples";
 import Footer from "@/components/Footer";
@@ -13,7 +14,7 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       {flags.enableNewMarketing ? <HeaderNew /> : <Header />}
       <main>
-        <Hero />
+        {flags.enableNewMarketing ? <NewHero /> : <Hero />}
         <ActivitiesShowcase />
         <FiveCsSection />
         <DinnerListings />

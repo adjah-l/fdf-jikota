@@ -44,9 +44,12 @@ export function PremiumFooter() {
             {/* About mbio */}
             <div className="lg:col-span-2">
               <div className="mb-6">
-                <h3 className="font-space text-2xl font-bold text-foreground mb-4">
-                  mbio
-                </h3>
+                <div className="mb-2">
+                  <h3 className="font-space text-2xl font-bold text-foreground">
+                    mbio
+                  </h3>
+                  <p className="text-xs text-muted-foreground">Powered by Family Dinner Foundation</p>
+                </div>
                 <p className="text-muted-foreground leading-relaxed mb-6">
                   <span className="font-semibold text-foreground">mbio</span> means "a people" in Efik, a Nigerian language. 
                   We help you belong through shared activities and the 5C mutual care framework for lasting care.

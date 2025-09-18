@@ -18,23 +18,23 @@ All colors MUST be HSL.
     --popover: 210 20% 98%;
     --popover-foreground: 0 0% 4%;
 
-    /* Electric Blue primary for premium CTAs */
-    --primary: 220 100% 50%;
+    /* #0066FF Primary */
+    --primary: 216 100% 50%;
     --primary-foreground: 0 0% 100%;
 
-    /* Emerald Green secondary for accents */
+    /* #00C896 Accent */
     --secondary: 169 100% 39%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 210 14% 92%;
-    --muted-foreground: 210 14% 35%;
+    --muted: 210 8% 94%;
+    --muted-foreground: 210 8% 29%;
 
-    /* Emerald accent for secondary actions */
+    /* #00C896 Accent */
     --accent: 169 100% 39%;
     --accent-foreground: 0 0% 100%;
 
-    /* Bright red for errors */
-    --destructive: 359 100% 65%;
+    /* #FF4D4F Error */
+    --destructive: 359 91% 65%;
     --destructive-foreground: 0 0% 100%;
 
     --border: 210 20% 90%;
@@ -84,8 +84,8 @@ All colors MUST be HSL.
   }
 
   .dark {
-    /* Premium dark mode - Charcoal background */
-    --background: 225 39% 12%;
+    /* #111827 Dark background */
+    --background: 221 39% 11%;
     --foreground: 0 0% 98%;
 
     --card: 225 39% 12%;
@@ -94,11 +94,11 @@ All colors MUST be HSL.
     --popover: 225 39% 12%;
     --popover-foreground: 0 0% 98%;
 
-    /* Electric Blue primary remains vibrant in dark */
-    --primary: 220 100% 50%;
+    /* #0066FF Primary remains vibrant in dark */
+    --primary: 216 100% 50%;
     --primary-foreground: 0 0% 100%;
 
-    /* Emerald secondary maintains vibrancy */
+    /* #00C896 Secondary maintains vibrancy */
     --secondary: 169 100% 39%;
     --secondary-foreground: 0 0% 100%;
 
