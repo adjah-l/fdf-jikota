@@ -6,7 +6,7 @@ import Hero from "@/components/Hero";
 import { NewHero } from "@/components/marketing/NewHero";
 import DinnerListings from "@/components/DinnerListings";
 import FiveCPrinciples from "@/components/FiveCPrinciples";
-import Footer from "@/components/Footer";
+import { PremiumFooter } from "@/components/marketing/PremiumFooter";
 import { flags } from "@/config/flags";
 
 const Index = () => {
@@ -20,7 +20,7 @@ const Index = () => {
         <DinnerListings />
         <FiveCPrinciples />
       </main>
-      <Footer />
+      <PremiumFooter />
     </div>
   );
 };
