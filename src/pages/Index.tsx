@@ -1,25 +1,42 @@
 import Header from "@/components/Header";
-import { HeaderNew } from "@/components/layout/HeaderNew";
+import { StickyHeader } from "@/components/marketing/StickyHeader";
 import { ActivitiesShowcase } from "@/components/marketing/ActivitiesShowcase";
 import { FiveCsSection } from "@/components/marketing/FiveCsSection";
-import { FiveCSection } from "@/components/marketing/FiveCSection";
 import Hero from "@/components/Hero";
-import { NewHero } from "@/components/marketing/NewHero";
 import DinnerListings from "@/components/DinnerListings";
 import FiveCPrinciples from "@/components/FiveCPrinciples";
 import { PremiumFooter } from "@/components/marketing/PremiumFooter";
+import { PremiumHero } from "@/components/marketing/PremiumHero";
+import { ValueProposition } from "@/components/marketing/ValueProposition";
+import { OurStory } from "@/components/marketing/OurStory";
+import { HowItWorks } from "@/components/marketing/HowItWorks";
+import { Testimonials } from "@/components/marketing/Testimonials";
+import { CTABanner } from "@/components/marketing/CTABanner";
 import { flags } from "@/config/flags";
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
-      {flags.enableNewMarketing ? <HeaderNew /> : <Header />}
+      {flags.enableNewMarketing ? <StickyHeader /> : <Header />}
       <main>
-        {flags.enableNewMarketing ? <NewHero /> : <Hero />}
-        {flags.enableNewMarketing ? <FiveCSection /> : <FiveCsSection />}
-        <ActivitiesShowcase />
-        <DinnerListings />
-        <FiveCPrinciples />
+        {flags.enableNewMarketing ? (
+          <>
+            <PremiumHero />
+            <ValueProposition />
+            <OurStory />
+            <HowItWorks />
+            <Testimonials />
+            <CTABanner />
+          </>
+        ) : (
+          <>
+            <Hero />
+            <ActivitiesShowcase />
+            <FiveCsSection />
+            <DinnerListings />
+            <FiveCPrinciples />
+          </>
+        )}
       </main>
       <PremiumFooter />
     </div>
