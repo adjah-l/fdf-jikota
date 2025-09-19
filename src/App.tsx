@@ -171,6 +171,7 @@ const AppContent = () => (
             {/* Legacy routes for backward compatibility */}
             <Route path="/premium" element={<HomePremium />} />
             <Route path="/home-premium" element={<HomePremium />} />
+            <Route path="/homepremium" element={<HomePremium />} />
             <Route path="/legacy-home" element={<Index />} />
             <Route path="/welcome" element={flags.enableNewMarketing ? <HomeNew /> : <Index />} />
             <Route path="/signin" element={<SignIn />} />
